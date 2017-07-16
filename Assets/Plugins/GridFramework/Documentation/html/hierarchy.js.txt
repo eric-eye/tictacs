@@ -1,0 +1,82 @@
+var hierarchy =
+[
+    [ "GridFramework.Extensions.Scale.AlignAndScale", "class_grid_framework_1_1_extensions_1_1_scale_1_1_align_and_scale.html", null ],
+    [ "GridFramework.Editor.AlignPanel", "class_grid_framework_1_1_editor_1_1_align_panel.html", null ],
+    [ "GridFramework.Grids.LayeredGrid.DepthEventArgs", "class_grid_framework_1_1_grids_1_1_layered_grid_1_1_depth_event_args.html", null ],
+    [ "GridFramework.Grids.Grid", "class_grid_framework_1_1_grids_1_1_grid.html", [
+      [ "GridFramework.Grids.LayeredGrid", "class_grid_framework_1_1_grids_1_1_layered_grid.html", [
+        [ "GridFramework.Grids.HexGrid", "class_grid_framework_1_1_grids_1_1_hex_grid.html", null ],
+        [ "GridFramework.Grids.PolarGrid", "class_grid_framework_1_1_grids_1_1_polar_grid.html", null ]
+      ] ],
+      [ "GridFramework.Grids.RectGrid", "class_grid_framework_1_1_grids_1_1_rect_grid.html", null ],
+      [ "GridFramework.Grids.SphereGrid", "class_grid_framework_1_1_grids_1_1_sphere_grid.html", null ]
+    ] ],
+    [ "GridFramework.Rendering.GridCamera", "class_grid_framework_1_1_rendering_1_1_grid_camera.html", null ],
+    [ "GridFramework.Renderers.GridRenderer", "class_grid_framework_1_1_renderers_1_1_grid_renderer.html", [
+      [ "GridFramework.Renderers.Hexagonal.HexRenderer", "class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_hex_renderer.html", [
+        [ "GridFramework.Renderers.Hexagonal.Cone", "class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_cone.html", null ],
+        [ "GridFramework.Renderers.Hexagonal.Herringbone", "class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_herringbone.html", null ],
+        [ "GridFramework.Renderers.Hexagonal.Rectangle", "class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_rectangle.html", null ],
+        [ "GridFramework.Renderers.Hexagonal.Rhombus", "class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_rhombus.html", null ]
+      ] ],
+      [ "GridFramework.Renderers.Polar.PolarRenderer", "class_grid_framework_1_1_renderers_1_1_polar_1_1_polar_renderer.html", [
+        [ "GridFramework.Renderers.Polar.Cylinder", "class_grid_framework_1_1_renderers_1_1_polar_1_1_cylinder.html", null ]
+      ] ],
+      [ "GridFramework.Renderers.Rectangular.RectangularRenderer", "class_grid_framework_1_1_renderers_1_1_rectangular_1_1_rectangular_renderer.html", [
+        [ "GridFramework.Renderers.Rectangular.Parallelepiped", "class_grid_framework_1_1_renderers_1_1_rectangular_1_1_parallelepiped.html", null ]
+      ] ],
+      [ "GridFramework.Renderers.Spherical.SphericalRenderer", "class_grid_framework_1_1_renderers_1_1_spherical_1_1_spherical_renderer.html", [
+        [ "GridFramework.Renderers.Spherical.Sphere", "class_grid_framework_1_1_renderers_1_1_spherical_1_1_sphere.html", null ]
+      ] ]
+    ] ],
+    [ "GridFramework.Extensions.Align.Hexagonal", "class_grid_framework_1_1_extensions_1_1_align_1_1_hexagonal.html", null ],
+    [ "GridFramework.Extensions.Nearest.Hexgonal", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_hexgonal.html", null ],
+    [ "GridFramework.Editor.HexGridEditor", "class_grid_framework_1_1_editor_1_1_hex_grid_editor.html", null ],
+    [ "GridFramework.Grids.SphereGrid.LinesEventArgs", "class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_lines_event_args.html", null ],
+    [ "GridFramework.Matrices.Matrix3x3", "struct_grid_framework_1_1_matrices_1_1_matrix3x3.html", null ],
+    [ "GridFramework.Matrices.Matrix3x4", "struct_grid_framework_1_1_matrices_1_1_matrix3x4.html", null ],
+    [ "GridFramework.Matrices.Matrix4x3", "struct_grid_framework_1_1_matrices_1_1_matrix4x3.html", null ],
+    [ "GridFramework.Editor.MenuItems", "class_grid_framework_1_1_editor_1_1_menu_items.html", null ],
+    [ "GridFramework.Extensions.Vectrosity.Points", "class_grid_framework_1_1_extensions_1_1_vectrosity_1_1_points.html", null ],
+    [ "GridFramework.Extensions.Conversion.Polar", "class_grid_framework_1_1_extensions_1_1_conversion_1_1_polar.html", null ],
+    [ "GridFramework.Extensions.Nearest.Polar", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_polar.html", null ],
+    [ "GridFramework.Editor.PolarGridEditor", "class_grid_framework_1_1_editor_1_1_polar_grid_editor.html", null ],
+    [ "GridFramework.Renderers.GridRenderer.PriorityEventArgs", "class_grid_framework_1_1_renderers_1_1_grid_renderer_1_1_priority_event_args.html", null ],
+    [ "GridFramework.Grids.PolarGrid.RadiusEventArgs", "class_grid_framework_1_1_grids_1_1_polar_grid_1_1_radius_event_args.html", null ],
+    [ "GridFramework.Grids.HexGrid.RadiusEventArgs", "class_grid_framework_1_1_grids_1_1_hex_grid_1_1_radius_event_args.html", null ],
+    [ "GridFramework.Grids.SphereGrid.RadiusEventArgs", "class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_radius_event_args.html", null ],
+    [ "GridFramework.Extensions.Align.Rectangular", "class_grid_framework_1_1_extensions_1_1_align_1_1_rectangular.html", null ],
+    [ "GridFramework.Extensions.Nearest.Rectangular", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_rectangular.html", null ],
+    [ "GridFramework.Editor.RectGridEditor", "class_grid_framework_1_1_editor_1_1_rect_grid_editor.html", null ],
+    [ "GridFramework.Editor.Renderers.RendererEditor< T >", "class_grid_framework_1_1_editor_1_1_renderers_1_1_renderer_editor.html", null ],
+    [ "GridFramework.Editor.Renderers.RendererEditor< Cone >", "class_grid_framework_1_1_editor_1_1_renderers_1_1_renderer_editor.html", [
+      [ "GridFramework.Editor.Renderers.Hexagonal.ConeEditor", "class_grid_framework_1_1_editor_1_1_renderers_1_1_hexagonal_1_1_cone_editor.html", null ]
+    ] ],
+    [ "GridFramework.Editor.Renderers.RendererEditor< Cylinder >", "class_grid_framework_1_1_editor_1_1_renderers_1_1_renderer_editor.html", [
+      [ "GridFramework.Editor.Renderers.Polar.CylinderEditor", "class_grid_framework_1_1_editor_1_1_renderers_1_1_polar_1_1_cylinder_editor.html", null ]
+    ] ],
+    [ "GridFramework.Editor.Renderers.RendererEditor< Herringbone >", "class_grid_framework_1_1_editor_1_1_renderers_1_1_renderer_editor.html", [
+      [ "GridFramework.Editor.Renderers.Hexagonal.HerringboneEditor", "class_grid_framework_1_1_editor_1_1_renderers_1_1_hexagonal_1_1_herringbone_editor.html", null ]
+    ] ],
+    [ "GridFramework.Editor.Renderers.RendererEditor< Parallelepiped >", "class_grid_framework_1_1_editor_1_1_renderers_1_1_renderer_editor.html", [
+      [ "GridFramework.Editor.Renderers.Rectangular.ParallelepipedEditor", "class_grid_framework_1_1_editor_1_1_renderers_1_1_rectangular_1_1_parallelepiped_editor.html", null ]
+    ] ],
+    [ "GridFramework.Editor.Renderers.RendererEditor< Rectangle >", "class_grid_framework_1_1_editor_1_1_renderers_1_1_renderer_editor.html", [
+      [ "GridFramework.Editor.Renderers.Hexagonal.RectangleEditor", "class_grid_framework_1_1_editor_1_1_renderers_1_1_hexagonal_1_1_rectangle_editor.html", null ]
+    ] ],
+    [ "GridFramework.Editor.Renderers.RendererEditor< Rhombus >", "class_grid_framework_1_1_editor_1_1_renderers_1_1_renderer_editor.html", [
+      [ "GridFramework.Editor.Renderers.Hexagonal.RhombusEditor", "class_grid_framework_1_1_editor_1_1_renderers_1_1_hexagonal_1_1_rhombus_editor.html", null ]
+    ] ],
+    [ "GridFramework.Editor.Renderers.RendererEditor< Sphere >", "class_grid_framework_1_1_editor_1_1_renderers_1_1_renderer_editor.html", [
+      [ "GridFramework.Editor.Renderers.Spherical.SphereEditor", "class_grid_framework_1_1_editor_1_1_renderers_1_1_spherical_1_1_sphere_editor.html", null ]
+    ] ],
+    [ "GridFramework.Rendering.RendererManager", "class_grid_framework_1_1_rendering_1_1_renderer_manager.html", null ],
+    [ "GridFramework.Grids.PolarGrid.SectorsEventArgs", "class_grid_framework_1_1_grids_1_1_polar_grid_1_1_sectors_event_args.html", null ],
+    [ "GridFramework.Grids.RectGrid.ShearingEventArgs", "class_grid_framework_1_1_grids_1_1_rect_grid_1_1_shearing_event_args.html", null ],
+    [ "GridFramework.Grids.HexGrid.SidesEventArgs", "class_grid_framework_1_1_grids_1_1_hex_grid_1_1_sides_event_args.html", null ],
+    [ "GridFramework.Grids.SphereGrid.SmoothnessEventArgs", "class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_smoothness_event_args.html", null ],
+    [ "GridFramework.Grids.RectGrid.SpacingEventArgs", "class_grid_framework_1_1_grids_1_1_rect_grid_1_1_spacing_event_args.html", null ],
+    [ "GridFramework.Editor.SphereGridEditor", "class_grid_framework_1_1_editor_1_1_sphere_grid_editor.html", null ],
+    [ "GridFramework.Extensions.Nearest.Spherical", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_spherical.html", null ],
+    [ "GridFramework.Vectors.Vector6", "struct_grid_framework_1_1_vectors_1_1_vector6.html", null ]
+];

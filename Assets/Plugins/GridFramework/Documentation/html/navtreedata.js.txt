@@ -1,0 +1,48 @@
+var NAVTREE =
+[
+  [ "Grid Framework", "index.html", [
+    [ "Index", "index.html", null ],
+    [ "Overview", "overview.html", null ],
+    [ "The concept of grids", "concepts.html", null ],
+    [ "Getting Started", "starting.html", null ],
+    [ "Grids In General", "general.html", null ],
+    [ "Rectangular Grids", "rect.html", null ],
+    [ "Spherical grids", "sphere.html", null ],
+    [ "Hexagonal grids", "hex.html", null ],
+    [ "Polar grids", "polar.html", null ],
+    [ "Rendering and drawing a Grid", "rendering.html", null ],
+    [ "Events", "events.html", null ],
+    [ "Extending Grid Framework", "extending.html", null ],
+    [ "Frequently used snippets", "snippets.html", null ],
+    [ "Upgrade Guide", "upgrade.html", null ],
+    [ "Supporting other Unity plugins", "plugins.html", null ],
+    [ "Playmaker support", "playmaker.html", null ],
+    [ "Changelog", "changelog.html", null ],
+    [ "Packages", null, [
+      [ "Packages", "namespaces.html", "namespaces" ]
+    ] ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", "functions_func" ],
+        [ "Variables", "functions_vars.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Properties", "functions_prop.html", null ],
+        [ "Events", "functions_evnt.html", null ]
+      ] ]
+    ] ]
+  ] ]
+];
+
+var NAVTREEINDEX =
+[
+"annotated.html",
+"class_grid_framework_1_1_renderers_1_1_grid_renderer_a8b12c3e68a1ffdea169404a4b7bd87f5.html#a8b12c3e68a1ffdea169404a4b7bd87f5",
+"struct_grid_framework_1_1_matrices_1_1_matrix3x4_a3a24957984a6cca91471966a99543114.html#a3a24957984a6cca91471966a99543114"
+];
+
+var SYNCONMSG = 'click to disable panel synchronisation';
+var SYNCOFFMSG = 'click to enable panel synchronisation';

@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['originx',['OriginX',['../class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_cone_acd517fe3f2d14feb7c05d7bbca490df7.html#acd517fe3f2d14feb7c05d7bbca490df7',1,'GridFramework::Renderers::Hexagonal::Cone']]],
+  ['originy',['OriginY',['../class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_cone_a629ae523f9415dea917641ae6dd4c09c.html#a629ae523f9415dea917641ae6dd4c09c',1,'GridFramework::Renderers::Hexagonal::Cone']]]
+];

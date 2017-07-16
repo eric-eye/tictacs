@@ -1,0 +1,11 @@
+var searchData=
+[
+  ['parallels',['Parallels',['../class_grid_framework_1_1_grids_1_1_sphere_grid_a907020ac41870dd78cc30e04922742e7.html#a907020ac41870dd78cc30e04922742e7',1,'GridFramework::Grids::SphereGrid']]],
+  ['parallelsdifference',['ParallelsDifference',['../class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_lines_event_args_a4057369bd17efb5ef7fbffba237ed911.html#a4057369bd17efb5ef7fbffba237ed911',1,'GridFramework.Grids.SphereGrid.LinesEventArgs.ParallelsDifference()'],['../class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_smoothness_event_args_ab2da0b12fb16865010bf3b11d64af0bc.html#ab2da0b12fb16865010bf3b11d64af0bc',1,'GridFramework.Grids.SphereGrid.SmoothnessEventArgs.ParallelsDifference()']]],
+  ['pointedsides',['PointedSides',['../class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_hex_renderer_a37dc3c514299e14c768374c9e7be271c.html#a37dc3c514299e14c768374c9e7be271c',1,'GridFramework::Renderers::Hexagonal::HexRenderer']]],
+  ['polar',['Polar',['../class_grid_framework_1_1_grids_1_1_sphere_grid_a2fe80f0e902d334a80308d352be4a546.html#a2fe80f0e902d334a80308d352be4a546',1,'GridFramework::Grids::SphereGrid']]],
+  ['polardeg',['PolarDeg',['../class_grid_framework_1_1_grids_1_1_sphere_grid_a0888535d885bc22c4d78c137f6055017.html#a0888535d885bc22c4d78c137f6055017',1,'GridFramework::Grids::SphereGrid']]],
+  ['previous',['Previous',['../class_grid_framework_1_1_grids_1_1_hex_grid_1_1_sides_event_args_a2d6559fd52fde28f147aaed9ff2e263c.html#a2d6559fd52fde28f147aaed9ff2e263c',1,'GridFramework::Grids::HexGrid::SidesEventArgs']]],
+  ['priority',['Priority',['../class_grid_framework_1_1_renderers_1_1_grid_renderer_a8e17398eb695237ca827840c511117bb.html#a8e17398eb695237ca827840c511117bb',1,'GridFramework::Renderers::GridRenderer']]],
+  ['pseudoinverse',['PseudoInverse',['../struct_grid_framework_1_1_matrices_1_1_matrix3x4_a83f82b754d6278cfd3eb25e3635358c8.html#a83f82b754d6278cfd3eb25e3635358c8',1,'GridFramework::Matrices::Matrix3x4']]]
+];

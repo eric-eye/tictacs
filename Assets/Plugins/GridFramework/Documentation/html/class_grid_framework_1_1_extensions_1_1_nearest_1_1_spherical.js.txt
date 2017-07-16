@@ -1,0 +1,6 @@
+var class_grid_framework_1_1_extensions_1_1_nearest_1_1_spherical =
+[
+    [ "NearestCell", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_spherical_a5712c95d956401a9b4d282df9d202487.html#a5712c95d956401a9b4d282df9d202487", null ],
+    [ "NearestVertex", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_spherical_af2847a9efa5d7e77039a73aacf778ba8.html#af2847a9efa5d7e77039a73aacf778ba8", null ],
+    [ "Units", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_spherical.html#ae091d008ee30d8cf1d52e775148b198a", null ]
+];

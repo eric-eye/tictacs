@@ -1,0 +1,5 @@
+var class_grid_framework_1_1_grids_1_1_polar_grid_1_1_sectors_event_args =
+[
+    [ "SectorsEventArgs", "class_grid_framework_1_1_grids_1_1_polar_grid_1_1_sectors_event_args_a5ba5b9a52ad81523f3996726df4a5b11.html#a5ba5b9a52ad81523f3996726df4a5b11", null ],
+    [ "Difference", "class_grid_framework_1_1_grids_1_1_polar_grid_1_1_sectors_event_args_a3e27bb087d488df6c859188e429a5fde.html#a3e27bb087d488df6c859188e429a5fde", null ]
+];

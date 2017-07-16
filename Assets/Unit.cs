@@ -1,0 +1,283 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using GridFramework.Grids;
+using GridFramework.Renderers.Rectangular;
+using GridFramework.Extensions.Align;
+using UnityEngine;
+
+public class Unit: MonoBehaviour {
+
+  public GameObject[] actions;
+  public GameObject[] stances;
+
+  private bool _isMoving;
+  private bool _isMovingUp;
+  private bool _isMovingDown;
+  private float _moveSpeed = 5f;
+  private Vector3 _goal;
+  private RectGrid _grid;
+  private Parallelepiped _renderer;
+  public int xPos;
+  public int zPos;
+  public int yPos;
+  private bool resetPath = false;
+  private List<int[]> _path = new List<int[]>();
+  public static Unit current;
+  public GameObject hitsPrefab;
+  public static Unit hovered;
+
+  public int maxHp = 30;
+  public int currentHp = 30;
+
+  public int maxTp = 100;
+  public int currentTp = 0;
+
+  public int maxMp;
+  public int currentMp;
+
+  public string defense = "Free";
+  public IStance stance;
+
+  public bool hasActed = false;
+  public bool hasMoved = false;
+
+  public float attackModifier = 1;
+  public float physicalResistModifier = 1;
+
+  public List<GameObject> buffs = new List<GameObject>();
+
+	// Use this for initialization
+	void Start () {
+    _grid = GameObject.Find("Grid").GetComponent<RectGrid>();
+    _renderer = _grid.gameObject.GetComponent<Parallelepiped>();
+
+    Vector3 position = transform.position;
+
+    yPos = VoxelController.elevationMatrix[xPos][zPos];
+
+    position.x = xPos + .5f;
+    position.z = zPos + .5f;
+    position.y = yPos + 1.5f;
+
+    transform.position = position;
+
+    transform.Find("Marker").GetComponent<Renderer>().material.color = Color.white;
+	}
+
+  bool IsMovingAnywhere(){
+    return(_isMoving || _isMovingDown || _isMovingUp);
+  }
+
+  public void ReceiveBuff(GameObject buff){
+    buffs.Add(buff);
+    buff.GetComponent<IBuff>().Up(this);
+  }
+
+  public void AdvanceBuffs(){
+    List<GameObject> buffsToRemove = new List<GameObject>();
+    foreach(GameObject buffObject in buffs){
+      IBuff buff = buffObject.GetComponent<IBuff>();
+      if(buff.TurnsLeft() < 1){
+        buff.Down();
+        buffsToRemove.Add(buffObject);
+      }else{
+        buff.DeductTurn();
+      }
+    }
+
+    foreach(GameObject buffObject in buffsToRemove){
+      buffs.Remove(buffObject);
+      Destroy(buffObject);
+    }
+  }
+
+  void FixedUpdate() {
+    if (IsMovingAnywhere()) {
+      Move();
+    } else {
+      PickNext();
+    }
+  }
+
+  public void SetColor(Color color){
+    transform.Find("Body").GetComponent<Renderer>().material.color = color;
+  }
+
+  public int TpDiff(){
+    return(maxTp - currentTp);
+  }
+
+  void OnMouseEnter() {
+    GameController.ShowProfile(this);
+    hovered = this;
+    SetHighlight();
+  }
+
+  void OnMouseExit() {
+    GameController.HideProfile();
+    hovered = null;
+    UnsetHighlight();
+  }
+
+  void SetHighlight(){
+    gameObject.transform.Find("Body").GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red * 100);
+    gameObject.transform.Find("Body").GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+  }
+
+  void UnsetHighlight(){
+    gameObject.transform.Find("Body").GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.black);
+    gameObject.transform.Find("Body").GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+  }
+
+  private void Die(){
+    GameController.units.Remove(this);
+    Destroy(gameObject);
+  }
+
+  public int MoveLength(){
+    return(stance.NegotiateMoveLength(10));
+  }
+
+  public void ReceiveDamage(int damage){
+    currentHp = currentHp - damage;
+    GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
+    damage = stance.NegotiateDamage(damage);
+    hitsObject.GetComponent<Hits>().damage = damage;
+    if(currentHp < 1){
+      Die();
+    }
+  }
+
+  public static void SetCurrent(Unit unit){
+    if(Unit.current) Unit.current.UnsetMarker();
+    Unit.current = unit;
+    unit.SetMarker();
+    unit.currentMp += 2;
+    if(unit.currentMp > unit.maxMp){
+      unit.currentMp = unit.maxMp;
+    }
+  }
+
+  public void SetMarker(){
+    transform.Find("Marker").GetComponent<MeshRenderer>().enabled = true;
+  }
+
+  public void UnsetMarker(){
+    transform.Find("Marker").GetComponent<MeshRenderer>().enabled = false;
+  }
+
+  public void SetPath(List<int[]> path){
+    _path = path;
+    GameController.FreezeInputs();
+    currentTp -= 25;
+    hasMoved = true;
+    Menu.Hide();
+    Menu.Show();
+  }
+
+  public void DoAction(Cursor cursor, IAction action){
+    currentTp -= action.TpCost();
+    currentMp -= action.MpCost();
+
+    action.DoAction(cursor);
+    hasActed = true;
+  }
+
+  public bool DoneWithTurn(){
+    return(hasActed && hasMoved);
+  }
+
+  public void ReadyNextTurn(){
+    hasActed = false;
+    hasMoved = false;
+  }
+
+  private void Move() {
+    var t = _moveSpeed * Time.deltaTime;
+    var position = transform.position;
+
+    if(_isMovingUp){
+      position.y = Mathf.MoveTowards(transform.position.y, _goal.y, t);
+
+      transform.position = position;
+
+      var deltaY = Mathf.Abs(transform.position.y - _goal.y);
+      if( deltaY < 0.01f) {
+        _isMovingUp = false;
+      }
+    }else if(_isMoving){
+      position.x = Mathf.MoveTowards(transform.position.x, _goal.x, t);
+      position.z = Mathf.MoveTowards(transform.position.z, _goal.z, t);
+
+      transform.position = position;
+
+      // Check if we reached the destination (use a certain tolerance so
+      // we don't miss the point becase of rounding errors)
+      var deltaX = Mathf.Abs(transform.position.x - _goal.x);
+      var deltaZ = Mathf.Abs(transform.position.z - _goal.z);
+      if( deltaX < 0.01f && deltaZ < 0.01f) {
+        _isMoving = false;
+      }
+    }else if(_isMovingDown){
+      position.y = Mathf.MoveTowards(transform.position.y, _goal.y, t);
+
+      transform.position = position;
+
+      var deltaY = Mathf.Abs(transform.position.y - _goal.y);
+      if( deltaY < 0.01f) {
+        _isMovingDown = false;
+      }
+    }
+
+    if(!_isMoving && !_isMovingUp && !_isMovingDown && resetPath){
+      CursorController.UnsetMovement();
+      CursorController.ResetPath();
+      resetPath = false;
+      GameController.Next();
+      GameController.UnfreezeInputs();
+    }
+  }
+
+  private void PickNext() {
+    if(_path.Count > 0){
+      Vector3 direction;  // Direction to move in (grid-coordinates)
+
+      int[] nextStep = _path[0];
+      _path.RemoveAt(0);
+      if(_path.Count == 0) resetPath = true;
+
+      CursorController.cursorMatrix[xPos][zPos].standingUnit = null;
+
+      int newY = nextStep[3] - yPos;
+      yPos = yPos + newY;
+
+      if (nextStep[0] > xPos) {
+        direction = new Vector3(1, newY, 0);
+        xPos++;
+      } else if (nextStep[0] < xPos) {
+        direction = new Vector3(-1, newY, 0);
+        xPos--;
+      } else if (nextStep[1] > zPos) {
+        direction = new Vector3(0, newY, 1);
+        zPos++;
+      } else if (nextStep[1] < zPos) {
+        direction = new Vector3(0, newY, -1);
+        zPos--;
+      } else {
+        return;
+      }
+
+      CursorController.cursorMatrix[xPos][zPos].standingUnit = this;
+
+
+      _goal = _grid.WorldToGrid(transform.position) + direction;
+
+      _goal = _grid.GridToWorld(_goal);
+      _isMoving = true;
+
+
+      if(newY > 0) _isMovingUp = true;
+      if(newY < 0) _isMovingDown = true;
+    }
+  }
+}
