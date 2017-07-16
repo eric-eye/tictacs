@@ -1,0 +1,6 @@
+var class_grid_framework_1_1_extensions_1_1_nearest_1_1_polar =
+[
+    [ "NearestCell", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_polar_a43aed206cda428fdbba7b5f1e2975bd7.html#a43aed206cda428fdbba7b5f1e2975bd7", null ],
+    [ "NearestFace", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_polar_a7c80a77ea06e0b5ff6d142748ffb42b1.html#a7c80a77ea06e0b5ff6d142748ffb42b1", null ],
+    [ "NearestVertex", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_polar_afe5138282f7f9d32e43440db18e77f31.html#afe5138282f7f9d32e43440db18e77f31", null ]
+];

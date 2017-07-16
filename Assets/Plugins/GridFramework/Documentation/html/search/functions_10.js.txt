@@ -1,0 +1,17 @@
+var searchData=
+[
+  ['world2deg',['World2Deg',['../class_grid_framework_1_1_extensions_1_1_conversion_1_1_polar_a251143857b5b06f0973e26bca284de4d.html#a251143857b5b06f0973e26bca284de4d',1,'GridFramework::Extensions::Conversion::Polar']]],
+  ['world2rad',['World2Rad',['../class_grid_framework_1_1_extensions_1_1_conversion_1_1_polar_a03b71aaaf7c8052a230ae690a4e7fe36.html#a03b71aaaf7c8052a230ae690a4e7fe36',1,'GridFramework::Extensions::Conversion::Polar']]],
+  ['world2radius',['World2Radius',['../class_grid_framework_1_1_extensions_1_1_conversion_1_1_polar_a0cac830cb462e271e7c3199c6f96cd00.html#a0cac830cb462e271e7c3199c6f96cd00',1,'GridFramework::Extensions::Conversion::Polar']]],
+  ['world2rotation',['World2Rotation',['../class_grid_framework_1_1_extensions_1_1_conversion_1_1_polar_ae218b029a8014b52492a7f4804ca5676.html#ae218b029a8014b52492a7f4804ca5676',1,'GridFramework::Extensions::Conversion::Polar']]],
+  ['world2sector',['World2Sector',['../class_grid_framework_1_1_extensions_1_1_conversion_1_1_polar_a9ac3702349f552856b50cb5a2070d761.html#a9ac3702349f552856b50cb5a2070d761',1,'GridFramework::Extensions::Conversion::Polar']]],
+  ['worldtocubic',['WorldToCubic',['../class_grid_framework_1_1_grids_1_1_hex_grid_a7e1119d3e43568bc3d961b188f183559.html#a7e1119d3e43568bc3d961b188f183559',1,'GridFramework::Grids::HexGrid']]],
+  ['worldtogeographic',['WorldToGeographic',['../class_grid_framework_1_1_grids_1_1_sphere_grid_ad9adca14a079ccd6447cf7e17323c641.html#ad9adca14a079ccd6447cf7e17323c641',1,'GridFramework::Grids::SphereGrid']]],
+  ['worldtogrid',['WorldToGrid',['../class_grid_framework_1_1_grids_1_1_polar_grid_aaf4b233b162ef886e9818ce4e8d95b13.html#aaf4b233b162ef886e9818ce4e8d95b13',1,'GridFramework.Grids.PolarGrid.WorldToGrid()'],['../class_grid_framework_1_1_grids_1_1_rect_grid_ace6360c5ba32f24a437c02ce40bc4a7c.html#ace6360c5ba32f24a437c02ce40bc4a7c',1,'GridFramework.Grids.RectGrid.WorldToGrid()'],['../class_grid_framework_1_1_grids_1_1_sphere_grid_a61b5ac1733e5bd201a5c6aed26923a9d.html#a61b5ac1733e5bd201a5c6aed26923a9d',1,'GridFramework.Grids.SphereGrid.WorldToGrid()']]],
+  ['worldtoherringdown',['WorldToHerringDown',['../class_grid_framework_1_1_grids_1_1_hex_grid_aef0bf06c1427de9fc51f355544629bdf.html#aef0bf06c1427de9fc51f355544629bdf',1,'GridFramework::Grids::HexGrid']]],
+  ['worldtoherringup',['WorldToHerringUp',['../class_grid_framework_1_1_grids_1_1_hex_grid_abf00c606a21f7f7613acf4323053c0e1.html#abf00c606a21f7f7613acf4323053c0e1',1,'GridFramework::Grids::HexGrid']]],
+  ['worldtopolar',['WorldToPolar',['../class_grid_framework_1_1_grids_1_1_polar_grid_aa0185363ddf504b5cb6e7d4618d998a6.html#aa0185363ddf504b5cb6e7d4618d998a6',1,'GridFramework::Grids::PolarGrid']]],
+  ['worldtorhombicdown',['WorldToRhombicDown',['../class_grid_framework_1_1_grids_1_1_hex_grid_ad5779193592a04e4fc6bf771d0385076.html#ad5779193592a04e4fc6bf771d0385076',1,'GridFramework::Grids::HexGrid']]],
+  ['worldtorhombicup',['WorldToRhombicUp',['../class_grid_framework_1_1_grids_1_1_hex_grid_ad3ec790cf7467f67f8508aa8ca04b43e.html#ad3ec790cf7467f67f8508aa8ca04b43e',1,'GridFramework::Grids::HexGrid']]],
+  ['worldtospheric',['WorldToSpheric',['../class_grid_framework_1_1_grids_1_1_sphere_grid_a2ad86512c11d414814f23e665a2b34ac.html#a2ad86512c11d414814f23e665a2b34ac',1,'GridFramework::Grids::SphereGrid']]]
+];

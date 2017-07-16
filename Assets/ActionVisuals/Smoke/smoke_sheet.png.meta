@@ -1,0 +1,391 @@
+fileFormatVersion: 2
+guid: 3ac0d93b08aa04bd59d0e44f9c4c426a
+timeCreated: 1507510935
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: windmagic fogflow 0000
+    21300002: windmagic fogflow 0001
+    21300004: windmagic fogflow 0002
+    21300006: windmagic fogflow 0003
+    21300008: windmagic fogflow 0004
+    21300010: windmagic fogflow 0005
+    21300012: windmagic fogflow 0006
+    21300014: windmagic fogflow 0007
+    21300016: windmagic fogflow 0008
+    21300018: windmagic fogflow 0009
+    21300020: windmagic fogflow 0010
+    21300022: windmagic fogflow 0011
+    21300024: windmagic fogflow 0012
+    21300026: windmagic fogflow 0013
+    21300028: windmagic fogflow 0014
+    21300030: windmagic fogflow 0015
+    21300032: windmagic fogflow 0016
+    21300034: windmagic fogflow 0017
+    21300036: windmagic fogflow 0018
+    21300038: windmagic fogflow 0019
+    21300040: windmagic fogflow 0020
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: -1
+    wrapV: -1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: windmagic fogflow 0000
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 133
+        width: 9
+        height: 9
+      alignment: 9
+      pivot: {x: 0.5555556, y: 2.4444444}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0001
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 232
+        width: 48
+        height: 23
+      alignment: 9
+      pivot: {x: 0.5416667, y: 1.0869565}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0002
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 1
+        width: 34
+        height: 34
+      alignment: 9
+      pivot: {x: 0.29411766, y: 0.7058824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0003
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 169
+        width: 21
+        height: 20
+      alignment: 9
+      pivot: {x: 0.52380955, y: 1.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0004
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 204
+        width: 23
+        height: 23
+      alignment: 9
+      pivot: {x: 0.5217391, y: 1.0434783}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0005
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 229
+        width: 25
+        height: 26
+      alignment: 9
+      pivot: {x: 0.52, y: 0.9230769}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0006
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 4
+        width: 27
+        height: 27
+      alignment: 9
+      pivot: {x: 0.5185185, y: 0.8518519}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0007
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2
+        width: 29
+        height: 29
+      alignment: 9
+      pivot: {x: 0.51724136, y: 0.79310346}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0008
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 174
+        width: 33
+        height: 31
+      alignment: 9
+      pivot: {x: 0.5151515, y: 0.7419355}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0009
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 2
+        width: 34
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5294118, y: 0.6666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0010
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 177
+        width: 36
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.62857145}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0011
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 191
+        width: 38
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5263158, y: 0.5897436}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0012
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 214
+        width: 41
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5121951, y: 0.5609756}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0013
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 89
+        width: 43
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5116279, y: 0.52380955}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0014
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 37
+        width: 45
+        height: 43
+      alignment: 9
+      pivot: {x: 0.51111114, y: 0.4883721}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0015
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 33
+        width: 48
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.4680851}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0016
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 207
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.4375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0017
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 144
+        width: 51
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5294118, y: 0.41666666}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0018
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 194
+        width: 58
+        height: 61
+      alignment: 9
+      pivot: {x: 0.55172414, y: 0.5081967}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0019
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 82
+        width: 50
+        height: 49
+      alignment: 9
+      pivot: {x: 0.48, y: 0.40816328}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: windmagic fogflow 0020
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 133
+        width: 42
+        height: 59
+      alignment: 9
+      pivot: {x: 0.3809524, y: 0.5423729}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

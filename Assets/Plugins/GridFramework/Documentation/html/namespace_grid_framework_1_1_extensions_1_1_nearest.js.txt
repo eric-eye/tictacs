@@ -1,0 +1,7 @@
+var namespace_grid_framework_1_1_extensions_1_1_nearest =
+[
+    [ "Hexgonal", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_hexgonal.html", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_hexgonal" ],
+    [ "Polar", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_polar.html", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_polar" ],
+    [ "Rectangular", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_rectangular.html", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_rectangular" ],
+    [ "Spherical", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_spherical.html", "class_grid_framework_1_1_extensions_1_1_nearest_1_1_spherical" ]
+];

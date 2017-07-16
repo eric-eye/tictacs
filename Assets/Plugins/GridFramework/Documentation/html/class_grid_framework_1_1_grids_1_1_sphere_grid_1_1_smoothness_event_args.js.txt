@@ -1,0 +1,6 @@
+var class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_smoothness_event_args =
+[
+    [ "SmoothnessEventArgs", "class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_smoothness_event_args_aba2ab2ac7c802f64b90e15307154700f.html#aba2ab2ac7c802f64b90e15307154700f", null ],
+    [ "MeridiansDifference", "class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_smoothness_event_args_a843bfb1c5ed8c0b79ed0def548fb0454.html#a843bfb1c5ed8c0b79ed0def548fb0454", null ],
+    [ "ParallelsDifference", "class_grid_framework_1_1_grids_1_1_sphere_grid_1_1_smoothness_event_args_ab2da0b12fb16865010bf3b11d64af0bc.html#ab2da0b12fb16865010bf3b11d64af0bc", null ]
+];

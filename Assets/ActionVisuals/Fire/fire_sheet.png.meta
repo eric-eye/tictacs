@@ -1,0 +1,976 @@
+fileFormatVersion: 2
+guid: 7b3fad29341804404b3f8f29c1b21f18
+timeCreated: 1507481513
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: red flamewallflame appear 0000
+    21300002: red flamewallflame appear 0001
+    21300004: red flamewallflame appear 0002
+    21300006: red flamewallflame appear 0003
+    21300008: red flamewallflame appear 0004
+    21300010: red flamewallflame appear 0005
+    21300012: red flamewallflame appear 0006
+    21300014: red flamewallflame appear 0007
+    21300016: red flamewallflame appear 0008
+    21300018: red flamewallflame appear 0009
+    21300020: red flamewallflame appear 0010
+    21300022: red flamewallflame appear 0011
+    21300024: red flamewallflame appear 0012
+    21300026: red flamewallflame appear 0013
+    21300028: red flamewallflame appear 0014
+    21300030: red flamewallflame appear 0015
+    21300032: red flamewallflame appear 0016
+    21300034: red flamewallflame appear 0017
+    21300036: red flamewallflame appear 0018
+    21300038: red flamewallflame appear 0019
+    21300040: red flamewallflame burn 0000
+    21300042: red flamewallflame burn 0001
+    21300044: red flamewallflame burn 0002
+    21300046: red flamewallflame burn 0003
+    21300048: red flamewallflame burn 0004
+    21300050: red flamewallflame burn 0005
+    21300052: red flamewallflame burn 0006
+    21300054: red flamewallflame burn 0007
+    21300056: red flamewallflame burn 0008
+    21300058: red flamewallflame burn 0009
+    21300060: red flamewallflame burn 0010
+    21300062: red flamewallflame burn 0011
+    21300064: red flamewallflame burn 0012
+    21300066: red flamewallflame burn 0013
+    21300068: red flamewallflame burn 0014
+    21300070: red flamewallflame burn 0015
+    21300072: red flamewallflame burn 0016
+    21300074: red flamewallflame burn 0017
+    21300076: red flamewallflame burn 0018
+    21300078: red flamewallflame burn 0019
+    21300080: red flamewallflame disappear 0000
+    21300082: red flamewallflame disappear 0001
+    21300084: red flamewallflame disappear 0002
+    21300086: red flamewallflame disappear 0003
+    21300088: red flamewallflame disappear 0004
+    21300090: red flamewallflame disappear 0005
+    21300092: red flamewallflame disappear 0006
+    21300094: red flamewallflame disappear 0007
+    21300096: red flamewallflame disappear 0008
+    21300098: red flamewallflame disappear 0009
+    21300100: red flamewallflame disappear 0010
+    21300102: red flamewallflame disappear 0011
+    21300104: red flamewallflame disappear 0012
+    21300106: red flamewallflame disappear 0013
+    21300108: red flamewallflame disappear 0014
+    21300110: red flamewallflame disappear 0015
+    21300112: red flamewallflame disappear 0016
+    21300114: red flamewallflame disappear 0017
+    21300116: red flamewallflame disappear 0018
+    21300118: red flamewallflame disappear 0019
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapU: -1
+    wrapV: -1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: red flamewallflame appear 0000
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 280
+        width: 12
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: 2.3846154}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0001
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 46
+        width: 17
+        height: 18
+      alignment: 9
+      pivot: {x: 0.47058824, y: 1.7222222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0002
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 208
+        width: 20
+        height: 22
+      alignment: 9
+      pivot: {x: 0.5, y: 1.4090909}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0003
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 75
+        width: 24
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 1.1071428}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0004
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 97
+        width: 30
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5, y: 0.93939394}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0005
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 112
+        width: 33
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5151515, y: 0.81578946}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0006
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 215
+        width: 34
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5, y: 0.775}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0007
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 132
+        width: 33
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5151515, y: 0.7380952}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0008
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 109
+        width: 33
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5151515, y: 0.6888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0009
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 461
+        width: 42
+        height: 50
+      alignment: 9
+      pivot: {x: 0.5, y: 0.64}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0010
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 152
+        width: 33
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.60784316}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0011
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 77
+        width: 33
+        height: 53
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.5849057}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0012
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 156
+        width: 33
+        height: 57
+      alignment: 9
+      pivot: {x: 0.5151515, y: 0.54385966}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0013
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 134
+        width: 33
+        height: 58
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.5344828}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0014
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 257
+        width: 35
+        height: 60
+      alignment: 9
+      pivot: {x: 0.51428574, y: 0.51666665}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0015
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 448
+        width: 42
+        height: 63
+      alignment: 9
+      pivot: {x: 0.47619048, y: 0.4920635}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0016
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 447
+        width: 44
+        height: 64
+      alignment: 9
+      pivot: {x: 0.52272725, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0017
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 448
+        width: 46
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5217391, y: 0.50793654}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0018
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 132
+        width: 33
+        height: 58
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.55172414}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame appear 0019
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 319
+        width: 40
+        height: 62
+      alignment: 9
+      pivot: {x: 0.425, y: 0.516129}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0000
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 448
+        width: 42
+        height: 63
+      alignment: 9
+      pivot: {x: 0.45238096, y: 0.50793654}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0001
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 192
+        width: 34
+        height: 60
+      alignment: 9
+      pivot: {x: 0.5, y: 0.51666665}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0002
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 205
+        width: 34
+        height: 60
+      alignment: 9
+      pivot: {x: 0.5, y: 0.51666665}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0003
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 164
+        width: 33
+        height: 59
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.5254237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0004
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 245
+        width: 33
+        height: 60
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.51666665}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0005
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 395
+        width: 41
+        height: 64
+      alignment: 9
+      pivot: {x: 0.58536583, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0006
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 318
+        width: 38
+        height: 62
+      alignment: 9
+      pivot: {x: 0.5263158, y: 0.516129}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0007
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 257
+        width: 37
+        height: 62
+      alignment: 9
+      pivot: {x: 0.4864865, y: 0.516129}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0008
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 185
+        width: 34
+        height: 58
+      alignment: 9
+      pivot: {x: 0.47058824, y: 0.5344828}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0009
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 382
+        width: 41
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5121951, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0010
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 16
+        width: 32
+        height: 59
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5254237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0011
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 254
+        width: 37
+        height: 62
+      alignment: 9
+      pivot: {x: 0.5675676, y: 0.516129}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0012
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 77
+        width: 33
+        height: 55
+      alignment: 9
+      pivot: {x: 0.5151515, y: 0.56363636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0013
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 127
+        width: 34
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5294118, y: 0.5535714}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0014
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 318
+        width: 38
+        height: 62
+      alignment: 9
+      pivot: {x: 0.55263156, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0015
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 383
+        width: 39
+        height: 62
+      alignment: 9
+      pivot: {x: 0.53846157, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0016
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 225
+        width: 34
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.50793654}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0017
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 383
+        width: 41
+        height: 63
+      alignment: 9
+      pivot: {x: 0.4878049, y: 0.50793654}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0018
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 105
+        width: 33
+        height: 57
+      alignment: 9
+      pivot: {x: 0.5151515, y: 0.54385966}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame burn 0019
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 331
+        width: 41
+        height: 62
+      alignment: 9
+      pivot: {x: 0.41463414, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0000
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 194
+        width: 34
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5081967}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0001
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 267
+        width: 40
+        height: 62
+      alignment: 9
+      pivot: {x: 0.575, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0002
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 321
+        width: 39
+        height: 60
+      alignment: 9
+      pivot: {x: 0.43589744, y: 0.51666665}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0003
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 382
+        width: 42
+        height: 64
+      alignment: 9
+      pivot: {x: 0.52380955, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0004
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 307
+        width: 30
+        height: 51
+      alignment: 9
+      pivot: {x: 0.5, y: 0.60784316}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0005
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 466
+        width: 28
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0006
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 420
+        width: 28
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6818182}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0007
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 360
+        width: 27
+        height: 42
+      alignment: 9
+      pivot: {x: 0.4814815, y: 0.71428573}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0008
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 66
+        width: 24
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.73170733}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0009
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 41
+        width: 22
+        height: 34
+      alignment: 9
+      pivot: {x: 0.5, y: 0.88235295}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0010
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 232
+        width: 20
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5, y: 0.90909094}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0011
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 176
+        width: 19
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5263158, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0012
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 11
+        width: 18
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 1.0714285}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0013
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 180
+        width: 16
+        height: 23
+      alignment: 9
+      pivot: {x: 0.5, y: 1.3043479}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0014
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 295
+        width: 15
+        height: 22
+      alignment: 9
+      pivot: {x: 0.53333336, y: 1.3636364}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0015
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 290
+        width: 35
+        height: 26
+      alignment: 9
+      pivot: {x: 0.62857145, y: 1.1923077}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0016
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 85
+        width: 25
+        height: 25
+      alignment: 9
+      pivot: {x: 0.76, y: 1.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0017
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 17
+        width: 22
+        height: 22
+      alignment: 9
+      pivot: {x: 0.77272725, y: 1.3181819}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0018
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 404
+        width: 28
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 2.0714285}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: red flamewallflame disappear 0019
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 371
+        width: 8
+        height: 9
+      alignment: 9
+      pivot: {x: 0.5, y: 3.2222223}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

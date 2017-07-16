@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['oddcolumnshift',['OddColumnShift',['../class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_herringbone_a17d12fb1152007b2e8b622e7b1e0a30e.html#a17d12fb1152007b2e8b622e7b1e0a30e',1,'GridFramework.Renderers.Hexagonal.Herringbone.OddColumnShift()'],['../class_grid_framework_1_1_renderers_1_1_hexagonal_1_1_rectangle_aad5ae732b0701476d5410f5eb8f779d8.html#aad5ae732b0701476d5410f5eb8f779d8',1,'GridFramework.Renderers.Hexagonal.Rectangle.OddColumnShift()']]],
+  ['orientation',['Orientation',['../class_grid_framework_1_1_grids_1_1_hex_grid_a65e4c6aee7f87084ad5a97192446bcb7.html#a65e4c6aee7f87084ad5a97192446bcb7',1,'GridFramework::Grids::HexGrid']]]
+];
