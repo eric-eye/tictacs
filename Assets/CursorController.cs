@@ -38,7 +38,7 @@ public class CursorController : MonoBehaviour {
         cursor.originalColor = Color.gray;
         cursor.xPos = x;
         cursor.zPos = z;
-        cursor.yPos = VoxelController.elevationMatrix[x][z];
+        cursor.yPos = VoxelController.GetElevation(x, z);
         cursorMatrix[x].Add(cursor);
       }
     }
@@ -177,7 +177,7 @@ public class CursorController : MonoBehaviour {
   private static List<int[]> DeriveShortestPath(Cursor destination, int originX, int originZ) {
     List<int[]> queue = new List<int[]>();
     List<int[]> shortestPath = new List<int[]>();
-    queue.Add(new int[] { destination.xPos, destination.zPos, 0, VoxelController.elevationMatrix[destination.xPos][destination.zPos] });
+    queue.Add(new int[] { destination.xPos, destination.zPos, 0, VoxelController.GetElevation(destination.xPos, destination.zPos) });
     for(int i = 0; i < queue.Count; i++){
       int[] entry = queue[i];
       int counter = entry[2] + 1;
@@ -188,8 +188,8 @@ public class CursorController : MonoBehaviour {
 
       foreach(Cursor cursor in neighbors){
         if(!cursor.standingUnit || cursor.standingUnit == Unit.current){
-          int elevation = VoxelController.elevationMatrix[cursor.xPos][cursor.zPos];
-          if(Mathf.Abs(elevation - VoxelController.elevationMatrix[entry[0]][entry[1]]) < 2){
+          int elevation = VoxelController.GetElevation(cursor.xPos, cursor.zPos);
+          if(Mathf.Abs(elevation - VoxelController.GetElevation(entry[0], entry[1])) < 2){
               newCells.Add(new int[] { cursor.xPos, cursor.zPos, counter, elevation });
           }
         }
@@ -276,8 +276,8 @@ public class CursorController : MonoBehaviour {
 
       foreach(Cursor cursor in neighbors){
         if(allowOthers || !cursor.standingUnit || cursor.standingUnit == Unit.current){
-          int elevation = VoxelController.elevationMatrix[cursor.xPos][cursor.zPos];
-          if(Mathf.Abs(elevation - VoxelController.elevationMatrix[entry[0]][entry[1]]) < 2){
+          int elevation = VoxelController.GetElevation(cursor.xPos, cursor.zPos);
+          if(Mathf.Abs(elevation - VoxelController.GetElevation(entry[0], entry[1])) < 2){
             newCells.Add(new int[] { cursor.xPos, cursor.zPos, counter, elevation });
           }
         }

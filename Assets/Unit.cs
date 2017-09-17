@@ -53,7 +53,7 @@ public class Unit: MonoBehaviour {
 
     Vector3 position = transform.position;
 
-    yPos = VoxelController.elevationMatrix[xPos][zPos];
+    yPos = VoxelController.GetElevation(xPos, zPos);
 
     position.x = xPos + .5f;
     position.z = zPos + .5f;

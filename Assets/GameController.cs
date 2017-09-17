@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class GameController : MonoBehaviour {
+public class GameController : NetworkBehaviour {
   public GameObject unitPrefab;
   public GameObject playerPrefab;
+  public GameObject voxelControllerPrefab;
 
   public static List<Unit> units = new List<Unit>();
   public static List<Player> players = new List<Player>();
@@ -14,30 +16,53 @@ public class GameController : MonoBehaviour {
   public enum State { PickAction, PickTarget };
   public static State state = State.PickAction;
   public static IAction selectedAction;
+  public static GameController instance;
 
-	// Use this for initialization
-	void Start () {
-    GameObject playerObject;
+  void Start(){
+    instance = this;
 
-    playerObject = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-    players.Add(playerObject.GetComponent<Player>());
+    if(NetworkServer.active) {
+      BeginHosting();
+    }
+  }
 
-    playerObject = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-    players.Add(playerObject.GetComponent<Player>());
+  public static void BeginHosting(){
+    //order of operations
+    //VoxelController
+    //CursorController
+    //Cursor
+    //Menu
+    //Gamecontroller
+    //
+    //GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
+    //NetworkServer.Spawn(voxelPrefab);
+    instance.CmdStrap();
 
-    units.Add(AddUnit(0, 0, Color.magenta));
-    //units.Add(AddUnit(2, 2, Color.cyan));
-    //units.Add(AddUnit(6, 6, Color.yellow));
+    if(false){
+      GameObject playerObject;
 
-    units.Add(AddUnit(1, 3, Color.blue));
-    //units.Add(AddUnit(5, 7, Color.white));
-    //units.Add(AddUnit(9, 9, Color.green));
+      //playerObject = Instantiate(instance.playerPrefab, Vector3.zero, Quaternion.identity);
+      //players.Add(playerObject.GetComponent<Player>());
 
-    Unit.SetCurrent(AdvanceTpAndSelectUnit());
-    CursorController.ShowMoveCells();
+      //playerObject = Instantiate(instance.playerPrefab, Vector3.zero, Quaternion.identity);
+      //players.Add(playerObject.GetComponent<Player>());
 
-    Menu.Show();
-	}
+      units.Add(instance.AddUnit(0, 0, Color.magenta));
+
+      units.Add(instance.AddUnit(1, 3, Color.blue));
+
+      Unit.SetCurrent(AdvanceTpAndSelectUnit());
+      CursorController.ShowMoveCells();
+
+      Menu.Show();
+    }
+  }
+
+  [Command]
+  void CmdStrap(){
+    GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(voxelPrefab);
+  }
 
   void Update () {
     if(InputController.InputConfirm()){
