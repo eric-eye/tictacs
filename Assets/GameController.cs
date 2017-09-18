@@ -7,8 +7,9 @@ public class GameController : NetworkBehaviour {
   public GameObject unitPrefab;
   public GameObject playerPrefab;
   public GameObject voxelControllerPrefab;
+  public GameObject cursorControllerPrefab;
 
-  public static List<Unit> units = new List<Unit>();
+  private List<Unit> units = new List<Unit>();
   public static List<Player> players = new List<Player>();
 
   public static int unitIndex = 0;
@@ -18,12 +19,18 @@ public class GameController : NetworkBehaviour {
   public static IAction selectedAction;
   public static GameController instance;
 
+  private bool initialized = false;
+
   void Start(){
     instance = this;
 
     if(NetworkServer.active) {
       BeginHosting();
     }
+  }
+
+  public static void RemoveUnit(Unit unit) {
+    instance.units.Remove(unit);
   }
 
   public static void BeginHosting(){
@@ -37,34 +44,41 @@ public class GameController : NetworkBehaviour {
     //GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
     //NetworkServer.Spawn(voxelPrefab);
     instance.CmdStrap();
+  }
 
-    if(false){
-      GameObject playerObject;
+  private void StrapDownstream(){
+    CmdAddUnits();
 
-      //playerObject = Instantiate(instance.playerPrefab, Vector3.zero, Quaternion.identity);
-      //players.Add(playerObject.GetComponent<Player>());
+    //if(false){
+      //Unit.SetCurrent(AdvanceTpAndSelectUnit());
+      //CursorController.ShowMoveCells();
 
-      //playerObject = Instantiate(instance.playerPrefab, Vector3.zero, Quaternion.identity);
-      //players.Add(playerObject.GetComponent<Player>());
+      //Menu.Show();
+    //}
 
-      units.Add(instance.AddUnit(0, 0, Color.magenta));
-
-      units.Add(instance.AddUnit(1, 3, Color.blue));
-
-      Unit.SetCurrent(AdvanceTpAndSelectUnit());
-      CursorController.ShowMoveCells();
-
-      Menu.Show();
-    }
+    initialized = true;
   }
 
   [Command]
   void CmdStrap(){
     GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
     NetworkServer.Spawn(voxelPrefab);
+
+    GameObject cursorPrefab = Instantiate(instance.cursorControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(cursorPrefab);
+  }
+
+  [Command]
+  void CmdAddUnits(){
+    instance.units.Add(instance.AddUnit(0, 0, Color.magenta));
+    instance.units.Add(instance.AddUnit(1, 3, Color.blue));
   }
 
   void Update () {
+    if(NetworkServer.active && !initialized){
+      StrapDownstream();
+    }
+
     if(InputController.InputConfirm()){
       CursorController.Confirm();
     }
@@ -76,11 +90,14 @@ public class GameController : NetworkBehaviour {
 
   private Unit AddUnit(int xPos, int zPos, Color color){
     GameObject unitObject = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
+
+    NetworkServer.Spawn(unitObject);
+
     unitObject.transform.parent = GameObject.Find("Units").transform;
     Unit unit = unitObject.GetComponent<Unit>();
     unit.xPos = xPos;
     unit.zPos = zPos;
-    unit.SetColor(color);
+    unit.CmdSetColor(color);
     unit.currentTp = Random.Range(50, 100);
     unit.stance = unit.stances[0].GetComponent<IStance>();
     CursorController.cursorMatrix[xPos][zPos].standingUnit = unit;
@@ -121,12 +138,12 @@ public class GameController : NetworkBehaviour {
   }
 
   public static Unit AdvanceTpAndSelectUnit(){
-    units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
-    int difference = units[0].TpDiff();
-    foreach(Unit unit in units){
+    instance.units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
+    int difference = instance.units[0].TpDiff();
+    foreach(Unit unit in instance.units){
       unit.currentTp = unit.currentTp + difference;
     }
-    return(units[0]);
+    return(instance.units[0]);
   }
 
   public static void Next() {

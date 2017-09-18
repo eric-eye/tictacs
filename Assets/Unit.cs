@@ -4,8 +4,9 @@ using GridFramework.Grids;
 using GridFramework.Renderers.Rectangular;
 using GridFramework.Extensions.Align;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Unit: MonoBehaviour {
+public class Unit: NetworkBehaviour {
 
   public GameObject[] actions;
   public GameObject[] stances;
@@ -17,11 +18,20 @@ public class Unit: MonoBehaviour {
   private Vector3 _goal;
   private RectGrid _grid;
   private Parallelepiped _renderer;
+
+  [SyncVar]
   public int xPos;
+
+  [SyncVar]
   public int zPos;
+
   public int yPos;
   private bool resetPath = false;
   private List<int[]> _path = new List<int[]>();
+
+  [SyncVar]
+  private Color _color;
+
   public static Unit current;
   public GameObject hitsPrefab;
   public static Unit hovered;
@@ -62,6 +72,8 @@ public class Unit: MonoBehaviour {
     transform.position = position;
 
     transform.Find("Marker").GetComponent<Renderer>().material.color = Color.white;
+
+    transform.Find("Body").GetComponent<Renderer>().material.color = _color;
 	}
 
   bool IsMovingAnywhere(){
@@ -99,8 +111,9 @@ public class Unit: MonoBehaviour {
     }
   }
 
-  public void SetColor(Color color){
-    transform.Find("Body").GetComponent<Renderer>().material.color = color;
+  [Command]
+  public void CmdSetColor(Color color){
+    _color = color;
   }
 
   public int TpDiff(){
@@ -130,7 +143,7 @@ public class Unit: MonoBehaviour {
   }
 
   private void Die(){
-    GameController.units.Remove(this);
+    GameController.RemoveUnit(this);
     Destroy(gameObject);
   }
 
