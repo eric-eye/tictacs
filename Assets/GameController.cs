@@ -70,21 +70,6 @@ public class GameController : NetworkBehaviour {
     //instance.units.Remove(unit);
   }
 
-  //public static void BeginHosting(){
-    //order of operations
-    //VoxelController
-    //CursorController
-    //Cursor
-    //Menu
-    //Gamecontroller
-    //
-    //GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
-    //NetworkServer.Spawn(voxelPrefab);
-  //}
-
-  private void StrapDownstream(){
-  }
-
   void SetCurrentUnit(){
     List<Unit> units = instance.Units();
     units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
@@ -154,15 +139,6 @@ public class GameController : NetworkBehaviour {
     Menu.Show();
   }
 
-  //public static Unit AdvanceTpAndSelectUnit(){
-    //instance.units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
-    //int difference = instance.units[0].TpDiff();
-    //foreach(Unit unit in instance.units){
-      //unit.CmdAddTp(difference);
-    //}
-    //return(instance.units[0]);
-  //}
-
   [Command]
   public void CmdAdvanceTp(){
     List<Unit> units = instance.Units();
@@ -174,16 +150,16 @@ public class GameController : NetworkBehaviour {
   }
 
   public static void Next() {
-    //SetState(State.PickAction);
+    SetState(State.PickAction);
 
-    //if(Unit.current.DoneWithTurn()){
-      //Unit.current.ReadyNextTurn();
-      //CursorController.moveEnabled = true;
-      //Unit.SetCurrent(AdvanceTpAndSelectUnit());
-      //Unit.current.AdvanceBuffs();
-      //CursorController.ShowMoveCells();
-      //Menu.Show();
-    //}
+    if(Unit.current.DoneWithTurn()){
+      Unit.current.ReadyNextTurn();
+      CursorController.moveEnabled = true;
+      Unit.SetCurrent(AdvanceTpAndSelectUnit());
+      Unit.current.AdvanceBuffs();
+      CursorController.ShowMoveCells();
+      Menu.Show();
+    }
   }
 
   public static void FreezeInputs() {

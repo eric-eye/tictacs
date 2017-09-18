@@ -163,7 +163,8 @@ public class Unit: NetworkBehaviour {
   public void ReceiveDamage(int damage){
     currentHp = currentHp - damage;
     GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
-    damage = stance.NegotiateDamage(damage);
+    //damage = stance.NegotiateDamage(damage);
+    damage = 15;
     hitsObject.GetComponent<Hits>().damage = damage;
     if(currentHp < 1){
       Die();
