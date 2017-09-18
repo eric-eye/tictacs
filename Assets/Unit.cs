@@ -156,7 +156,8 @@ public class Unit: NetworkBehaviour {
   }
 
   public int MoveLength(){
-    return(stance.NegotiateMoveLength(10));
+    return(10);
+    //return(stance.NegotiateMoveLength(10));
   }
 
   public void ReceiveDamage(int damage){

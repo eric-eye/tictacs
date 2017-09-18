@@ -41,6 +41,8 @@ public class GameController : NetworkBehaviour {
     if(!unitsCreated){
       if(Units().Count > 0){
         SetCurrentUnit();
+        CursorController.ShowMoveCells();
+        Menu.Show();
         unitsCreated = true;
       }
     }
@@ -81,13 +83,6 @@ public class GameController : NetworkBehaviour {
   //}
 
   private void StrapDownstream(){
-    //Unit.SetCurrent(AdvanceTpAndSelectUnit());
-
-    //if(false){
-      //CursorController.ShowMoveCells();
-
-      //Menu.Show();
-    //}
   }
 
   void SetCurrentUnit(){
@@ -116,13 +111,12 @@ public class GameController : NetworkBehaviour {
 
     NetworkServer.Spawn(unitObject);
 
-    //unitObject.transform.parent = GameObject.Find("Units").transform;
     Unit unit = unitObject.GetComponent<Unit>();
     unit.xPos = xPos;
     unit.zPos = zPos;
     unit.CmdSetColor(color);
     unit.currentTp = Random.Range(50, 100);
-    unit.stance = unit.stances[0].GetComponent<IStance>();
+    //unit.stance = unit.stances[0].GetComponent<IStance>();
     CursorController.cursorMatrix[xPos][zPos].standingUnit = unit;
     return unit;
   }
