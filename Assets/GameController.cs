@@ -149,16 +149,30 @@ public class GameController : NetworkBehaviour {
     }
   }
 
+  [Command]
+  public void CmdAdvanceTpToNext(){
+    CmdAdvanceTp();
+    RpcDoNext();
+  }
+
+  [ClientRpc]
+  public void RpcDoNext(){
+    print("rpc do next");
+    SetCurrentUnit();
+    Unit.current.AdvanceBuffs();
+    CursorController.ShowMoveCells();
+    Menu.Show();
+  }
+
   public static void Next() {
     SetState(State.PickAction);
 
     if(Unit.current.DoneWithTurn()){
+      print("Next time lads!");
+
       Unit.current.ReadyNextTurn();
       CursorController.moveEnabled = true;
-      Unit.SetCurrent(AdvanceTpAndSelectUnit());
-      Unit.current.AdvanceBuffs();
-      CursorController.ShowMoveCells();
-      Menu.Show();
+      if(NetworkServer.active) instance.CmdAdvanceTpToNext();
     }
   }
 
