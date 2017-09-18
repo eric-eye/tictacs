@@ -40,6 +40,8 @@ public class Unit: NetworkBehaviour {
   public int currentHp = 30;
 
   public int maxTp = 100;
+
+  [SyncVar]
   public int currentTp = 0;
 
   public int maxMp;
@@ -74,6 +76,7 @@ public class Unit: NetworkBehaviour {
     transform.Find("Marker").GetComponent<Renderer>().material.color = Color.white;
 
     transform.Find("Body").GetComponent<Renderer>().material.color = _color;
+    transform.parent = GameObject.Find("Units").transform;
 	}
 
   bool IsMovingAnywhere(){
@@ -109,6 +112,11 @@ public class Unit: NetworkBehaviour {
     } else {
       PickNext();
     }
+  }
+
+  [Command]
+  public void CmdAddTp(int tpToAdd){
+    currentTp += tpToAdd;
   }
 
   [Command]
@@ -162,6 +170,7 @@ public class Unit: NetworkBehaviour {
   }
 
   public static void SetCurrent(Unit unit){
+    print("setting current unit" + unit);
     if(Unit.current) Unit.current.UnsetMarker();
     Unit.current = unit;
     unit.SetMarker();

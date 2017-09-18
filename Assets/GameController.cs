@@ -20,63 +20,29 @@ public class GameController : NetworkBehaviour {
   public static GameController instance;
 
   private bool initialized = false;
+  private bool unitsCreated = false;
 
   void Start(){
     instance = this;
 
     if(NetworkServer.active) {
-      BeginHosting();
+      instance.CmdSpawnControllers();
     }
   }
 
-  public static void RemoveUnit(Unit unit) {
-    instance.units.Remove(unit);
-  }
+  void Update(){
+    if(!initialized){
+      if(NetworkServer.active) instance.CmdAddUnits();
+      if(NetworkServer.active) instance.CmdAdvanceTp();
 
-  public static void BeginHosting(){
-    //order of operations
-    //VoxelController
-    //CursorController
-    //Cursor
-    //Menu
-    //Gamecontroller
-    //
-    //GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
-    //NetworkServer.Spawn(voxelPrefab);
-    instance.CmdStrap();
-  }
+      initialized = true;
+    }
 
-  private void StrapDownstream(){
-    CmdAddUnits();
-
-    //if(false){
-      //Unit.SetCurrent(AdvanceTpAndSelectUnit());
-      //CursorController.ShowMoveCells();
-
-      //Menu.Show();
-    //}
-
-    initialized = true;
-  }
-
-  [Command]
-  void CmdStrap(){
-    GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(voxelPrefab);
-
-    GameObject cursorPrefab = Instantiate(instance.cursorControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(cursorPrefab);
-  }
-
-  [Command]
-  void CmdAddUnits(){
-    instance.units.Add(instance.AddUnit(0, 0, Color.magenta));
-    instance.units.Add(instance.AddUnit(1, 3, Color.blue));
-  }
-
-  void Update () {
-    if(NetworkServer.active && !initialized){
-      StrapDownstream();
+    if(!unitsCreated){
+      if(Units().Count > 0){
+        SetCurrentUnit();
+        unitsCreated = true;
+      }
     }
 
     if(InputController.InputConfirm()){
@@ -88,12 +54,69 @@ public class GameController : NetworkBehaviour {
     }
   }
 
+  public List<Unit> Units(){
+    List<Unit> units = new List<Unit>();
+
+    foreach(Transform child in GameObject.Find("Units").transform){
+      units.Add(child.GetComponent<Unit>());
+    }
+
+    return(units);
+  }
+
+  public static void RemoveUnit(Unit unit) {
+    //instance.units.Remove(unit);
+  }
+
+  //public static void BeginHosting(){
+    //order of operations
+    //VoxelController
+    //CursorController
+    //Cursor
+    //Menu
+    //Gamecontroller
+    //
+    //GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
+    //NetworkServer.Spawn(voxelPrefab);
+  //}
+
+  private void StrapDownstream(){
+    //Unit.SetCurrent(AdvanceTpAndSelectUnit());
+
+    //if(false){
+      //CursorController.ShowMoveCells();
+
+      //Menu.Show();
+    //}
+  }
+
+  void SetCurrentUnit(){
+    List<Unit> units = instance.Units();
+    units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
+    Unit.SetCurrent(units[0]);
+  }
+
+  [Command]
+  void CmdSpawnControllers(){
+    GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(voxelPrefab);
+
+    GameObject cursorPrefab = Instantiate(instance.cursorControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(cursorPrefab);
+  }
+
+  [Command]
+  void CmdAddUnits(){
+    units.Add(instance.AddUnit(0, 0, Color.magenta));
+    units.Add(instance.AddUnit(1, 3, Color.blue));
+  }
+
   private Unit AddUnit(int xPos, int zPos, Color color){
     GameObject unitObject = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
 
     NetworkServer.Spawn(unitObject);
 
-    unitObject.transform.parent = GameObject.Find("Units").transform;
+    //unitObject.transform.parent = GameObject.Find("Units").transform;
     Unit unit = unitObject.GetComponent<Unit>();
     unit.xPos = xPos;
     unit.zPos = zPos;
@@ -137,26 +160,36 @@ public class GameController : NetworkBehaviour {
     Menu.Show();
   }
 
-  public static Unit AdvanceTpAndSelectUnit(){
-    instance.units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
+  //public static Unit AdvanceTpAndSelectUnit(){
+    //instance.units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
+    //int difference = instance.units[0].TpDiff();
+    //foreach(Unit unit in instance.units){
+      //unit.CmdAddTp(difference);
+    //}
+    //return(instance.units[0]);
+  //}
+
+  [Command]
+  public void CmdAdvanceTp(){
+    List<Unit> units = instance.Units();
+    units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
     int difference = instance.units[0].TpDiff();
     foreach(Unit unit in instance.units){
-      unit.currentTp = unit.currentTp + difference;
+      unit.CmdAddTp(difference);
     }
-    return(instance.units[0]);
   }
 
   public static void Next() {
-    SetState(State.PickAction);
+    //SetState(State.PickAction);
 
-    if(Unit.current.DoneWithTurn()){
-      Unit.current.ReadyNextTurn();
-      CursorController.moveEnabled = true;
-      Unit.SetCurrent(AdvanceTpAndSelectUnit());
-      Unit.current.AdvanceBuffs();
-      CursorController.ShowMoveCells();
-      Menu.Show();
-    }
+    //if(Unit.current.DoneWithTurn()){
+      //Unit.current.ReadyNextTurn();
+      //CursorController.moveEnabled = true;
+      //Unit.SetCurrent(AdvanceTpAndSelectUnit());
+      //Unit.current.AdvanceBuffs();
+      //CursorController.ShowMoveCells();
+      //Menu.Show();
+    //}
   }
 
   public static void FreezeInputs() {
