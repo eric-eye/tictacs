@@ -100,7 +100,7 @@ public class GameController : NetworkBehaviour {
     unit.xPos = xPos;
     unit.zPos = zPos;
     unit.CmdSetColor(color);
-    unit.currentTp = Random.Range(50, 100);
+    unit.CmdSetTp(Random.Range(50, 100));
     //unit.stance = unit.stances[0].GetComponent<IStance>();
     CursorController.cursorMatrix[xPos][zPos].standingUnit = unit;
     return unit;

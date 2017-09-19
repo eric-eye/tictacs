@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using GridFramework.Renderers.Rectangular;
 using GridFramework.Grids;
+using UnityEngine.Networking;
 
-public class CursorController : MonoBehaviour {
+public class CursorController : NetworkBehaviour {
+  public struct Coordinate
+    {
+      public int x;
+      public int z;
+      public int counter;
+      public int elevation;
+    };
 
   public GameObject cursorPrefab;
 
@@ -63,7 +71,20 @@ public class CursorController : MonoBehaviour {
     if (moveEnabled && GameController.state == GameController.State.PickAction && Cursor.hovered){
       if(selected && selected == Cursor.hovered){
         moveEnabled = false;
-        Unit.current.SetPath(_path);
+        if(NetworkServer.active) {
+          Coordinate[] coordinates = new Coordinate[_path.Count];
+          int c = 0;
+          foreach(int[] array in _path){
+            Coordinate coordinate = new Coordinate();
+            coordinate.x = array[0];
+            coordinate.z = array[1];
+            coordinate.counter = array[2];
+            coordinate.elevation = array[3];
+            coordinates[c] = coordinate;
+            c++;
+          }
+          Unit.current.CmdSetPath(coordinates);
+        }
       }else if(!Cursor.hovered.standingUnit && Cursor.hovered.movable){
         selected = Cursor.hovered;
         _path = DeriveShortestPath(selected, Unit.current.xPos, Unit.current.zPos);
@@ -153,7 +174,6 @@ public class CursorController : MonoBehaviour {
   }
 
   private static void HighlightMovableTiles(List<int[]> tileCoordinates) {
-    print("unsetmovement called");
     foreach(List<Cursor> list in cursorMatrix){
       foreach(Cursor tile in list){
         tile.UnsetMovement();
@@ -166,7 +186,6 @@ public class CursorController : MonoBehaviour {
   }
 
   public static void UnsetMovement() {
-    print("unsetmovement called");
     foreach(List<Cursor> list in cursorMatrix){
       foreach(Cursor tile in list){
         tile.UnsetMovement();

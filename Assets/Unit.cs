@@ -25,9 +25,13 @@ public class Unit: NetworkBehaviour {
   [SyncVar]
   public int zPos;
 
+  public class CoordinateList : SyncListStruct<CursorController.Coordinate> {};
+
   public int yPos;
   private bool resetPath = false;
-  private List<int[]> _path = new List<int[]>();
+
+  [SyncVar]
+  private CoordinateList _path = new CoordinateList();
 
   [SyncVar]
   private Color _color;
@@ -40,9 +44,11 @@ public class Unit: NetworkBehaviour {
   public int currentHp = 30;
 
   public int maxTp = 100;
+  private int _pathIndex = 0;
+  private bool _canWalkPath = false;
 
   [SyncVar]
-  public int currentTp = 0;
+  private int currentTp = 0;
 
   public int maxMp;
   public int currentMp;
@@ -81,6 +87,15 @@ public class Unit: NetworkBehaviour {
 
   bool IsMovingAnywhere(){
     return(_isMoving || _isMovingDown || _isMovingUp);
+  }
+
+  public int CurrentTp(){
+    return(currentTp);
+  }
+
+  [Command]
+  public void CmdSetTp(int newTp){
+    currentTp = newTp;
   }
 
   public void ReceiveBuff(GameObject buff){
@@ -190,11 +205,21 @@ public class Unit: NetworkBehaviour {
     transform.Find("Marker").GetComponent<MeshRenderer>().enabled = false;
   }
 
-  public void SetPath(List<int[]> path){
-    _path = path;
-    GameController.FreezeInputs();
+  [Command]
+  public void CmdSetPath(CursorController.Coordinate[] path){
     currentTp -= 25;
+    _path.Clear();
+    foreach(CursorController.Coordinate coordinate in path){
+      _path.Add(coordinate);
+    }
     hasMoved = true;
+    RpcRefreshMenuAndFreezeInputs();
+  }
+
+  [ClientRpc]
+  public void RpcRefreshMenuAndFreezeInputs(){
+    _canWalkPath = true;
+    GameController.FreezeInputs();
     Menu.Hide();
     Menu.Show();
   }
@@ -263,28 +288,36 @@ public class Unit: NetworkBehaviour {
   }
 
   private void PickNext() {
-    if(_path.Count > 0){
+    if(_canWalkPath){
       Vector3 direction;  // Direction to move in (grid-coordinates)
 
-      int[] nextStep = _path[0];
-      _path.RemoveAt(0);
-      if(_path.Count == 0) resetPath = true;
+      if(_pathIndex >= _path.Count){
+        return;
+      }
+
+      CursorController.Coordinate nextStep = _path[_pathIndex];
+      _pathIndex++;
+      if(_pathIndex >= _path.Count) {
+        resetPath = true;
+        _canWalkPath = false;
+        _pathIndex = 0;
+      }
 
       CursorController.cursorMatrix[xPos][zPos].standingUnit = null;
 
-      int newY = nextStep[3] - yPos;
+      int newY = nextStep.elevation - yPos;
       yPos = yPos + newY;
 
-      if (nextStep[0] > xPos) {
+      if (nextStep.x > xPos) {
         direction = new Vector3(1, newY, 0);
         xPos++;
-      } else if (nextStep[0] < xPos) {
+      } else if (nextStep.x < xPos) {
         direction = new Vector3(-1, newY, 0);
         xPos--;
-      } else if (nextStep[1] > zPos) {
+      } else if (nextStep.z > zPos) {
         direction = new Vector3(0, newY, 1);
         zPos++;
-      } else if (nextStep[1] < zPos) {
+      } else if (nextStep.z < zPos) {
         direction = new Vector3(0, newY, -1);
         zPos--;
       } else {
@@ -293,12 +326,10 @@ public class Unit: NetworkBehaviour {
 
       CursorController.cursorMatrix[xPos][zPos].standingUnit = this;
 
-
       _goal = _grid.WorldToGrid(transform.position) + direction;
 
       _goal = _grid.GridToWorld(_goal);
       _isMoving = true;
-
 
       if(newY > 0) _isMovingUp = true;
       if(newY < 0) _isMovingDown = true;
