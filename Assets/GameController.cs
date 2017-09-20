@@ -16,7 +16,7 @@ public class GameController : NetworkBehaviour {
   public static bool inputsFrozen = false;
   public enum State { PickAction, PickTarget };
   public static State state = State.PickAction;
-  public static IAction selectedAction;
+  public static GameObject selectedAction;
   public static GameController instance;
 
   private bool initialized = false;
@@ -111,14 +111,18 @@ public class GameController : NetworkBehaviour {
   }
 
   public static void DoAction(Cursor cursor){
-    Unit.current.DoAction(cursor, selectedAction);
+    Unit.current.CmdDoAction(cursor.gameObject, selectedAction.gameObject);
+  }
+
+  [ClientRpc]
+  public void RpcDoActionResponse(){
     Menu.Show();
     CursorController.HideAttackCursors();
     SetState(State.PickAction);
     Next();
   }
 
-  public static void PickAction(IAction action){
+  public static void PickAction(GameObject action){
     CursorController.Cancel();
     SetState(State.PickTarget);
     selectedAction = action;

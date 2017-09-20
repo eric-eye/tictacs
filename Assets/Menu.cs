@@ -16,7 +16,7 @@ public class Menu : MonoBehaviour {
     menu = this;
 	}
 
-  public void PickAction(IAction action){
+  public void PickAction(GameObject action){
     if(!GameController.inputsFrozen){
       GameController.PickAction(action);
       Hide();
@@ -56,7 +56,7 @@ public class Menu : MonoBehaviour {
         IAction action = Unit.current.actions[i].GetComponent<IAction>();
         buttonObject.transform.Find("Text").GetComponent<Text>().text = action.Name();
         buttonObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-88, yStart - (i * 30));
-        buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickAction(action));
+        buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickAction(actionObject));
 
         if(Unit.current.currentMp < action.MpCost()){
           buttonObject.SetActive(false);

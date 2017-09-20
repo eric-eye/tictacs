@@ -115,7 +115,9 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  public static void ShowActionCursors(IAction action){
+  public static void ShowActionCursors(GameObject actionObject){
+    IAction action = actionObject.GetComponent<IAction>();
+
     int xPos = Unit.current.xPos;
     int zPos = Unit.current.zPos;
 

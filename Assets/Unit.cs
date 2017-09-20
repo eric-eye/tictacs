@@ -41,6 +41,8 @@ public class Unit: NetworkBehaviour {
   public static Unit hovered;
 
   public int maxHp = 30;
+
+  [SyncVar(hook = "OnChangeHp")]
   public int currentHp = 30;
 
   public int maxTp = 100;
@@ -51,6 +53,7 @@ public class Unit: NetworkBehaviour {
   private int currentTp = 0;
 
   public int maxMp;
+  [SyncVar]
   public int currentMp;
 
   public string defense = "Free";
@@ -177,13 +180,16 @@ public class Unit: NetworkBehaviour {
 
   public void ReceiveDamage(int damage){
     currentHp = currentHp - damage;
-    GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
     //damage = stance.NegotiateDamage(damage);
     damage = 15;
-    hitsObject.GetComponent<Hits>().damage = damage;
     if(currentHp < 1){
       Die();
     }
+  }
+
+  public void OnChangeHp(int amount){
+    GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
+    hitsObject.GetComponent<Hits>().damage = amount;
   }
 
   public static void SetCurrent(Unit unit){
@@ -224,12 +230,16 @@ public class Unit: NetworkBehaviour {
     Menu.Show();
   }
 
-  public void DoAction(Cursor cursor, IAction action){
+  [Command]
+  public void CmdDoAction(GameObject cursorObject, GameObject actionObject){
+    IAction action = actionObject.GetComponent<IAction>();
+
     currentTp -= action.TpCost();
     currentMp -= action.MpCost();
 
-    action.DoAction(cursor);
+    action.DoAction(cursorObject.GetComponent<Cursor>());
     hasActed = true;
+    GameController.instance.RpcDoActionResponse();
   }
 
   public bool DoneWithTurn(){
