@@ -102,25 +102,26 @@ public class Unit: NetworkBehaviour {
   }
 
   public void ReceiveBuff(GameObject buff){
-    buffs.Add(buff);
+    NetworkServer.Spawn(buff);
+    buff.transform.parent = transform.Find("Buffs");
+    RpcSyncBuffParent(buff);
     buff.GetComponent<IBuff>().Up(this);
   }
 
+  [ClientRpc]
+  public void RpcSyncBuffParent(GameObject buff){
+    buff.transform.parent = transform.Find("Buffs");
+  }
+
   public void AdvanceBuffs(){
-    List<GameObject> buffsToRemove = new List<GameObject>();
-    foreach(GameObject buffObject in buffs){
-      IBuff buff = buffObject.GetComponent<IBuff>();
+    foreach(Transform buffTransform in transform.Find("Buffs")){
+      IBuff buff = buffTransform.GetComponent<IBuff>();
       if(buff.TurnsLeft() < 1){
         buff.Down();
-        buffsToRemove.Add(buffObject);
+        Destroy(buffTransform.gameObject);
       }else{
         buff.DeductTurn();
       }
-    }
-
-    foreach(GameObject buffObject in buffsToRemove){
-      buffs.Remove(buffObject);
-      Destroy(buffObject);
     }
   }
 
