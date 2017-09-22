@@ -5,6 +5,7 @@ using GridFramework.Renderers.Rectangular;
 using GridFramework.Extensions.Align;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Linq;
 
 public class Unit: NetworkBehaviour {
 
@@ -56,8 +57,10 @@ public class Unit: NetworkBehaviour {
   [SyncVar]
   public int currentMp;
 
+  [SyncVar]
+  private int stanceIndex = 0;
+
   public string defense = "Free";
-  public IStance stance;
 
   public bool hasActed = false;
   public bool hasMoved = false;
@@ -65,7 +68,7 @@ public class Unit: NetworkBehaviour {
   public float attackModifier = 1;
   public float physicalResistModifier = 1;
 
-  public List<GameObject> buffs = new List<GameObject>();
+  //public List<GameObject> buffs = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
@@ -111,6 +114,14 @@ public class Unit: NetworkBehaviour {
   [ClientRpc]
   public void RpcSyncBuffParent(GameObject buff){
     buff.transform.parent = transform.Find("Buffs");
+  }
+
+  public List<GameObject> Buffs(){
+    List<GameObject> buffs = new List<GameObject>();
+    foreach(Transform child in transform.Find("Buffs")){
+      buffs.Add(child.gameObject);
+    }
+    return(buffs);
   }
 
   public void AdvanceBuffs(){
@@ -175,22 +186,31 @@ public class Unit: NetworkBehaviour {
   }
 
   public int MoveLength(){
-    return(10);
-    //return(stance.NegotiateMoveLength(10));
+    return(Stance().NegotiateMoveLength(10));
+  }
+
+  [Command]
+  public void CmdSetStance(int newStanceIndex){
+    stanceIndex = newStanceIndex;
+  }
+
+  public IStance Stance(){
+    return(stances[stanceIndex].GetComponent<IStance>());
   }
 
   public void ReceiveDamage(int damage){
-    currentHp = currentHp - damage;
-    //damage = stance.NegotiateDamage(damage);
-    damage = 15;
+    damage = Stance().NegotiateDamage(damage);
+    currentHp -= damage;
     if(currentHp < 1){
       Die();
     }
   }
 
-  public void OnChangeHp(int amount){
+  public void OnChangeHp(int newHp){
+    int difference = currentHp - newHp;
+    currentHp = newHp;
     GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
-    hitsObject.GetComponent<Hits>().damage = amount;
+    hitsObject.GetComponent<Hits>().damage = difference;
   }
 
   public static void SetCurrent(Unit unit){

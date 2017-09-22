@@ -129,8 +129,8 @@ public class GameController : NetworkBehaviour {
     CursorController.ShowActionCursors(action);
   }
 
-  public static void PickStance(IStance stance){
-    Unit.current.stance = stance;
+  public static void PickStance(int stanceIndex){
+    Unit.current.CmdSetStance(stanceIndex);
 
     CursorController.Cancel();
     CursorController.UnsetMovement();

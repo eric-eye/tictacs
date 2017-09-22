@@ -23,9 +23,9 @@ public class Menu : MonoBehaviour {
     }
   }
 
-  public void PickStance(IStance stance){
+  public void PickStance(int stanceIndex){
     if(!GameController.inputsFrozen){
-      GameController.PickStance(stance);
+      GameController.PickStance(stanceIndex);
       Hide();
       Show();
     }
@@ -70,14 +70,15 @@ public class Menu : MonoBehaviour {
 
     if(!Unit.current.hasActed && !Unit.current.hasMoved){
       foreach(GameObject actionObject in Unit.current.stances){
+        int localIndex = x;
         GameObject buttonObject = Instantiate(menu.stanceButtonPrefab, Vector3.zero, Quaternion.identity);
         buttonObject.transform.parent = menu.transform.Find("Panel").Find("Stances");
         IStance stance = Unit.current.stances[x].GetComponent<IStance>();
         string newName = stance.Name();
-        if(stance == Unit.current.stance) newName = newName + " *";
+        if(stance == Unit.current.Stance()) newName = newName + " *";
         buttonObject.transform.Find("Text").GetComponent<Text>().text = newName;
         buttonObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(80, yStart - (x * 30));
-        buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickStance(stance));
+        buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickStance(localIndex));
 
         x++;
       }
