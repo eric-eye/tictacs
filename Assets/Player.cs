@@ -21,12 +21,23 @@ public class Player : NetworkBehaviour {
     }
 
     if(InputController.InputConfirm()){
-      if (CursorController.moveEnabled && GameController.state == GameController.State.PickAction && Cursor.hovered){
-        if(CursorController.selected && CursorController.selected == Cursor.hovered){
-          CmdMoveAlong(CursorController.selected.xPos, CursorController.selected.zPos);
-        }else if(!Cursor.hovered.standingUnit && Cursor.hovered.movable){
-          CursorController.instance.ShowPath();
+      if (CursorController.moveEnabled) {
+        if (GameController.state == GameController.State.PickAction && Cursor.hovered){
+          if(CursorController.selected && CursorController.selected == Cursor.hovered){
+            CmdMoveAlong(CursorController.selected.xPos, CursorController.selected.zPos);
+          }else if(!Cursor.hovered.standingUnit && Cursor.hovered.movable){
+            CursorController.instance.ShowPath();
+          }
         }
+      }
+    }
+
+    if(InputController.InputCancel()){
+      if (GameController.state == GameController.State.PickAction && CursorController.selected){
+        CursorController.ResetPath();
+      }
+      if (GameController.state == GameController.State.PickTarget){
+        GameController.CancelAttack();
       }
     }
 	}
