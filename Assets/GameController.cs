@@ -16,7 +16,7 @@ public class GameController : NetworkBehaviour {
   public static bool inputsFrozen = false;
   public enum State { PickAction, PickTarget };
   public static State state = State.PickAction;
-  public static GameObject selectedAction;
+  public static int selectedActionIndex;
   public static GameController instance;
 
   private bool initialized = false;
@@ -97,7 +97,6 @@ public class GameController : NetworkBehaviour {
     unit.zPos = zPos;
     unit.CmdSetColor(color);
     unit.CmdSetTp(Random.Range(50, 100));
-    //unit.stance = unit.stances[0].GetComponent<IStance>();
     CursorController.cursorMatrix[xPos][zPos].standingUnit = unit;
     return unit;
   }
@@ -106,8 +105,9 @@ public class GameController : NetworkBehaviour {
     state = newState;
   }
 
-  public static void DoAction(Cursor cursor){
-    Unit.current.CmdDoAction(cursor.gameObject, selectedAction.gameObject);
+  [Command]
+  public void CmdDoAction(int x, int z, int actionIndex){
+    Unit.current.CmdDoAction(x, z, actionIndex);
   }
 
   [ClientRpc]
@@ -118,11 +118,11 @@ public class GameController : NetworkBehaviour {
     Next();
   }
 
-  public static void PickAction(GameObject action){
+  public static void PickAction(int actionIndex){
     CursorController.Cancel();
     SetState(State.PickTarget);
-    selectedAction = action;
-    CursorController.ShowActionCursors(action);
+    selectedActionIndex = actionIndex;
+    CursorController.ShowActionCursors(actionIndex);
   }
 
   public static void PickStance(int stanceIndex){

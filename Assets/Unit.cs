@@ -9,7 +9,6 @@ using System.Linq;
 
 public class Unit: NetworkBehaviour {
 
-  public GameObject[] actions;
   public GameObject[] stances;
 
   private bool _isMoving;
@@ -90,6 +89,14 @@ public class Unit: NetworkBehaviour {
     transform.Find("Body").GetComponent<Renderer>().material.color = _color;
     transform.parent = GameObject.Find("Units").transform;
 	}
+
+  public List<GameObject> Actions(){
+    List<GameObject> actions = new List<GameObject>();
+    foreach(Transform child in transform.Find("Actions")){
+      actions.Add(child.gameObject);
+    }
+    return(actions);
+  }
 
   bool IsMovingAnywhere(){
     return(_isMoving || _isMovingDown || _isMovingUp);
@@ -252,13 +259,15 @@ public class Unit: NetworkBehaviour {
   }
 
   [Command]
-  public void CmdDoAction(GameObject cursorObject, GameObject actionObject){
-    IAction action = actionObject.GetComponent<IAction>();
+  public void CmdDoAction(int x, int z, int actionIndex){
+    IAction action = Actions()[actionIndex].GetComponent<IAction>();
 
     currentTp -= action.TpCost();
     currentMp -= action.MpCost();
 
-    action.DoAction(cursorObject.GetComponent<Cursor>());
+    Cursor cursor = CursorController.cursorMatrix[x][z];
+
+    action.DoAction(cursor);
     hasActed = true;
     GameController.instance.RpcDoActionResponse();
   }

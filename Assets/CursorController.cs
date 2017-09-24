@@ -118,8 +118,8 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  public static void ShowActionCursors(GameObject actionObject){
-    IAction action = actionObject.GetComponent<IAction>();
+  public static void ShowActionCursors(int actionIndex){
+    IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
 
     int xPos = Unit.current.xPos;
     int zPos = Unit.current.zPos;

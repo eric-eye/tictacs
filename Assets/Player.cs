@@ -30,6 +30,11 @@ public class Player : NetworkBehaviour {
           }
         }
       }
+
+      if((GameController.state == GameController.State.PickTarget) && Cursor.hovered && Cursor.hovered.attack){
+        print("go time");
+        CmdDoAction(Cursor.hovered.xPos, Cursor.hovered.zPos, GameController.selectedActionIndex);
+      }
     }
 
     if(InputController.InputCancel()){
@@ -41,6 +46,11 @@ public class Player : NetworkBehaviour {
       }
     }
 	}
+
+  [Command]
+  public void CmdDoAction(int x, int z, int actionIndex){
+    GameController.instance.CmdDoAction(x, z, actionIndex);
+  }
 
   [Command]
   public void CmdMoveAlong(int x, int z) {

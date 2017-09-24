@@ -16,9 +16,9 @@ public class Menu : MonoBehaviour {
     menu = this;
 	}
 
-  public void PickAction(GameObject action){
+  public void PickAction(int stanceIndex){
     if(!GameController.inputsFrozen){
-      GameController.PickAction(action);
+      GameController.PickAction(stanceIndex);
       Hide();
     }
   }
@@ -50,13 +50,14 @@ public class Menu : MonoBehaviour {
     int i = 0;
 
     if(!Unit.current.hasActed){
-      foreach(GameObject actionObject in Unit.current.actions){
+      foreach(GameObject actionObject in Unit.current.Actions()){
+        int localIndex = i;
         GameObject buttonObject = Instantiate(menu.actionButtonPrefab, Vector3.zero, Quaternion.identity);
         buttonObject.transform.parent = menu.transform.Find("Panel").Find("Actions");
-        IAction action = Unit.current.actions[i].GetComponent<IAction>();
+        IAction action = Unit.current.Actions()[i].GetComponent<IAction>();
         buttonObject.transform.Find("Text").GetComponent<Text>().text = action.Name();
         buttonObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-88, yStart - (i * 30));
-        buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickAction(actionObject));
+        buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickAction(localIndex));
 
         if(Unit.current.currentMp < action.MpCost()){
           buttonObject.SetActive(false);
