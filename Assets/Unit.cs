@@ -20,6 +20,9 @@ public class Unit: NetworkBehaviour {
   private Parallelepiped _renderer;
 
   [SyncVar]
+  public int playerIndex;
+
+  [SyncVar]
   public int xPos;
 
   [SyncVar]
@@ -57,7 +60,7 @@ public class Unit: NetworkBehaviour {
   public int currentMp;
 
   [SyncVar(hook = "OnStanceIndexChanged")]
-  public int stanceIndex = 0;
+  private int stanceIndex = 0;
 
   public string defense = "Free";
 

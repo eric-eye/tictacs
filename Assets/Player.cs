@@ -7,6 +7,9 @@ public class Player : NetworkBehaviour {
 
   public static Player player;
 
+  [SyncVar(hook = "OnPlayerIndexChanged")]
+  public int playerIndex;
+
   public GameObject gameControllerPrefab;
 
 	// Use this for initialization
@@ -16,8 +19,21 @@ public class Player : NetworkBehaviour {
     }
     if(isLocalPlayer){
       player = this;
+      CmdSetPlayerIndex(GameController.instance.playerCount);
+      GameController.instance.CmdBumpPlayerCount();
     }
 	}
+
+  void OnPlayerIndexChanged(int newPlayerIndex){
+    playerIndex = newPlayerIndex;
+    print("index changed to... " + newPlayerIndex);
+    GameController.instance.Launch();
+  }
+
+  [Command]
+  void CmdSetPlayerIndex(int newIndex){
+    playerIndex = newIndex;
+  }
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,7 +53,6 @@ public class Player : NetworkBehaviour {
       }
 
       if((GameController.state == GameController.State.PickTarget) && Cursor.hovered && Cursor.hovered.attack){
-        print("go time");
         CmdDoAction(Cursor.hovered.xPos, Cursor.hovered.zPos, GameController.selectedActionIndex);
       }
     }

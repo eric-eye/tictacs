@@ -12,7 +12,6 @@ public class GameController : NetworkBehaviour {
   private List<Unit> units = new List<Unit>();
   public static List<Player> players = new List<Player>();
 
-  public static int unitIndex = 0;
   public static bool inputsFrozen = false;
   public enum State { PickAction, PickTarget };
   public static State state = State.PickAction;
@@ -22,12 +21,23 @@ public class GameController : NetworkBehaviour {
   private bool initialized = false;
   private bool unitsCreated = false;
 
-  void Start(){
-    instance = this;
+  [SyncVar]
+  public int playerCount = 0;
 
+  void Awake(){
+    instance = this;
+  }
+
+  void Start(){
     if(NetworkServer.active) {
       instance.CmdSpawnControllers();
     }
+  }
+
+  [Command]
+  public void CmdBumpPlayerCount(){
+    print("bumping player count");
+    playerCount++;
   }
 
   void Update(){
@@ -38,6 +48,14 @@ public class GameController : NetworkBehaviour {
       initialized = true;
     }
 
+    //Launch();
+
+    if(InputController.InputCancel()){
+      CursorController.Cancel();
+    }
+  }
+
+  public void Launch(){
     if(!unitsCreated){
       if(Units().Count > 0){
         SetCurrentUnit();
@@ -45,10 +63,6 @@ public class GameController : NetworkBehaviour {
         Menu.Show();
         unitsCreated = true;
       }
-    }
-
-    if(InputController.InputCancel()){
-      CursorController.Cancel();
     }
   }
 
@@ -69,7 +83,14 @@ public class GameController : NetworkBehaviour {
   void SetCurrentUnit(){
     List<Unit> units = instance.Units();
     units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
-    Unit.SetCurrent(units[0]);
+    Unit unit = units[0];
+    Unit.SetCurrent(unit);
+    print("player index " + Player.player.playerIndex);
+    if(unit.playerIndex == Player.player.playerIndex){
+      MenuCamera.Show();
+    }else{
+      MenuCamera.Hide();
+    }
   }
 
   [Command]
@@ -83,11 +104,11 @@ public class GameController : NetworkBehaviour {
 
   [Command]
   void CmdAddUnits(){
-    units.Add(instance.AddUnit(0, 0, Color.magenta));
-    units.Add(instance.AddUnit(1, 3, Color.blue));
+    units.Add(instance.AddUnit(0, 0, Color.magenta, 0));
+    units.Add(instance.AddUnit(1, 3, Color.blue, 1));
   }
 
-  private Unit AddUnit(int xPos, int zPos, Color color){
+  private Unit AddUnit(int xPos, int zPos, Color color, int playerIndex){
     GameObject unitObject = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
 
     NetworkServer.Spawn(unitObject);
@@ -95,6 +116,7 @@ public class GameController : NetworkBehaviour {
     Unit unit = unitObject.GetComponent<Unit>();
     unit.xPos = xPos;
     unit.zPos = zPos;
+    unit.playerIndex = playerIndex;
     unit.CmdSetColor(color);
     unit.CmdSetTp(Random.Range(50, 100));
     CursorController.cursorMatrix[xPos][zPos].standingUnit = unit;
@@ -131,8 +153,6 @@ public class GameController : NetworkBehaviour {
   }
 
   public static void PostStanceChange() {
-    print("do the hide-y things " + Unit.current.stanceIndex);
-
     CursorController.Cancel();
     CursorController.UnsetMovement();
     CursorController.ShowMoveCells();

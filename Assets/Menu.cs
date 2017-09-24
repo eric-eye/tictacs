@@ -52,8 +52,12 @@ public class Menu : MonoBehaviour {
         int localIndex = i;
         GameObject buttonObject = Instantiate(menu.actionButtonPrefab, Vector3.zero, Quaternion.identity);
         buttonObject.transform.parent = menu.transform.Find("Panel").Find("Actions");
+
+        //buttonObject.transform.position = Vector3.zero;
         IAction action = Unit.current.Actions()[i].GetComponent<IAction>();
         buttonObject.transform.Find("Text").GetComponent<Text>().text = action.Name();
+        buttonObject.transform.position = menu.transform.Find("Panel").transform.position;
+        buttonObject.transform.localScale = new Vector3(1, 1, 1);
         buttonObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-88, yStart - (i * 30));
         buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickAction(localIndex));
 
