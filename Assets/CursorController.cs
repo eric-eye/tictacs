@@ -17,6 +17,7 @@ public class CursorController : NetworkBehaviour {
   public GameObject cursorPrefab;
 
   public static Cursor selected;
+  public static CursorController instance;
   public static List<List<Cursor>> cursorMatrix = new List<List<Cursor>>();
   public static bool moveEnabled = true;
 
@@ -30,6 +31,7 @@ public class CursorController : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
+    instance = this;
     _grid = GameObject.Find("Grid").GetComponent<RectGrid>();
     _renderer = _grid.gameObject.GetComponent<Parallelepiped>();
     xMin = (int)_renderer.From[0];
@@ -63,38 +65,39 @@ public class CursorController : NetworkBehaviour {
 	}
 
   public static void ShowMoveCells(){
-    _path = GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
-    HighlightMovableTiles(_path);
+    List <int[]> path = GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
+    HighlightMovableTiles(path);
   }
 
-  public static void Confirm(){
-    if (moveEnabled && GameController.state == GameController.State.PickAction && Cursor.hovered){
-      if(selected && selected == Cursor.hovered){
-        moveEnabled = false;
-        if(NetworkServer.active) {
-          Coordinate[] coordinates = new Coordinate[_path.Count];
-          int c = 0;
-          foreach(int[] array in _path){
-            Coordinate coordinate = new Coordinate();
-            coordinate.x = array[0];
-            coordinate.z = array[1];
-            coordinate.counter = array[2];
-            coordinate.elevation = array[3];
-            coordinates[c] = coordinate;
-            c++;
-          }
-          Unit.current.CmdSetPath(coordinates);
-        }
-      }else if(!Cursor.hovered.standingUnit && Cursor.hovered.movable){
-        selected = Cursor.hovered;
-        _path = DeriveShortestPath(selected, Unit.current.xPos, Unit.current.zPos);
-        HighlightTiles(_path);
-      }
+  public void Confirm(){
+    //if((GameController.state == GameController.State.PickTarget) &&
+        //Cursor.hovered && Cursor.hovered.attack){
+      //GameController.DoAction(Cursor.hovered);
+    //}
+  }
+
+  public void ShowPath(){
+    selected = Cursor.hovered;
+    _path = DeriveShortestPath(selected.xPos, selected.zPos, Unit.current.xPos, Unit.current.zPos);
+    HighlightTiles(_path);
+  }
+
+  [Command]
+  public void CmdMoveAlong(int x, int z){
+    List<int[]> path = DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
+    moveEnabled = false;
+    Coordinate[] coordinates = new Coordinate[path.Count];
+    int c = 0;
+    foreach(int[] array in path){
+      Coordinate coordinate = new Coordinate();
+      coordinate.x = array[0];
+      coordinate.z = array[1];
+      coordinate.counter = array[2];
+      coordinate.elevation = array[3];
+      coordinates[c] = coordinate;
+      c++;
     }
-    if((GameController.state == GameController.State.PickTarget) &&
-        Cursor.hovered && Cursor.hovered.attack){
-      GameController.DoAction(Cursor.hovered);
-    }
+    Unit.current.CmdSetPath(coordinates);
   }
 
   public static void ResetPath(){
@@ -195,10 +198,10 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  private static List<int[]> DeriveShortestPath(Cursor destination, int originX, int originZ) {
+  private static List<int[]> DeriveShortestPath(int xPos, int zPos, int originX, int originZ) {
     List<int[]> queue = new List<int[]>();
     List<int[]> shortestPath = new List<int[]>();
-    queue.Add(new int[] { destination.xPos, destination.zPos, 0, VoxelController.GetElevation(destination.xPos, destination.zPos) });
+    queue.Add(new int[] { xPos, zPos, 0, VoxelController.GetElevation(xPos, zPos) });
     for(int i = 0; i < queue.Count; i++){
       int[] entry = queue[i];
       int counter = entry[2] + 1;

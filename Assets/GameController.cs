@@ -47,10 +47,6 @@ public class GameController : NetworkBehaviour {
       }
     }
 
-    if(InputController.InputConfirm()){
-      CursorController.Confirm();
-    }
-
     if(InputController.InputCancel()){
       CursorController.Cancel();
     }
@@ -161,7 +157,6 @@ public class GameController : NetworkBehaviour {
 
   [ClientRpc]
   public void RpcDoNext(){
-    print("rpc do next");
     SetCurrentUnit();
     Unit.current.AdvanceBuffs();
     CursorController.ShowMoveCells();
@@ -172,8 +167,6 @@ public class GameController : NetworkBehaviour {
     SetState(State.PickAction);
 
     if(Unit.current.DoneWithTurn()){
-      print("Next time lads!");
-
       Unit.current.ReadyNextTurn();
       CursorController.moveEnabled = true;
       if(NetworkServer.active) instance.CmdAdvanceTpToNext();
