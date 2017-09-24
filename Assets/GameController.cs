@@ -125,12 +125,19 @@ public class GameController : NetworkBehaviour {
     CursorController.ShowActionCursors(actionIndex);
   }
 
-  public static void PickStance(int stanceIndex){
-    Unit.current.CmdSetStance(stanceIndex);
+  [Command]
+  public void CmdPickStance(int stanceIndex, GameObject player){
+    Unit.current.CmdSetStance(stanceIndex, player);
+  }
+
+  public static void PostStanceChange() {
+    print("do the hide-y things " + Unit.current.stanceIndex);
 
     CursorController.Cancel();
     CursorController.UnsetMovement();
     CursorController.ShowMoveCells();
+    Menu.Hide();
+    Menu.Show();
   }
 
   public static void CancelAttack(){

@@ -25,9 +25,7 @@ public class Menu : MonoBehaviour {
 
   public void PickStance(int stanceIndex){
     if(!GameController.inputsFrozen){
-      GameController.PickStance(stanceIndex);
-      Hide();
-      Show();
+      Player.player.PickStance(stanceIndex);
     }
   }
 

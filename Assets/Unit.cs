@@ -56,8 +56,8 @@ public class Unit: NetworkBehaviour {
   [SyncVar]
   public int currentMp;
 
-  [SyncVar]
-  private int stanceIndex = 0;
+  [SyncVar(hook = "OnStanceIndexChanged")]
+  public int stanceIndex = 0;
 
   public string defense = "Free";
 
@@ -197,8 +197,13 @@ public class Unit: NetworkBehaviour {
   }
 
   [Command]
-  public void CmdSetStance(int newStanceIndex){
+  public void CmdSetStance(int newStanceIndex, GameObject player){
     stanceIndex = newStanceIndex;
+  }
+
+  public void OnStanceIndexChanged(int newStanceIndex){
+    stanceIndex = newStanceIndex;
+    GameController.PostStanceChange();
   }
 
   public IStance Stance(){

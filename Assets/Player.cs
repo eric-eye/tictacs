@@ -5,12 +5,17 @@ using UnityEngine.Networking;
 
 public class Player : NetworkBehaviour {
 
+  public static Player player;
+
   public GameObject gameControllerPrefab;
 
 	// Use this for initialization
 	void Start () {
     if(isServer && isLocalPlayer){
       CmdSpawnGameController();
+    }
+    if(isLocalPlayer){
+      player = this;
     }
 	}
 	
@@ -46,6 +51,15 @@ public class Player : NetworkBehaviour {
       }
     }
 	}
+
+  public void PickStance(int stanceIndex){
+    CmdPickStance(stanceIndex, gameObject);
+  }
+
+  [Command]
+  public void CmdPickStance(int stanceIndex, GameObject player){
+    GameController.instance.CmdPickStance(stanceIndex, player);
+  }
 
   [Command]
   public void CmdDoAction(int x, int z, int actionIndex){
