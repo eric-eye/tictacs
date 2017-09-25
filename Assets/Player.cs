@@ -27,7 +27,7 @@ public class Player : NetworkBehaviour {
   void OnPlayerIndexChanged(int newPlayerIndex){
     playerIndex = newPlayerIndex;
     print("index changed to... " + newPlayerIndex);
-    GameController.instance.Launch();
+    GameController.canLaunch = true;
   }
 
   [Command]

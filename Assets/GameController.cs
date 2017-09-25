@@ -20,6 +20,7 @@ public class GameController : NetworkBehaviour {
 
   private bool initialized = false;
   private bool unitsCreated = false;
+  public static bool canLaunch = false;
 
   [SyncVar]
   public int playerCount = 0;
@@ -48,7 +49,7 @@ public class GameController : NetworkBehaviour {
       initialized = true;
     }
 
-    //Launch();
+    if(canLaunch) Launch();
 
     if(InputController.InputCancel()){
       CursorController.Cancel();
