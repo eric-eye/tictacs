@@ -18,7 +18,8 @@ public class GameController : NetworkBehaviour {
   public static int selectedActionIndex;
   public static GameController instance;
 
-  private bool initialized = false;
+  private bool unitsAdded = false;
+  private bool tpInitialized = false;
   private bool unitsCreated = false;
   public static bool canLaunch = false;
 
@@ -42,11 +43,16 @@ public class GameController : NetworkBehaviour {
   }
 
   void Update(){
-    if(!initialized){
-      if(NetworkServer.active) instance.CmdAddUnits();
-      if(NetworkServer.active) instance.CmdAdvanceTp();
+    if(unitsAdded && !tpInitialized){
+      tpInitialized = true;
 
-      initialized = true;
+      if(NetworkServer.active) instance.CmdAdvanceTp();
+    }
+
+    if(!unitsAdded){
+      unitsAdded = true;
+
+      if(NetworkServer.active) instance.CmdAddUnits();
     }
 
     if(canLaunch) Launch();
@@ -71,6 +77,7 @@ public class GameController : NetworkBehaviour {
     List<Unit> units = new List<Unit>();
 
     foreach(Transform child in GameObject.Find("Units").transform){
+      print("addin a unit");
       units.Add(child.GetComponent<Unit>());
     }
 
@@ -110,6 +117,7 @@ public class GameController : NetworkBehaviour {
   }
 
   private Unit AddUnit(int xPos, int zPos, Color color, int playerIndex){
+    print("adding unit for some reason?");
     GameObject unitObject = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
 
     NetworkServer.Spawn(unitObject);
@@ -169,10 +177,11 @@ public class GameController : NetworkBehaviour {
 
   [Command]
   public void CmdAdvanceTp(){
-    List<Unit> units = instance.Units();
-    units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
-    int difference = instance.units[0].TpDiff();
-    foreach(Unit unit in instance.units){
+    List<Unit> sudoUnits = instance.Units();
+    print("Units(): " + instance.Units().Count);
+    sudoUnits.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
+    int difference = sudoUnits[0].TpDiff();
+    foreach(Unit unit in sudoUnits){
       unit.CmdAddTp(difference);
     }
   }

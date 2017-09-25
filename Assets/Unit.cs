@@ -53,7 +53,7 @@ public class Unit: NetworkBehaviour {
   private bool _canWalkPath = false;
 
   [SyncVar]
-  private int currentTp = 0;
+  public int currentTp = 0;
 
   public int maxMp;
   [SyncVar]
@@ -111,6 +111,7 @@ public class Unit: NetworkBehaviour {
 
   [Command]
   public void CmdSetTp(int newTp){
+    print("tp set to " + newTp);
     currentTp = newTp;
   }
 
@@ -156,6 +157,7 @@ public class Unit: NetworkBehaviour {
 
   [Command]
   public void CmdAddTp(int tpToAdd){
+    print("adding tp " + tpToAdd);
     currentTp += tpToAdd;
   }
 
@@ -165,6 +167,7 @@ public class Unit: NetworkBehaviour {
   }
 
   public int TpDiff(){
+    print("i believe my currentTp is " + currentTp);
     return(maxTp - currentTp);
   }
 
