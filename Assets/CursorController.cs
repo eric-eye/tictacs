@@ -65,8 +65,10 @@ public class CursorController : NetworkBehaviour {
 	}
 
   public static void ShowMoveCells(){
-    List <int[]> path = GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
-    HighlightMovableTiles(path);
+    if(Unit.current.playerIndex == Player.player.playerIndex){
+      List <int[]> path = GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
+      HighlightMovableTiles(path);
+    }
   }
 
   public void Confirm(){

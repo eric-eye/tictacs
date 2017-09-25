@@ -79,6 +79,8 @@ public class Menu : MonoBehaviour {
         IStance stance = Unit.current.stances[x].GetComponent<IStance>();
         string newName = stance.Name();
         if(stance == Unit.current.Stance()) newName = newName + " *";
+        buttonObject.transform.position = menu.transform.Find("Panel").transform.position;
+        buttonObject.transform.localScale = new Vector3(1, 1, 1);
         buttonObject.transform.Find("Text").GetComponent<Text>().text = newName;
         buttonObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(80, yStart - (x * 30));
         buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickStance(localIndex));

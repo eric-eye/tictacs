@@ -32,6 +32,8 @@ public class Cursor : MonoBehaviour {
 
     transform.position = position;
 
+    NegotiateColor();
+
     //_grid.AlignTransform(transform);
 	}
 	
