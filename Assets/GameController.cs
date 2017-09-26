@@ -68,7 +68,7 @@ public class GameController : NetworkBehaviour {
   }
 
   public void Launch(){
-    if(Units().Count > 0){
+    if(Unit.All().Count > 0){
       SetCurrentUnit();
       CursorController.ShowMoveCells();
       Menu.Show();
@@ -76,15 +76,16 @@ public class GameController : NetworkBehaviour {
     }
   }
 
-  public static List<Unit> Units(){
-    List<Unit> units = new List<Unit>();
+  //public static List<Unit> Units(){
+    //return(Unit.all);
+    ////List<Unit> units = new List<Unit>();
 
-    foreach(Transform child in GameObject.Find("Units").transform){
-      units.Add(child.GetComponent<Unit>());
-    }
+    ////foreach(Transform child in GameObject.Find("Units").transform){
+      ////units.Add(child.GetComponent<Unit>());
+    ////}
 
-    return(units);
-  }
+    ////return(units);
+  //}
 
   public static void RemoveUnit(Unit unit) {
     //instance.units.Remove(unit);
@@ -92,7 +93,7 @@ public class GameController : NetworkBehaviour {
 
   public static void SetCurrentUnit(){
     SetState(State.PickAction);
-    List<Unit> units = Units();
+    List<Unit> units = Unit.All();
     units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
     Unit unit = units[0];
     Unit.SetCurrent(unit);

@@ -13,7 +13,7 @@ public class TurnController : NetworkBehaviour {
 
   [Command]
   public void CmdAdvanceTp(){
-    List<Unit> sudoUnits = GameController.Units();
+    List<Unit> sudoUnits = Unit.All();
     sudoUnits.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
     int difference = sudoUnits[0].TpDiff();
     foreach(Unit unit in sudoUnits){

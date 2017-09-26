@@ -19,6 +19,8 @@ public class Unit: NetworkBehaviour {
   private RectGrid _grid;
   private Parallelepiped _renderer;
 
+  private static List<Unit> all = new List<Unit>();
+
   [SyncVar]
   public int playerIndex;
 
@@ -91,6 +93,8 @@ public class Unit: NetworkBehaviour {
 
     transform.Find("Body").GetComponent<Renderer>().material.color = _color;
     transform.parent = GameObject.Find("Units").transform;
+
+    all.Add(this);
 	}
 
   public List<GameObject> Actions(){
@@ -99,6 +103,10 @@ public class Unit: NetworkBehaviour {
       actions.Add(child.gameObject);
     }
     return(actions);
+  }
+
+  public static List<Unit> All(){
+    return(all);
   }
 
   bool IsMovingAnywhere(){
