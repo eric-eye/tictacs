@@ -8,6 +8,7 @@ public class GameController : NetworkBehaviour {
   public GameObject playerPrefab;
   public GameObject voxelControllerPrefab;
   public GameObject cursorControllerPrefab;
+  public GameObject turnControllerPrefab;
 
   private List<Unit> units = new List<Unit>();
   public static List<Player> players = new List<Player>();
@@ -20,8 +21,10 @@ public class GameController : NetworkBehaviour {
 
   private bool unitsAdded = false;
   private bool tpInitialized = false;
-  private bool unitsCreated = false;
+  private bool launched = false;
   public static bool canLaunch = false;
+
+  private int setupIndex = 0;
 
   [SyncVar]
   public int playerCount = 0;
@@ -38,24 +41,26 @@ public class GameController : NetworkBehaviour {
 
   [Command]
   public void CmdBumpPlayerCount(){
-    print("bumping player count");
     playerCount++;
   }
 
+  public void DoSetupSteps(){
+    switch (setupIndex)
+    {
+      case 0:
+        instance.CmdAddUnits();
+        break;
+      case 1:
+        TurnController.instance.CmdAdvanceTp();
+        break;
+    }
+    setupIndex++;
+  }
+
   void Update(){
-    if(unitsAdded && !tpInitialized){
-      tpInitialized = true;
+    if(NetworkServer.active) DoSetupSteps();
 
-      if(NetworkServer.active) instance.CmdAdvanceTp();
-    }
-
-    if(!unitsAdded){
-      unitsAdded = true;
-
-      if(NetworkServer.active) instance.CmdAddUnits();
-    }
-
-    if(canLaunch) Launch();
+    if(canLaunch && !launched) Launch();
 
     if(InputController.InputCancel()){
       CursorController.Cancel();
@@ -63,21 +68,18 @@ public class GameController : NetworkBehaviour {
   }
 
   public void Launch(){
-    if(!unitsCreated){
-      if(Units().Count > 0){
-        SetCurrentUnit();
-        CursorController.ShowMoveCells();
-        Menu.Show();
-        unitsCreated = true;
-      }
+    if(Units().Count > 0){
+      SetCurrentUnit();
+      CursorController.ShowMoveCells();
+      Menu.Show();
+      launched = true;
     }
   }
 
-  public List<Unit> Units(){
+  public static List<Unit> Units(){
     List<Unit> units = new List<Unit>();
 
     foreach(Transform child in GameObject.Find("Units").transform){
-      print("addin a unit");
       units.Add(child.GetComponent<Unit>());
     }
 
@@ -88,12 +90,12 @@ public class GameController : NetworkBehaviour {
     //instance.units.Remove(unit);
   }
 
-  void SetCurrentUnit(){
-    List<Unit> units = instance.Units();
+  public static void SetCurrentUnit(){
+    SetState(State.PickAction);
+    List<Unit> units = Units();
     units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
     Unit unit = units[0];
     Unit.SetCurrent(unit);
-    print("player index " + Player.player.playerIndex);
     if(unit.playerIndex == Player.player.playerIndex){
       MenuCamera.Show();
     }else{
@@ -106,6 +108,9 @@ public class GameController : NetworkBehaviour {
     GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
     NetworkServer.Spawn(voxelPrefab);
 
+    GameObject turnPrefab = Instantiate(instance.turnControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(turnPrefab);
+
     GameObject cursorPrefab = Instantiate(instance.cursorControllerPrefab, Vector3.zero, Quaternion.identity);
     NetworkServer.Spawn(cursorPrefab);
   }
@@ -117,7 +122,6 @@ public class GameController : NetworkBehaviour {
   }
 
   private Unit AddUnit(int xPos, int zPos, Color color, int playerIndex){
-    print("adding unit for some reason?");
     GameObject unitObject = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
 
     NetworkServer.Spawn(unitObject);
@@ -146,7 +150,7 @@ public class GameController : NetworkBehaviour {
     Menu.Show();
     CursorController.HideAttackCursors();
     SetState(State.PickAction);
-    Next();
+    TurnController.Next();
   }
 
   public static void PickAction(int actionIndex){
@@ -173,41 +177,6 @@ public class GameController : NetworkBehaviour {
     SetState(State.PickAction);
     CursorController.HideAttackCursors();
     Menu.Show();
-  }
-
-  [Command]
-  public void CmdAdvanceTp(){
-    List<Unit> sudoUnits = instance.Units();
-    print("Units(): " + instance.Units().Count);
-    sudoUnits.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
-    int difference = sudoUnits[0].TpDiff();
-    foreach(Unit unit in sudoUnits){
-      unit.CmdAddTp(difference);
-    }
-  }
-
-  [Command]
-  public void CmdAdvanceTpToNext(){
-    CmdAdvanceTp();
-    RpcDoNext();
-  }
-
-  [ClientRpc]
-  public void RpcDoNext(){
-    SetCurrentUnit();
-    Unit.current.AdvanceBuffs();
-    CursorController.ShowMoveCells();
-    Menu.Show();
-  }
-
-  public static void Next() {
-    SetState(State.PickAction);
-
-    if(Unit.current.DoneWithTurn()){
-      Unit.current.ReadyNextTurn();
-      CursorController.moveEnabled = true;
-      if(NetworkServer.active) instance.CmdAdvanceTpToNext();
-    }
   }
 
   public static void FreezeInputs() {

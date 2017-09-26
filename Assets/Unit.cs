@@ -333,7 +333,7 @@ public class Unit: NetworkBehaviour {
       CursorController.UnsetMovement();
       CursorController.ResetPath();
       resetPath = false;
-      GameController.Next();
+      TurnController.Next();
       GameController.UnfreezeInputs();
     }
   }

@@ -26,7 +26,6 @@ public class Player : NetworkBehaviour {
 
   void OnPlayerIndexChanged(int newPlayerIndex){
     playerIndex = newPlayerIndex;
-    print("index changed to... " + newPlayerIndex);
     GameController.canLaunch = true;
   }
 
