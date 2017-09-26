@@ -119,7 +119,6 @@ public class Unit: NetworkBehaviour {
 
   [Command]
   public void CmdSetTp(int newTp){
-    print("tp set to " + newTp);
     currentTp = newTp;
   }
 
@@ -165,7 +164,6 @@ public class Unit: NetworkBehaviour {
 
   [Command]
   public void CmdAddTp(int tpToAdd){
-    print("adding tp " + tpToAdd);
     currentTp += tpToAdd;
   }
 
@@ -175,7 +173,6 @@ public class Unit: NetworkBehaviour {
   }
 
   public int TpDiff(){
-    print("i believe my currentTp is " + currentTp);
     return(maxTp - currentTp);
   }
 
@@ -240,7 +237,6 @@ public class Unit: NetworkBehaviour {
   }
 
   public static void SetCurrent(Unit unit){
-    print("setting current unit" + unit);
     if(Unit.current) Unit.current.UnsetMarker();
     Unit.current = unit;
     unit.SetMarker();

@@ -4,27 +4,20 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class GameController : NetworkBehaviour {
-  public GameObject unitPrefab;
+  public enum State { PickAction, PickTarget };
+
   public GameObject playerPrefab;
   public GameObject voxelControllerPrefab;
   public GameObject cursorControllerPrefab;
   public GameObject turnControllerPrefab;
 
-  private List<Unit> units = new List<Unit>();
-  public static List<Player> players = new List<Player>();
-
-  public static bool inputsFrozen = false;
-  public enum State { PickAction, PickTarget };
   public static State state = State.PickAction;
-  public static int selectedActionIndex;
+  public static bool inputsFrozen = false;
   public static GameController instance;
-
-  private bool unitsAdded = false;
-  private bool tpInitialized = false;
-  private bool launched = false;
   public static bool canLaunch = false;
+  public static int selectedActionIndex;
 
-  private int setupIndex = 0;
+  private bool launched = false;
 
   [SyncVar]
   public int playerCount = 0;
