@@ -7,6 +7,7 @@ public class GameController : NetworkBehaviour {
   public enum State { PickAction, PickTarget };
 
   public GameObject playerPrefab;
+  public GameObject unitPrefab;
   public GameObject voxelControllerPrefab;
   public GameObject cursorControllerPrefab;
   public GameObject turnControllerPrefab;
@@ -18,6 +19,7 @@ public class GameController : NetworkBehaviour {
   public static int selectedActionIndex;
 
   private bool launched = false;
+  private int setupIndex = 0;
 
   [SyncVar]
   public int playerCount = 0;
@@ -111,8 +113,8 @@ public class GameController : NetworkBehaviour {
 
   [Command]
   void CmdAddUnits(){
-    units.Add(instance.AddUnit(0, 0, Color.magenta, 0));
-    units.Add(instance.AddUnit(1, 3, Color.blue, 1));
+    instance.AddUnit(0, 0, Color.magenta, 0);
+    instance.AddUnit(1, 3, Color.blue, 1);
   }
 
   private Unit AddUnit(int xPos, int zPos, Color color, int playerIndex){
