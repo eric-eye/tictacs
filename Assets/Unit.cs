@@ -30,6 +30,9 @@ public class Unit: NetworkBehaviour {
   [SyncVar]
   public int zPos;
 
+  private int _currentxPos;
+  private int _currentzPos;
+
   public class CoordinateList : SyncListStruct<CursorController.Coordinate> {};
 
   public int yPos;
@@ -54,6 +57,9 @@ public class Unit: NetworkBehaviour {
   private int _pathIndex = 0;
   private bool _canWalkPath = false;
 
+  [SyncVar(hook = "OnChangeIsCurrent")]
+  public bool isCurrent = false;
+
   [SyncVar]
   public int currentTp = 0;
 
@@ -66,7 +72,10 @@ public class Unit: NetworkBehaviour {
 
   public string defense = "Free";
 
+  [SyncVar(hook = "OnChangeHasActed")]
   public bool hasActed = false;
+
+  [SyncVar(hook = "OnChangeHasMoved")]
   public bool hasMoved = false;
 
   public float attackModifier = 1;
@@ -83,6 +92,9 @@ public class Unit: NetworkBehaviour {
 
     yPos = VoxelController.GetElevation(xPos, zPos);
 
+    _currentxPos = xPos;
+    _currentzPos = zPos;
+
     position.x = xPos + .5f;
     position.z = zPos + .5f;
     position.y = yPos + 1.5f;
@@ -94,7 +106,11 @@ public class Unit: NetworkBehaviour {
     transform.Find("Body").GetComponent<Renderer>().material.color = _color;
     transform.parent = GameObject.Find("Units").transform;
 
+    CursorController.cursorMatrix[xPos][zPos].standingUnit = this;
+
     all.Add(this);
+
+    ReflectCurrent();
 	}
 
   public List<GameObject> Actions(){
@@ -236,14 +252,32 @@ public class Unit: NetworkBehaviour {
     hitsObject.GetComponent<Hits>().damage = difference;
   }
 
-  public static void SetCurrent(Unit unit){
-    if(Unit.current) Unit.current.UnsetMarker();
-    Unit.current = unit;
-    unit.SetMarker();
-    unit.currentMp += 2;
-    if(unit.currentMp > unit.maxMp){
-      unit.currentMp = unit.maxMp;
+  public void OnChangeIsCurrent(bool newIsCurrent){
+    isCurrent = newIsCurrent;
+    ReflectCurrent();
+    GameController.SetStateForPlayer();
+  }
+
+  public void ReflectCurrent(){
+    if(isCurrent) {
+      Unit.current = this;
+      SetMarker();
+    }else{
+      UnsetMarker();
     }
+  }
+
+  [Command]
+  public void CmdSetCurrent(){
+    isCurrent = true;
+    hasMoved = false;
+    hasActed = false;
+    AdvanceBuffs();
+  }
+
+  [Command]
+  public void CmdUnsetCurrent(){
+      isCurrent = false;
   }
 
   public void SetMarker(){
@@ -262,12 +296,15 @@ public class Unit: NetworkBehaviour {
       _path.Add(coordinate);
     }
     hasMoved = true;
-    RpcRefreshMenuAndFreezeInputs();
+    xPos = _path.Last().x;
+    zPos = _path.Last().z;
+    //RpcRefreshMenuAndFreezeInputs();
   }
 
-  [ClientRpc]
-  public void RpcRefreshMenuAndFreezeInputs(){
+  public void StartMoving(){
     _canWalkPath = true;
+    CursorController.cursorMatrix[_currentxPos][_currentzPos].standingUnit = null;
+    CursorController.cursorMatrix[xPos][zPos].standingUnit = this;
     GameController.FreezeInputs();
     Menu.Hide();
     Menu.Show();
@@ -284,7 +321,16 @@ public class Unit: NetworkBehaviour {
 
     action.DoAction(cursor);
     hasActed = true;
-    GameController.instance.RpcDoActionResponse();
+  }
+
+  public void OnChangeHasActed(bool newHasActed){
+    hasActed = newHasActed;
+    if(hasActed) GameController.FinishAction();
+  }
+
+  public void OnChangeHasMoved(bool newHasMoved){
+    hasMoved = newHasMoved;
+    if(hasMoved) StartMoving();
   }
 
   public bool DoneWithTurn(){
@@ -358,23 +404,21 @@ public class Unit: NetworkBehaviour {
         _pathIndex = 0;
       }
 
-      CursorController.cursorMatrix[xPos][zPos].standingUnit = null;
-
       int newY = nextStep.elevation - yPos;
       yPos = yPos + newY;
 
-      if (nextStep.x > xPos) {
+      if (nextStep.x > _currentxPos) {
         direction = new Vector3(1, newY, 0);
-        xPos++;
-      } else if (nextStep.x < xPos) {
+        _currentxPos++;
+      } else if (nextStep.x < _currentxPos) {
         direction = new Vector3(-1, newY, 0);
-        xPos--;
-      } else if (nextStep.z > zPos) {
+        _currentxPos--;
+      } else if (nextStep.z > _currentzPos) {
         direction = new Vector3(0, newY, 1);
-        zPos++;
-      } else if (nextStep.z < zPos) {
+        _currentzPos++;
+      } else if (nextStep.z < _currentzPos) {
         direction = new Vector3(0, newY, -1);
-        zPos--;
+        _currentzPos--;
       } else {
         return;
       }

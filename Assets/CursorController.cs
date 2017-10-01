@@ -84,23 +84,23 @@ public class CursorController : NetworkBehaviour {
     HighlightTiles(_path);
   }
 
-  [Command]
-  public void CmdMoveAlong(int x, int z){
-    List<int[]> path = DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
-    moveEnabled = false;
-    Coordinate[] coordinates = new Coordinate[path.Count];
-    int c = 0;
-    foreach(int[] array in path){
-      Coordinate coordinate = new Coordinate();
-      coordinate.x = array[0];
-      coordinate.z = array[1];
-      coordinate.counter = array[2];
-      coordinate.elevation = array[3];
-      coordinates[c] = coordinate;
-      c++;
-    }
-    Unit.current.CmdSetPath(coordinates);
-  }
+  //[Command]
+  //private void CmdMoveAlong(int x, int z){
+    //List<int[]> path = DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
+    //moveEnabled = false;
+    //Coordinate[] coordinates = new Coordinate[path.Count];
+    //int c = 0;
+    //foreach(int[] array in path){
+      //Coordinate coordinate = new Coordinate();
+      //coordinate.x = array[0];
+      //coordinate.z = array[1];
+      //coordinate.counter = array[2];
+      //coordinate.elevation = array[3];
+      //coordinates[c] = coordinate;
+      //c++;
+    //}
+    //Unit.current.CmdSetPath(coordinates);
+  //}
 
   public static void ResetPath(){
     selected = null;
@@ -200,7 +200,7 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  private static List<int[]> DeriveShortestPath(int xPos, int zPos, int originX, int originZ) {
+  public static List<int[]> DeriveShortestPath(int xPos, int zPos, int originX, int originZ) {
     List<int[]> queue = new List<int[]>();
     List<int[]> shortestPath = new List<int[]>();
     queue.Add(new int[] { xPos, zPos, 0, VoxelController.GetElevation(xPos, zPos) });

@@ -18,6 +18,7 @@ public class Player : NetworkBehaviour {
       CmdSpawnGameController();
     }
     if(isLocalPlayer){
+      print("OK then");
       player = this;
       CmdSetPlayerIndex(GameController.instance.playerCount);
       GameController.instance.CmdBumpPlayerCount();
@@ -82,7 +83,7 @@ public class Player : NetworkBehaviour {
 
   [Command]
   public void CmdMoveAlong(int x, int z) {
-    CursorController.instance.CmdMoveAlong(x, z);
+    GameController.instance.CmdMoveAlong(x, z);
   }
 
   [Command]

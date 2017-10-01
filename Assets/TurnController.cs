@@ -24,15 +24,22 @@ public class TurnController : NetworkBehaviour {
   [Command]
   public void CmdAdvanceTpToNext(){
     CmdAdvanceTp();
-    RpcDoNext();
+    CmdSetCurrentUnit();
   }
-  
-  [ClientRpc]
-  public void RpcDoNext(){
-    GameController.SetCurrentUnit();
-    Unit.current.AdvanceBuffs();
-    CursorController.ShowMoveCells();
-    Menu.Show();
+
+  [Command]
+  public void CmdSetCurrentUnit(){
+    List<Unit> units = Unit.All();
+    units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
+    Unit unit = units[0];
+    if(Unit.current) Unit.current.CmdUnsetCurrent();
+    unit.CmdSetCurrent();
+
+
+    unit.currentMp += 2;
+    if(unit.currentMp > unit.maxMp){
+      unit.currentMp = unit.maxMp;
+    }
   }
 
   public static void Next() {

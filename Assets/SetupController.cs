@@ -15,20 +15,20 @@ public class SetupController : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-    //if(!NetworkServer.active){
-      //return;
-    //}
+    if(!NetworkServer.active){
+      return;
+    }
 
-    //switch (setupIndex)
-    //{
-      //case 0:
-        //CmdAddUnits();
-        //break;
-      //case 1:
-        //TurnController.instance.CmdAdvanceTp();
-        //break;
-    //}
-    //setupIndex++;
+    switch (setupIndex)
+    {
+      case 0:
+        CmdAddUnits();
+        break;
+      case 1:
+        TurnController.instance.CmdAdvanceTp();
+        break;
+    }
+    setupIndex++;
 	}
 
   [Command]
@@ -48,10 +48,6 @@ public class SetupController : NetworkBehaviour {
     unit.playerIndex = playerIndex;
     unit.CmdSetColor(color);
     unit.CmdSetTp(Random.Range(50, 100));
-    CursorController.cursorMatrix[xPos][zPos].standingUnit = unit;
-    print(xPos);
-    print(zPos);
-    print("a2");
     return unit;
   }
 }
