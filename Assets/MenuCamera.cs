@@ -11,11 +11,7 @@ public class MenuCamera : MonoBehaviour {
     main = gameObject;
 	}
 	
-  public static void Show(){
-    main.SetActive(true);
-  }
-
-  public static void Hide(){
-    main.SetActive(false);
+  public static void Refresh(){
+    main.SetActive(GameController.IsCurrentPlayer());
   }
 }

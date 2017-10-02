@@ -41,13 +41,13 @@ public class Menu : MonoBehaviour {
     }
   }
 
-  public static void Show(){
+  public static void Refresh(){
     display.enabled = true;
 
     float yStart = 35;
     int i = 0;
 
-    if(!Unit.current.hasActed){
+    if(Unit.current && !Unit.current.hasActed){
       foreach(GameObject actionObject in Unit.current.Actions()){
         int localIndex = i;
         GameObject buttonObject = Instantiate(menu.actionButtonPrefab, Vector3.zero, Quaternion.identity);
@@ -71,10 +71,7 @@ public class Menu : MonoBehaviour {
 
     int x = 0;
 
-    print("unit hasActed" + Unit.current.hasActed);
-    print("unit hasMoved" + Unit.current.hasMoved);
-
-    if(!Unit.current.hasActed && !Unit.current.hasMoved){
+    if(Unit.current && !Unit.current.hasActed && !Unit.current.hasMoved){
       foreach(GameObject actionObject in Unit.current.stances){
         int localIndex = x;
         GameObject buttonObject = Instantiate(menu.stanceButtonPrefab, Vector3.zero, Quaternion.identity);

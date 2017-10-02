@@ -20,7 +20,6 @@ public class GameController : NetworkBehaviour {
   public static int selectedActionIndex;
 
   private bool launched = false;
-  private int setupIndex = 0;
 
   [SyncVar]
   public int playerCount = 0;
@@ -30,27 +29,7 @@ public class GameController : NetworkBehaviour {
   }
 
   void Start(){
-    if(NetworkServer.active) {
-      instance.CmdSpawnControllers();
-    }
-  }
-
-  [Command]
-  public void CmdBumpPlayerCount(){
-    playerCount++;
-  }
-
-  public static void StartMoving(Unit unit){
-    GameController.FreezeInputs();
-    Menu.Hide();
-  }
-
-  public static void FinishMoving(){
-    CursorController.ShowMoveCells();
-    CursorController.ResetPath();
-    TurnController.Next();
-    UnfreezeInputs();
-    Menu.Show();
+    if(NetworkServer.active) instance.CmdSpawnControllers();
   }
 
   void Update(){
@@ -59,69 +38,6 @@ public class GameController : NetworkBehaviour {
     if(InputController.InputCancel()){
       CursorController.Cancel();
     }
-  }
-
-  public void Launch(){
-    if(Unit.All().Count > 0){
-      SetStateForPlayer();
-      launched = true;
-    }
-  }
-
-  public static void RemoveUnit(Unit unit) {
-    //instance.units.Remove(unit);
-  }
-
-  public static void SetStateForPlayer(){
-    CursorController.ShowMoveCells();
-
-    if(Unit.current && Unit.current.playerIndex == Player.player.playerIndex){
-      SetState(State.PickAction);
-      MenuCamera.Show();
-      Menu.Show();
-      print("showing MenuCamera");
-    }else{
-      print("hiding MenuCamera");
-      MenuCamera.Hide();
-    }
-  }
-
-  [Command]
-  void CmdSpawnControllers(){
-    GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(voxelPrefab);
-
-    GameObject turnPrefab = Instantiate(instance.turnControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(turnPrefab);
-
-    GameObject cursorPrefab = Instantiate(instance.cursorControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(cursorPrefab);
-
-    GameObject setupPrefab = Instantiate(instance.setupControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(setupPrefab);
-  }
-
-  private static void SetState(State newState){
-    state = newState;
-  }
-
-  [Command]
-  public void CmdDoAction(int x, int z, int actionIndex){
-    Unit.current.CmdDoAction(x, z, actionIndex);
-  }
-
-  public static void FinishAction(){
-    Menu.Show();
-    CursorController.HideAttackCursors();
-    SetState(State.PickAction);
-    TurnController.Next();
-  }
-
-  public static void PickAction(int actionIndex){
-    CursorController.Cancel();
-    SetState(State.PickTarget);
-    selectedActionIndex = actionIndex;
-    CursorController.ShowActionCursors(actionIndex);
   }
 
   [Command]
@@ -147,17 +63,83 @@ public class GameController : NetworkBehaviour {
     Unit.current.CmdSetStance(stanceIndex, player);
   }
 
+  [Command]
+  public void CmdDoAction(int x, int z, int actionIndex){
+    Unit.current.CmdDoAction(x, z, actionIndex);
+  }
+
+  [Command]
+  public void CmdBumpPlayerCount(){
+    playerCount++;
+  }
+
+  [Command]
+  private void CmdSpawnControllers(){
+    GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(voxelPrefab);
+
+    GameObject turnPrefab = Instantiate(instance.turnControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(turnPrefab);
+
+    GameObject cursorPrefab = Instantiate(instance.cursorControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(cursorPrefab);
+
+    GameObject setupPrefab = Instantiate(instance.setupControllerPrefab, Vector3.zero, Quaternion.identity);
+    NetworkServer.Spawn(setupPrefab);
+  }
+
+  public static void PickAction(int actionIndex){
+    CursorController.Cancel();
+    SetState(State.PickTarget);
+    selectedActionIndex = actionIndex;
+    CursorController.ShowActionCursors(actionIndex);
+  }
+
+  public static void StartMoving(Unit unit){
+    GameController.FreezeInputs();
+    Menu.Hide();
+  }
+
+  public static void FinishMoving(){
+    CursorController.ShowMoveCells();
+    CursorController.ResetPath();
+    TurnController.Next();
+    UnfreezeInputs();
+    Menu.Refresh();
+  }
+
+  public static void FinishAction(){
+    Menu.Refresh();
+    CursorController.HideAttackCursors();
+    SetState(State.PickAction);
+    TurnController.Next();
+  }
+
+  public static void RemoveUnit(Unit unit) {
+    //instance.units.Remove(unit);
+  }
+
+  public static void RefreshPlayerView(){
+    CursorController.ShowMoveCells();
+    SetState(State.PickAction);
+    Menu.Refresh();
+    MenuCamera.Refresh();
+  }
+
+  public static bool IsCurrentPlayer(){
+    return(Unit.current && Unit.current.playerIndex == Player.player.playerIndex);
+  }
+
   public static void PostStanceChange() {
     CursorController.Cancel();
     CursorController.ShowMoveCells();
-    Menu.Hide();
-    Menu.Show();
+    Menu.Refresh();
   }
 
   public static void CancelAttack(){
     SetState(State.PickAction);
     CursorController.HideAttackCursors();
-    Menu.Show();
+    Menu.Refresh();
   }
 
   public static void FreezeInputs() {
@@ -174,5 +156,16 @@ public class GameController : NetworkBehaviour {
 
   public static void HideProfile(){
     Profile.Hide();
+  }
+
+  private static void SetState(State newState){
+    state = newState;
+  }
+
+  private void Launch(){
+    if(Unit.All().Count > 0){
+      RefreshPlayerView();
+      launched = true;
+    }
   }
 }

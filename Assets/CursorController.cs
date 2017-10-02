@@ -65,7 +65,7 @@ public class CursorController : NetworkBehaviour {
 	}
 
   public static void ShowMoveCells(){
-    if(Unit.current && Unit.current.playerIndex == Player.player.playerIndex && !Unit.current.hasMoved){
+    if(GameController.IsCurrentPlayer() && !Unit.current.hasMoved){
       List <int[]> path = GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
       HighlightMovableTiles(path);
     }else{
@@ -73,36 +73,11 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  public void Confirm(){
-    //if((GameController.state == GameController.State.PickTarget) &&
-        //Cursor.hovered && Cursor.hovered.attack){
-      //GameController.DoAction(Cursor.hovered);
-    //}
-  }
-
   public void ShowPath(){
     selected = Cursor.hovered;
     _path = DeriveShortestPath(selected.xPos, selected.zPos, Unit.current.xPos, Unit.current.zPos);
     HighlightTiles(_path);
   }
-
-  //[Command]
-  //private void CmdMoveAlong(int x, int z){
-    //List<int[]> path = DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
-    //moveEnabled = false;
-    //Coordinate[] coordinates = new Coordinate[path.Count];
-    //int c = 0;
-    //foreach(int[] array in path){
-      //Coordinate coordinate = new Coordinate();
-      //coordinate.x = array[0];
-      //coordinate.z = array[1];
-      //coordinate.counter = array[2];
-      //coordinate.elevation = array[3];
-      //coordinates[c] = coordinate;
-      //c++;
-    //}
-    //Unit.current.CmdSetPath(coordinates);
-  //}
 
   public static void ResetPath(){
     selected = null;

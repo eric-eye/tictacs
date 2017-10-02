@@ -256,7 +256,7 @@ public class Unit: NetworkBehaviour {
   public void OnChangeIsCurrent(bool newIsCurrent){
     isCurrent = newIsCurrent;
     ReflectCurrent();
-    GameController.SetStateForPlayer();
+    GameController.RefreshPlayerView();
   }
 
   public void ReflectCurrent(){
@@ -333,7 +333,7 @@ public class Unit: NetworkBehaviour {
     if(hasActed) {
       GameController.FinishAction();
     }else{
-      GameController.SetStateForPlayer();
+      GameController.RefreshPlayerView();
     }
   }
 
@@ -342,7 +342,7 @@ public class Unit: NetworkBehaviour {
     if(hasMoved) {
       StartMoving();
     }else{
-      GameController.SetStateForPlayer();
+      GameController.RefreshPlayerView();
     }
   }
 
