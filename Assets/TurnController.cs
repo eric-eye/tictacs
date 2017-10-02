@@ -29,12 +29,13 @@ public class TurnController : NetworkBehaviour {
 
   [Command]
   public void CmdSetCurrentUnit(){
-    List<Unit> units = Unit.All();
-    units.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
-    Unit unit = units[0];
-    if(Unit.current) Unit.current.CmdUnsetCurrent();
+    List<GameObject> units = new List<GameObject>();
+    foreach(Transform unitObject in GameObject.Find("Units").transform){
+      units.Add(unitObject.gameObject);
+    }
+    units.Sort((a, b) => a.GetComponent<Unit>().TpDiff().CompareTo(b.GetComponent<Unit>().TpDiff()));
+    Unit unit = units[0].GetComponent<Unit>();
     unit.CmdSetCurrent();
-
 
     unit.currentMp += 2;
     if(unit.currentMp > unit.maxMp){

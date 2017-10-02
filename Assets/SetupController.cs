@@ -25,7 +25,7 @@ public class SetupController : NetworkBehaviour {
         CmdAddUnits();
         break;
       case 1:
-        TurnController.instance.CmdAdvanceTp();
+        TurnController.instance.CmdAdvanceTpToNext();
         break;
     }
     setupIndex++;
@@ -33,11 +33,11 @@ public class SetupController : NetworkBehaviour {
 
   [Command]
   void CmdAddUnits(){
-    AddUnit(0, 0, Color.magenta, 0);
-    AddUnit(1, 3, Color.blue, 1);
+    AddUnit(0, 0, Color.magenta, 0, "pinky", 25);
+    AddUnit(1, 3, Color.blue, 1, "bluey", 15);
   }
 
-  private Unit AddUnit(int xPos, int zPos, Color color, int playerIndex){
+  private Unit AddUnit(int xPos, int zPos, Color color, int playerIndex, string newName, int initialTp){
     GameObject unitObject = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
 
     NetworkServer.Spawn(unitObject);
@@ -47,7 +47,8 @@ public class SetupController : NetworkBehaviour {
     unit.zPos = zPos;
     unit.playerIndex = playerIndex;
     unit.CmdSetColor(color);
-    unit.CmdSetTp(Random.Range(50, 100));
+    unit.unitName = newName;
+    unit.CmdSetTp(initialTp);
     return unit;
   }
 }

@@ -71,6 +71,9 @@ public class Menu : MonoBehaviour {
 
     int x = 0;
 
+    print("unit hasActed" + Unit.current.hasActed);
+    print("unit hasMoved" + Unit.current.hasMoved);
+
     if(!Unit.current.hasActed && !Unit.current.hasMoved){
       foreach(GameObject actionObject in Unit.current.stances){
         int localIndex = x;

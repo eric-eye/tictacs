@@ -65,9 +65,11 @@ public class CursorController : NetworkBehaviour {
 	}
 
   public static void ShowMoveCells(){
-    if(Unit.current.playerIndex == Player.player.playerIndex){
+    if(Unit.current && Unit.current.playerIndex == Player.player.playerIndex && !Unit.current.hasMoved){
       List <int[]> path = GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
       HighlightMovableTiles(path);
+    }else{
+      UnsetMovement();
     }
   }
 
@@ -192,7 +194,7 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  public static void UnsetMovement() {
+  private static void UnsetMovement() {
     foreach(List<Cursor> list in cursorMatrix){
       foreach(Cursor tile in list){
         tile.UnsetMovement();

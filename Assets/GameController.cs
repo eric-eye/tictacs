@@ -40,8 +40,21 @@ public class GameController : NetworkBehaviour {
     playerCount++;
   }
 
+  public static void StartMoving(Unit unit){
+    GameController.FreezeInputs();
+    Menu.Hide();
+  }
+
+  public static void FinishMoving(){
+    CursorController.ShowMoveCells();
+    CursorController.ResetPath();
+    TurnController.Next();
+    UnfreezeInputs();
+    Menu.Show();
+  }
+
   void Update(){
-    if(canLaunch && !launched) Launch();
+    if(canLaunch && !launched && Unit.current) Launch();
 
     if(InputController.InputCancel()){
       CursorController.Cancel();
@@ -50,9 +63,7 @@ public class GameController : NetworkBehaviour {
 
   public void Launch(){
     if(Unit.All().Count > 0){
-      TurnController.instance.CmdSetCurrentUnit();
-      CursorController.ShowMoveCells();
-      Menu.Show();
+      SetStateForPlayer();
       launched = true;
     }
   }
@@ -62,11 +73,15 @@ public class GameController : NetworkBehaviour {
   }
 
   public static void SetStateForPlayer(){
-    SetState(State.PickAction);
     CursorController.ShowMoveCells();
-    if(Unit.current.playerIndex == Player.player.playerIndex){
+
+    if(Unit.current && Unit.current.playerIndex == Player.player.playerIndex){
+      SetState(State.PickAction);
       MenuCamera.Show();
+      Menu.Show();
+      print("showing MenuCamera");
     }else{
+      print("hiding MenuCamera");
       MenuCamera.Hide();
     }
   }
@@ -134,7 +149,6 @@ public class GameController : NetworkBehaviour {
 
   public static void PostStanceChange() {
     CursorController.Cancel();
-    CursorController.UnsetMovement();
     CursorController.ShowMoveCells();
     Menu.Hide();
     Menu.Show();
