@@ -18,7 +18,6 @@ public class Player : NetworkBehaviour {
       CmdSpawnGameController();
     }
     if(isLocalPlayer){
-      print("OK then");
       player = this;
       CmdSetPlayerIndex(GameController.instance.playerCount);
       GameController.instance.CmdBumpPlayerCount();
@@ -91,8 +90,4 @@ public class Player : NetworkBehaviour {
     GameObject gameController = Instantiate(gameControllerPrefab, Vector3.zero, Quaternion.identity);
     NetworkServer.Spawn(gameController);
   }
-
-  void Confirm () {
-  }
-
 }

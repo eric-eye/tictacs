@@ -47,10 +47,6 @@ public class Cursor : MonoBehaviour {
     NegotiateColor();
   }
 
-  //public Voxel GetVoxel(){
-    //return VoxelController.voxelMatrix[xPos][zPos][yPos];
-  //}
-
   public void NegotiateColor(){
     if(hovered == this){
       SetColor(Color.red);
