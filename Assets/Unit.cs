@@ -193,28 +193,6 @@ public class Unit: NetworkBehaviour {
     return(maxTp - currentTp);
   }
 
-  void OnMouseEnter() {
-    Profile.Show(this);
-    hovered = this;
-    SetHighlight();
-  }
-
-  void OnMouseExit() {
-    Profile.Hide();
-    hovered = null;
-    UnsetHighlight();
-  }
-
-  void SetHighlight(){
-    gameObject.transform.Find("Body").GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red * 100);
-    gameObject.transform.Find("Body").GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-  }
-
-  void UnsetHighlight(){
-    gameObject.transform.Find("Body").GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.black);
-    gameObject.transform.Find("Body").GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-  }
-
   private void Die(){
     GameController.RemoveUnit(this);
     Destroy(gameObject);
@@ -262,9 +240,9 @@ public class Unit: NetworkBehaviour {
   public void ReflectCurrent(){
     if(isCurrent) {
       Unit.current = this;
-      SetMarker();
+      GetComponent<UnitUIBehavior>().SetMarker();
     }else{
-      UnsetMarker();
+      GetComponent<UnitUIBehavior>().UnsetMarker();
     }
   }
 
@@ -280,14 +258,6 @@ public class Unit: NetworkBehaviour {
     hasActed = false;
     isCurrent = true;
     AdvanceBuffs();
-  }
-
-  public void SetMarker(){
-    transform.Find("Marker").GetComponent<MeshRenderer>().enabled = true;
-  }
-
-  public void UnsetMarker(){
-    transform.Find("Marker").GetComponent<MeshRenderer>().enabled = false;
   }
 
   [Command]

@@ -49,15 +49,15 @@ public class Cursor : MonoBehaviour {
 
   public void NegotiateColor(){
     if(hovered == this){
-      SetColor(Color.red);
+      SetColor(new Color(1, 0, 0, 0.75f));
     }else if(attack){
-      SetColor(Color.green);
+      SetColor(new Color(0, 1, 0, 0.75f));
     }else if(path){
-      SetColor(Color.blue);
+      SetColor(new Color(0, 0, 1, 0.75f));
     }else if(movable){
-      SetColor(Color.yellow);
+      SetColor(new Color(1, 1, 0, 0.5f));
     }else {
-      SetColor(originalColor);
+      SetColor(new Color(0, 0, 0, 0));
     }
   }
 
