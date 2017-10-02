@@ -194,13 +194,13 @@ public class Unit: NetworkBehaviour {
   }
 
   void OnMouseEnter() {
-    GameController.ShowProfile(this);
+    Profile.Show(this);
     hovered = this;
     SetHighlight();
   }
 
   void OnMouseExit() {
-    GameController.HideProfile();
+    Profile.Hide();
     hovered = null;
     UnsetHighlight();
   }
@@ -231,7 +231,7 @@ public class Unit: NetworkBehaviour {
 
   public void OnStanceIndexChanged(int newStanceIndex){
     stanceIndex = newStanceIndex;
-    GameController.PostStanceChange();
+    GameController.FinishStanceChange();
   }
 
   public IStance Stance(){

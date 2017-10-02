@@ -29,7 +29,7 @@ public class Menu : MonoBehaviour {
     }
   }
 
-  public static void Hide(){
+  private static void Hide(){
     display.enabled = false;
 
     foreach(Transform button in menu.transform.Find("Panel").Find("Actions")){
@@ -42,6 +42,11 @@ public class Menu : MonoBehaviour {
   }
 
   public static void Refresh(){
+    if(GameController.inputsFrozen){
+      Hide();
+      return;
+    }
+
     display.enabled = true;
 
     float yStart = 35;

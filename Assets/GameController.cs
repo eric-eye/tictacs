@@ -97,7 +97,7 @@ public class GameController : NetworkBehaviour {
 
   public static void StartMoving(Unit unit){
     GameController.FreezeInputs();
-    Menu.Hide();
+    Menu.Refresh();
   }
 
   public static void FinishMoving(){
@@ -130,7 +130,7 @@ public class GameController : NetworkBehaviour {
     return(Unit.current && Unit.current.playerIndex == Player.player.playerIndex);
   }
 
-  public static void PostStanceChange() {
+  public static void FinishStanceChange() {
     CursorController.Cancel();
     CursorController.ShowMoveCells();
     Menu.Refresh();
@@ -142,20 +142,12 @@ public class GameController : NetworkBehaviour {
     Menu.Refresh();
   }
 
-  public static void FreezeInputs() {
+  private static void FreezeInputs() {
     inputsFrozen = true;
   }
 
-  public static void UnfreezeInputs() {
+  private static void UnfreezeInputs() {
     inputsFrozen = false;
-  }
-
-  public static void ShowProfile(Unit unit){
-    Profile.Show(unit);
-  }
-
-  public static void HideProfile(){
-    Profile.Hide();
   }
 
   private static void SetState(State newState){
