@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ActionAttack : MonoBehaviour, IAction {
+public class ActionAttack : NetworkBehaviour, IAction {
   public int TpCost(){
     return(25);
   }
@@ -23,10 +24,15 @@ public class ActionAttack : MonoBehaviour, IAction {
     return(false);
   }
 
+  [ClientRpc]
+  public void RpcBeginAction(GameObject targetObject){
+    //if(cursor.standingUnit){
+      //cursor.standingUnit.ReceiveDamage(15);
+    //}
+  }
+
   public void DoAction(Cursor cursor){
-    if(cursor.standingUnit){
-      cursor.standingUnit.ReceiveDamage(15);
-    }
+
   }
 
   public bool NeedsLineOfSight(){

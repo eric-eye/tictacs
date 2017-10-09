@@ -217,10 +217,12 @@ public class Unit: NetworkBehaviour {
   }
 
   public void ReceiveDamage(int damage){
-    damage = Stance().NegotiateDamage(damage);
-    currentHp -= damage;
-    if(currentHp < 1){
-      Die();
+    if(NetworkServer.active){
+      damage = Stance().NegotiateDamage(damage);
+      currentHp -= damage;
+      if(currentHp < 1){
+        Die();
+      }
     }
   }
 
@@ -285,17 +287,23 @@ public class Unit: NetworkBehaviour {
     GameController.StartMoving(this);
   }
 
-  [Command]
-  public void CmdDoAction(int x, int z, int actionIndex){
+  [ClientRpc]
+  public void RpcDoAction(int x, int z, int actionIndex){
     IAction action = Actions()[actionIndex].GetComponent<IAction>();
 
-    currentTp -= action.TpCost();
-    currentMp -= action.MpCost();
+    if(NetworkServer.active){
+      currentTp -= action.TpCost();
+      currentMp -= action.MpCost();
+    }
 
     Cursor cursor = CursorController.cursorMatrix[x][z];
 
-    action.DoAction(cursor);
-    hasActed = true;
+    action.RpcBeginAction(cursor.gameObject);
+  }
+
+  public void FinishAction(){
+    GameController.UnfreezeInputs();
+    if(NetworkServer.active) hasActed = true;
   }
 
   public void OnChangeHasActed(bool newHasActed){

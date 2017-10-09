@@ -65,7 +65,7 @@ public class GameController : NetworkBehaviour {
 
   [Command]
   public void CmdDoAction(int x, int z, int actionIndex){
-    Unit.current.CmdDoAction(x, z, actionIndex);
+    Unit.current.RpcDoAction(x, z, actionIndex);
   }
 
   [Command]
@@ -142,11 +142,11 @@ public class GameController : NetworkBehaviour {
     Menu.Refresh();
   }
 
-  private static void FreezeInputs() {
+  public static void FreezeInputs() {
     inputsFrozen = true;
   }
 
-  private static void UnfreezeInputs() {
+  public static void UnfreezeInputs() {
     inputsFrozen = false;
   }
 

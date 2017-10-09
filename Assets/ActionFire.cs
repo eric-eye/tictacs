@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionFire : MonoBehaviour, IAction {
+public class ActionFire : Action, IAction {
+  public GameObject firePrefab;
+
   public int TpCost(){
     return(35);
   }
@@ -23,10 +25,19 @@ public class ActionFire : MonoBehaviour, IAction {
     return(true);
   }
 
+  public void RpcBeginAction(GameObject targetObject){
+    Cursor cursor = targetObject.GetComponent<Cursor>();
+    GameObject fireObject = Instantiate(firePrefab, cursor.transform.position, Quaternion.identity);
+    Fire fire = fireObject.GetComponent<Fire>();
+    fire.action = this;
+    fire.cursor = cursor;
+  }
+
   public void DoAction(Cursor cursor){
     if(cursor.standingUnit){
       cursor.standingUnit.ReceiveDamage(12);
     }
+    Unit().FinishAction();
   }
 
   public bool NeedsLineOfSight(){

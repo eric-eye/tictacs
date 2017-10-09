@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ActionThrowStone : MonoBehaviour, IAction {
+public class ActionThrowStone : NetworkBehaviour, IAction {
   public int TpCost(){
     return(30);
   }
@@ -23,10 +24,15 @@ public class ActionThrowStone : MonoBehaviour, IAction {
     return(false);
   }
 
+  [ClientRpc]
+  public void RpcBeginAction(GameObject targetObject){
+    //if(cursor.standingUnit){
+      //cursor.standingUnit.ReceiveDamage(5);
+    //}
+  }
+
   public void DoAction(Cursor cursor){
-    if(cursor.standingUnit){
-      cursor.standingUnit.ReceiveDamage(5);
-    }
+
   }
 
   public bool NeedsLineOfSight(){
