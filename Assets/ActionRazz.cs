@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ActionRazz : NetworkBehaviour, IAction {
+public class ActionRazz : Action, IAction {
   public GameObject effectPrefab;
+  public GameObject razzPrefab;
 
   public int TpCost(){
     return(40);
@@ -26,16 +27,20 @@ public class ActionRazz : NetworkBehaviour, IAction {
     return(false);
   }
 
-  [ClientRpc]
-  public void RpcBeginAction(GameObject targetObject){
-    //if(cursor.standingUnit){
-      //GameObject effect = Instantiate(effectPrefab, Vector3.zero, Quaternion.identity);
-      //cursor.standingUnit.ReceiveBuff(effect);
-    //}
+  public void BeginAction(GameObject targetObject){
+    Cursor cursor = targetObject.GetComponent<Cursor>();
+    GameObject razzObject = Instantiate(razzPrefab, cursor.transform.position, Quaternion.identity);
+    Razz razz = razzObject.transform.Find("Razz").GetComponent<Razz>();
+    razz.action = this;
+    razz.cursor = cursor;
   }
 
   public void DoAction(Cursor cursor){
-
+    if(cursor.standingUnit){
+      GameObject effect = Instantiate(effectPrefab, Vector3.zero, Quaternion.identity);
+      cursor.standingUnit.ReceiveBuff(effect);
+    }
+    Unit().FinishAction();
   }
 
   public bool NeedsLineOfSight(){

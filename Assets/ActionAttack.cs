@@ -24,8 +24,7 @@ public class ActionAttack : NetworkBehaviour, IAction {
     return(false);
   }
 
-  [ClientRpc]
-  public void RpcBeginAction(GameObject targetObject){
+  public void BeginAction(GameObject targetObject){
     //if(cursor.standingUnit){
       //cursor.standingUnit.ReceiveDamage(15);
     //}

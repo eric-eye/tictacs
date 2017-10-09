@@ -140,15 +140,11 @@ public class Unit: NetworkBehaviour {
   }
 
   public void ReceiveBuff(GameObject buff){
-    NetworkServer.Spawn(buff);
+    if(NetworkServer.active){
+      NetworkServer.Spawn(buff);
+    }
     buff.transform.parent = transform.Find("Buffs");
-    RpcSyncBuffParent(buff);
     buff.GetComponent<IBuff>().Up(this);
-  }
-
-  [ClientRpc]
-  public void RpcSyncBuffParent(GameObject buff){
-    buff.transform.parent = transform.Find("Buffs");
   }
 
   public List<GameObject> Buffs(){
@@ -298,7 +294,7 @@ public class Unit: NetworkBehaviour {
 
     Cursor cursor = CursorController.cursorMatrix[x][z];
 
-    action.RpcBeginAction(cursor.gameObject);
+    action.BeginAction(cursor.gameObject);
   }
 
   public void FinishAction(){

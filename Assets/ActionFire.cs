@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ActionFire : Action, IAction {
   public GameObject firePrefab;
@@ -18,6 +19,7 @@ public class ActionFire : Action, IAction {
   }
 
   public int MaxDistance(){
+
     return(5);
   }
 
@@ -25,10 +27,10 @@ public class ActionFire : Action, IAction {
     return(true);
   }
 
-  public void RpcBeginAction(GameObject targetObject){
+  public void BeginAction(GameObject targetObject){
     Cursor cursor = targetObject.GetComponent<Cursor>();
     GameObject fireObject = Instantiate(firePrefab, cursor.transform.position, Quaternion.identity);
-    Fire fire = fireObject.GetComponent<Fire>();
+    Fire fire = fireObject.transform.Find("Fire").GetComponent<Fire>();
     fire.action = this;
     fire.cursor = cursor;
   }

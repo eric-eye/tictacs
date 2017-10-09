@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire : MonoBehaviour {
+public class Razz : MonoBehaviour {
 
   public Cursor cursor;
   public IAction action;
