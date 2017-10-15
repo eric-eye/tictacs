@@ -106,7 +106,9 @@ public class Unit: NetworkBehaviour {
 
     transform.Find("Marker").GetComponent<Renderer>().material.color = Color.white;
 
-    transform.Find("Body").GetComponent<Renderer>().material.color = _color;
+    transform.Find("Body").Find("CharacterModel").Find("ArmLeft1").GetComponent<Renderer>().material.color = _color;
+    transform.Find("Body").Find("CharacterModel").Find("ArmRight1").GetComponent<Renderer>().material.color = _color;
+    transform.Find("Body").Find("CharacterModel").Find("Body1").GetComponent<Renderer>().material.color = _color;
     transform.parent = GameObject.Find("Units").transform;
 
     CursorController.cursorMatrix[xPos][zPos].standingUnit = this;
@@ -425,6 +427,11 @@ public class Unit: NetworkBehaviour {
       } else {
         return;
       }
+
+      Vector3 lookDirection = new Vector3(direction.x, 0, direction.z);
+
+      Quaternion rotation = Quaternion.LookRotation(lookDirection);
+      transform.rotation = rotation;
 
       CursorController.cursorMatrix[xPos][zPos].standingUnit = this;
 
