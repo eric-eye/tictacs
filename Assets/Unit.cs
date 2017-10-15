@@ -31,6 +31,9 @@ public class Unit: NetworkBehaviour {
   [SyncVar]
   public int zPos;
 
+  [SyncVar]
+  public bool stanceRevealed = false;
+
   public int currentxPos;
   public int currentzPos;
 
@@ -219,7 +222,8 @@ public class Unit: NetworkBehaviour {
   public void ReceiveDamage(int damage){
     if(NetworkServer.active){
       damage = Stance().NegotiateDamage(damage);
-      print("damage taken: " + damage);
+      stanceRevealed = true;
+      print("stance revealed");
       currentHp -= damage;
       if(currentHp < 1){
         Die();
@@ -258,7 +262,6 @@ public class Unit: NetworkBehaviour {
 
   [Command]
   public void CmdSetCurrent(){
-    print("setCurrent");
     if(Unit.current){
       Unit.current.isCurrent = false;
       //SYNCVAR bug
@@ -267,6 +270,7 @@ public class Unit: NetworkBehaviour {
     hasMoved = false;
     hasActed = false;
     isCurrent = true;
+    stanceRevealed = false;
     AdvanceBuffs();
   }
 

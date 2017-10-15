@@ -38,12 +38,22 @@ public class Profile : MonoBehaviour {
       unitMp.text = "MP: " + unit.currentMp.ToString() + "/" + unit.maxMp.ToString();
       unitTp.text = "TP: " + unit.CurrentTp().ToString() + "/" + unit.maxTp.ToString();
       if(unit.Stance() != null){
-        unitStance.text = "Stance: " + unit.Stance().Name().ToString();
+        unitStance.text = "Stance: " + StanceName();
       }else{
         unitStance.text = "Stance: None";
       }
       unitBuffs.text = "Buffs: " + String.Join(", ", unit.Buffs().Select(a => a.name).ToArray());
     }
+  }
+
+  private string StanceName(){
+    string stanceName = "";
+    if(unit.stanceRevealed || unit.playerIndex == Player.player.playerIndex){
+      stanceName = unit.Stance().Name().ToString();
+    }else{
+      stanceName = "?????";
+    }
+    return(stanceName);
   }
 
   public static void SetUnit(Unit newUnit){
