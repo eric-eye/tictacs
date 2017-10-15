@@ -2,6 +2,7 @@
 #if GRID_FRAMEWORK_PLAYMAKER
 using UnityEngine;
 using GridFramework.Grids;
+using GFGrid = GridFramework.Grids.Grid;
 using FsmStateAction = HutongGames.PlayMaker.FsmStateAction;
 
 namespace HutongGames.PlayMaker.Actions {
@@ -16,7 +17,7 @@ namespace HutongGames.PlayMaker.Actions {
 		///   The GameObject that carries the grid this action will refer to.
 		/// </summary>
 		[RequiredField]
-		[CheckForComponent(typeof(Grid))]
+		[CheckForComponent(typeof(GFGrid))]
 		[Tooltip("GameObject that carries the grid, defaults to the owner of the FSM.")]
 		public FsmOwnerDefault _gridGameObject;
 

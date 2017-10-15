@@ -5,6 +5,16 @@ Changelog {#changelog}
 Version 2.1.x
 -------------
 
+### Version 2.1.6 ###
+
+Fix name conflicts in Unity 2017.2
+
+
+### Version 2.1.5 ###
+
+Fix a name conflict error when using Playmaker actions
+
+
 ### Version 2.1.4 ###
 
 - Fix incorrect algorithm in extension method `NearestFace` for hex grids

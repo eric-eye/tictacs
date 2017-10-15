@@ -47,6 +47,8 @@ public class Unit: NetworkBehaviour {
 
   public static Unit current;
   public GameObject hitsPrefab;
+  public GameObject actionDialoguePrefab;
+  public GameObject stanceDialoguePrefab;
   public static Unit hovered;
 
   public int maxHp = 30;
@@ -215,6 +217,7 @@ public class Unit: NetworkBehaviour {
   public void ReceiveDamage(int damage){
     if(NetworkServer.active){
       damage = Stance().NegotiateDamage(damage);
+      print("damage taken: " + damage);
       currentHp -= damage;
       if(currentHp < 1){
         Die();
@@ -225,8 +228,15 @@ public class Unit: NetworkBehaviour {
   public void OnChangeHp(int newHp){
     int difference = currentHp - newHp;
     currentHp = newHp;
-    GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
-    hitsObject.GetComponent<Hits>().damage = difference;
+
+    System.Action showHits = () => {
+      GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
+      hitsObject.GetComponent<Hits>().damage = difference;
+    };
+
+    GameObject stanceDialogueObject = Instantiate(stanceDialoguePrefab, transform.position, Quaternion.identity);
+    stanceDialogueObject.GetComponent<StanceDialogue>().stance = Stance();
+    stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
   }
 
   public void OnChangeIsCurrent(bool newIsCurrent){
@@ -294,7 +304,12 @@ public class Unit: NetworkBehaviour {
 
     Cursor cursor = CursorController.cursorMatrix[x][z];
 
-    action.BeginAction(cursor.gameObject);
+    GameObject actionDialogueObject = Instantiate(actionDialoguePrefab, transform.position, Quaternion.identity);
+    actionDialogueObject.GetComponent<ActionDialogue>().action = action;
+    System.Action beginAction = () => {
+      action.BeginAction(cursor.gameObject);
+    };
+    actionDialogueObject.GetComponent<ActionDialogue>().whenDone = beginAction;
   }
 
   public void FinishAction(){

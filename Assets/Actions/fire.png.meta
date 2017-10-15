@@ -64,6 +64,7 @@ TextureImporter:
     21300114: red flamewallflame disappear 0017
     21300116: red flamewallflame disappear 0018
     21300118: red flamewallflame disappear 0019
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -72,6 +73,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -87,10 +90,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: 16
     mipBias: -1
-    wrapMode: -1
+    wrapU: -1
+    wrapV: -1
+    wrapW: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -112,6 +118,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -133,6 +140,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 2.3846154}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0001
@@ -146,6 +154,7 @@ TextureImporter:
       pivot: {x: 0.47058824, y: 1.7222222}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0002
@@ -159,6 +168,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 1.4090909}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0003
@@ -172,6 +182,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 1.1071428}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0004
@@ -185,6 +196,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.93939394}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0005
@@ -198,6 +210,7 @@ TextureImporter:
       pivot: {x: 0.5151515, y: 0.81578946}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0006
@@ -211,6 +224,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.775}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0007
@@ -224,6 +238,7 @@ TextureImporter:
       pivot: {x: 0.5151515, y: 0.7380952}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0008
@@ -237,6 +252,7 @@ TextureImporter:
       pivot: {x: 0.5151515, y: 0.6888889}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0009
@@ -250,6 +266,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.64}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0010
@@ -263,6 +280,7 @@ TextureImporter:
       pivot: {x: 0.4848485, y: 0.60784316}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0011
@@ -276,6 +294,7 @@ TextureImporter:
       pivot: {x: 0.4848485, y: 0.5849057}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0012
@@ -289,6 +308,7 @@ TextureImporter:
       pivot: {x: 0.5151515, y: 0.54385966}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0013
@@ -302,6 +322,7 @@ TextureImporter:
       pivot: {x: 0.4848485, y: 0.5344828}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0014
@@ -315,6 +336,7 @@ TextureImporter:
       pivot: {x: 0.51428574, y: 0.51666665}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0015
@@ -328,6 +350,7 @@ TextureImporter:
       pivot: {x: 0.47619048, y: 0.4920635}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0016
@@ -341,6 +364,7 @@ TextureImporter:
       pivot: {x: 0.52272725, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0017
@@ -354,6 +378,7 @@ TextureImporter:
       pivot: {x: 0.5217391, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0018
@@ -367,6 +392,7 @@ TextureImporter:
       pivot: {x: 0.4848485, y: 0.55172414}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame appear 0019
@@ -380,6 +406,7 @@ TextureImporter:
       pivot: {x: 0.425, y: 0.516129}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0000
@@ -393,6 +420,7 @@ TextureImporter:
       pivot: {x: 0.45238096, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0001
@@ -406,6 +434,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.51666665}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0002
@@ -419,6 +448,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.51666665}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0003
@@ -432,6 +462,7 @@ TextureImporter:
       pivot: {x: 0.4848485, y: 0.5254237}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0004
@@ -445,6 +476,7 @@ TextureImporter:
       pivot: {x: 0.4848485, y: 0.51666665}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0005
@@ -458,6 +490,7 @@ TextureImporter:
       pivot: {x: 0.58536583, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0006
@@ -471,6 +504,7 @@ TextureImporter:
       pivot: {x: 0.5263158, y: 0.516129}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0007
@@ -484,6 +518,7 @@ TextureImporter:
       pivot: {x: 0.4864865, y: 0.516129}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0008
@@ -497,6 +532,7 @@ TextureImporter:
       pivot: {x: 0.47058824, y: 0.5344828}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0009
@@ -510,6 +546,7 @@ TextureImporter:
       pivot: {x: 0.5121951, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0010
@@ -523,6 +560,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5254237}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0011
@@ -536,6 +574,7 @@ TextureImporter:
       pivot: {x: 0.5675676, y: 0.516129}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0012
@@ -549,6 +588,7 @@ TextureImporter:
       pivot: {x: 0.5151515, y: 0.56363636}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0013
@@ -562,6 +602,7 @@ TextureImporter:
       pivot: {x: 0.5294118, y: 0.5535714}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0014
@@ -575,6 +616,7 @@ TextureImporter:
       pivot: {x: 0.55263156, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0015
@@ -588,6 +630,7 @@ TextureImporter:
       pivot: {x: 0.53846157, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0016
@@ -601,6 +644,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0017
@@ -614,6 +658,7 @@ TextureImporter:
       pivot: {x: 0.4878049, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0018
@@ -627,6 +672,7 @@ TextureImporter:
       pivot: {x: 0.5151515, y: 0.54385966}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame burn 0019
@@ -640,6 +686,7 @@ TextureImporter:
       pivot: {x: 0.41463414, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0000
@@ -653,6 +700,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5081967}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0001
@@ -666,6 +714,7 @@ TextureImporter:
       pivot: {x: 0.575, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0002
@@ -679,6 +728,7 @@ TextureImporter:
       pivot: {x: 0.43589744, y: 0.51666665}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0003
@@ -692,6 +742,7 @@ TextureImporter:
       pivot: {x: 0.52380955, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0004
@@ -705,6 +756,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.60784316}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0005
@@ -718,6 +770,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.6666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0006
@@ -731,6 +784,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.6818182}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0007
@@ -744,6 +798,7 @@ TextureImporter:
       pivot: {x: 0.4814815, y: 0.71428573}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0008
@@ -757,6 +812,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.73170733}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0009
@@ -770,6 +826,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.88235295}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0010
@@ -783,6 +840,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.90909094}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0011
@@ -796,6 +854,7 @@ TextureImporter:
       pivot: {x: 0.5263158, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0012
@@ -809,6 +868,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 1.0714285}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0013
@@ -822,6 +882,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 1.3043479}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0014
@@ -835,6 +896,7 @@ TextureImporter:
       pivot: {x: 0.53333336, y: 1.3636364}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0015
@@ -848,6 +910,7 @@ TextureImporter:
       pivot: {x: 0.62857145, y: 1.1923077}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0016
@@ -861,6 +924,7 @@ TextureImporter:
       pivot: {x: 0.76, y: 1.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0017
@@ -874,6 +938,7 @@ TextureImporter:
       pivot: {x: 0.77272725, y: 1.3181819}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0018
@@ -887,6 +952,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 2.0714285}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: red flamewallflame disappear 0019
@@ -900,8 +966,10 @@ TextureImporter:
       pivot: {x: 0.5, y: 3.2222223}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

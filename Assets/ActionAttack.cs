@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ActionAttack : NetworkBehaviour, IAction {
+public class ActionAttack : Action, IAction {
+  public GameObject slashPrefab;
+
   public int TpCost(){
     return(25);
   }
@@ -25,13 +27,18 @@ public class ActionAttack : NetworkBehaviour, IAction {
   }
 
   public void BeginAction(GameObject targetObject){
-    //if(cursor.standingUnit){
-      //cursor.standingUnit.ReceiveDamage(15);
-    //}
+    Cursor cursor = targetObject.GetComponent<Cursor>();
+    GameObject slashObject = Instantiate(slashPrefab, cursor.transform.position, Quaternion.identity);
+    Slash slash = slashObject.transform.Find("Slash").GetComponent<Slash>();
+    slash.action = this;
+    slash.cursor = cursor;
   }
 
   public void DoAction(Cursor cursor){
-
+    if(cursor.standingUnit){
+      cursor.standingUnit.ReceiveDamage(15);
+    }
+    Unit().FinishAction();
   }
 
   public bool NeedsLineOfSight(){

@@ -25,6 +25,7 @@ TextureImporter:
     21300036: windmagic fogflow 0018
     21300038: windmagic fogflow 0019
     21300040: windmagic fogflow 0020
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -33,6 +34,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -48,10 +51,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: -1
+    wrapU: -1
+    wrapV: -1
+    wrapW: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -73,6 +79,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -94,6 +101,7 @@ TextureImporter:
       pivot: {x: 0.5555556, y: 2.4444444}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0001
@@ -107,6 +115,7 @@ TextureImporter:
       pivot: {x: 0.5416667, y: 1.0869565}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0002
@@ -120,6 +129,7 @@ TextureImporter:
       pivot: {x: 0.29411766, y: 0.7058824}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0003
@@ -133,6 +143,7 @@ TextureImporter:
       pivot: {x: 0.52380955, y: 1.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0004
@@ -146,6 +157,7 @@ TextureImporter:
       pivot: {x: 0.5217391, y: 1.0434783}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0005
@@ -159,6 +171,7 @@ TextureImporter:
       pivot: {x: 0.52, y: 0.9230769}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0006
@@ -172,6 +185,7 @@ TextureImporter:
       pivot: {x: 0.5185185, y: 0.8518519}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0007
@@ -185,6 +199,7 @@ TextureImporter:
       pivot: {x: 0.51724136, y: 0.79310346}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0008
@@ -198,6 +213,7 @@ TextureImporter:
       pivot: {x: 0.5151515, y: 0.7419355}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0009
@@ -211,6 +227,7 @@ TextureImporter:
       pivot: {x: 0.5294118, y: 0.6666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0010
@@ -224,6 +241,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.62857145}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0011
@@ -237,6 +255,7 @@ TextureImporter:
       pivot: {x: 0.5263158, y: 0.5897436}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0012
@@ -250,6 +269,7 @@ TextureImporter:
       pivot: {x: 0.5121951, y: 0.5609756}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0013
@@ -263,6 +283,7 @@ TextureImporter:
       pivot: {x: 0.5116279, y: 0.52380955}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0014
@@ -276,6 +297,7 @@ TextureImporter:
       pivot: {x: 0.51111114, y: 0.4883721}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0015
@@ -289,6 +311,7 @@ TextureImporter:
       pivot: {x: 0.5208333, y: 0.4680851}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0016
@@ -302,6 +325,7 @@ TextureImporter:
       pivot: {x: 0.5208333, y: 0.4375}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0017
@@ -315,6 +339,7 @@ TextureImporter:
       pivot: {x: 0.5294118, y: 0.41666666}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0018
@@ -328,6 +353,7 @@ TextureImporter:
       pivot: {x: 0.55172414, y: 0.5081967}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0019
@@ -341,6 +367,7 @@ TextureImporter:
       pivot: {x: 0.48, y: 0.40816328}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: windmagic fogflow 0020
@@ -354,8 +381,10 @@ TextureImporter:
       pivot: {x: 0.3809524, y: 0.5423729}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: -1
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

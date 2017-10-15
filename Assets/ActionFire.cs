@@ -19,7 +19,6 @@ public class ActionFire : Action, IAction {
   }
 
   public int MaxDistance(){
-
     return(5);
   }
 
