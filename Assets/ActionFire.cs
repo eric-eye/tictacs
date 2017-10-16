@@ -27,6 +27,8 @@ public class ActionFire : Action, IAction {
   }
 
   public void BeginAction(GameObject targetObject){
+    used = true;
+
     Cursor cursor = targetObject.GetComponent<Cursor>();
     GameObject fireObject = Instantiate(firePrefab, cursor.transform.position, Quaternion.identity);
     Fire fire = fireObject.transform.Find("Fire").GetComponent<Fire>();

@@ -16,12 +16,14 @@ public class UnitUIBehavior : MonoBehaviour {
 
   void OnMouseEnter() {
     Profile.Show(GetComponent<Unit>());
+    AdvancedProfile.Show(GetComponent<Unit>());
     Unit.hovered = GetComponent<Unit>();
     SetHighlight();
   }
 
   void OnMouseExit() {
     Profile.Hide();
+    AdvancedProfile.Hide();
     Unit.hovered = null;
     UnsetHighlight();
   }

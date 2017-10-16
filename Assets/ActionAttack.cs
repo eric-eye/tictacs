@@ -27,6 +27,8 @@ public class ActionAttack : Action, IAction {
   }
 
   public void BeginAction(GameObject targetObject){
+    used = true;
+
     Cursor cursor = targetObject.GetComponent<Cursor>();
     GameObject slashObject = Instantiate(slashPrefab, cursor.transform.position, Quaternion.identity);
     Slash slash = slashObject.transform.Find("Slash").GetComponent<Slash>();
