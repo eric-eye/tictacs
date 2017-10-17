@@ -77,11 +77,11 @@ public class Menu : MonoBehaviour {
     int x = 0;
 
     if(Unit.current && !Unit.current.hasActed && !Unit.current.hasMoved){
-      foreach(GameObject actionObject in Unit.current.stances){
+      foreach(GameObject actionObject in Unit.current.Stances()){
         int localIndex = x;
         GameObject buttonObject = Instantiate(menu.stanceButtonPrefab, Vector3.zero, Quaternion.identity);
         buttonObject.transform.parent = menu.transform.Find("Panel").Find("Stances");
-        IStance stance = Unit.current.stances[x].GetComponent<IStance>();
+        IStance stance = Unit.current.Stances()[x].GetComponent<IStance>();
         string newName = stance.Name();
         if(stance == Unit.current.Stance()) newName = newName + " *";
         buttonObject.transform.position = menu.transform.Find("Panel").transform.position;

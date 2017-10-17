@@ -28,7 +28,7 @@ public class ActionRazz : Action, IAction {
   }
 
   public void BeginAction(GameObject targetObject){
-    used = true;
+    if(NetworkServer.active) used = true;
 
     Cursor cursor = targetObject.GetComponent<Cursor>();
     GameObject razzObject = Instantiate(razzPrefab, cursor.transform.position, Quaternion.identity);

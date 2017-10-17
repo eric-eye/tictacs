@@ -27,7 +27,7 @@ public class ActionThrowStone : Action, IAction {
   }
 
   public void BeginAction(GameObject targetObject){
-    used = true;
+    if(NetworkServer.active) used = true;
 
     Cursor cursor = targetObject.GetComponent<Cursor>();
     GameObject stoneObject = Instantiate(stonePrefab, Unit().transform.position, Quaternion.identity);

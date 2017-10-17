@@ -9,7 +9,6 @@ using System.Linq;
 
 public class Unit: NetworkBehaviour {
 
-  public GameObject[] stances;
   public string unitName;
 
   private bool _isMoving;
@@ -118,6 +117,34 @@ public class Unit: NetworkBehaviour {
 
     all.Add(this);
 
+    if(NetworkServer.active){
+      GameObject instance;
+
+      instance = Instantiate(Resources.Load("ActionAttack", typeof(GameObject))) as GameObject;
+      NetworkServer.Spawn(instance);
+      instance.GetComponent<Action>().parentNetId = netId;
+
+      instance = Instantiate(Resources.Load("ActionFire", typeof(GameObject))) as GameObject;
+      NetworkServer.Spawn(instance);
+      instance.GetComponent<Action>().parentNetId = netId;
+
+      instance = Instantiate(Resources.Load("ActionRazz", typeof(GameObject))) as GameObject;
+      NetworkServer.Spawn(instance);
+      instance.GetComponent<Action>().parentNetId = netId;
+
+      instance = Instantiate(Resources.Load("ActionThrowStone", typeof(GameObject))) as GameObject;
+      NetworkServer.Spawn(instance);
+      instance.GetComponent<Action>().parentNetId = netId;
+
+      instance = Instantiate(Resources.Load("StanceNeutral", typeof(GameObject))) as GameObject;
+      NetworkServer.Spawn(instance);
+      instance.GetComponent<Stance>().parentNetId = netId;
+
+      instance = Instantiate(Resources.Load("StanceDefend", typeof(GameObject))) as GameObject;
+      NetworkServer.Spawn(instance);
+      instance.GetComponent<Stance>().parentNetId = netId;
+    }
+
     ReflectCurrent();
 	}
 
@@ -127,6 +154,14 @@ public class Unit: NetworkBehaviour {
       actions.Add(child.gameObject);
     }
     return(actions);
+  }
+
+  public List<GameObject> Stances(){
+    List<GameObject> stances = new List<GameObject>();
+    foreach(Transform child in transform.Find("Stances")){
+      stances.Add(child.gameObject);
+    }
+    return(stances);
   }
 
   public static List<Unit> All(){
@@ -216,14 +251,18 @@ public class Unit: NetworkBehaviour {
   }
 
   public IStance Stance(){
-    return(stances[stanceIndex].GetComponent<IStance>());
+    return(Stances()[stanceIndex].GetComponent<IStance>());
   }
 
   public void ReceiveDamage(int damage){
     if(NetworkServer.active){
+      foreach(GameObject stance in Stances()){
+          if(stance.GetComponent<IStance>() == Stance()){
+            stance.GetComponent<Stance>().used = true;
+          }
+      }
       damage = Stance().NegotiateDamage(damage);
       stanceRevealed = true;
-      print("stance revealed");
       currentHp -= damage;
       if(currentHp < 1){
         Die();

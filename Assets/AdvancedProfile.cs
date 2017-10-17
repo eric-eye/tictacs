@@ -44,8 +44,16 @@ public class AdvancedProfile : MonoBehaviour {
     i = 0;
 
     foreach(Transform stanceTransform in display.transform.Find("Panel").Find("Stances")){
-      if(i < newUnit.stances.Length){
-        stanceTransform.GetComponent<Text>().text = newUnit.stances[i].GetComponent<IStance>().Name();
+      Unit unit = newUnit.GetComponent<Unit>();
+
+      if(i < unit.Stances().Count){
+        string stanceName = "????";
+        print(newUnit.Stances()[i].GetComponent<Stance>());
+        print(newUnit.Stances()[i].GetComponent<Stance>().used);
+        if(newUnit.Stances()[i].GetComponent<Stance>().used || newUnit.playerIndex == Player.player.playerIndex){
+          stanceName = newUnit.Stances()[i].GetComponent<IStance>().Name();
+        }
+        stanceTransform.GetComponent<Text>().text = stanceName;
       }else{
         stanceTransform.GetComponent<Text>().text = "";
       }

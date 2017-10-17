@@ -27,7 +27,7 @@ public class ActionFire : Action, IAction {
   }
 
   public void BeginAction(GameObject targetObject){
-    used = true;
+    if(NetworkServer.active) used = true;
 
     Cursor cursor = targetObject.GetComponent<Cursor>();
     GameObject fireObject = Instantiate(firePrefab, cursor.transform.position, Quaternion.identity);

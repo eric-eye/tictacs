@@ -27,7 +27,7 @@ public class ActionAttack : Action, IAction {
   }
 
   public void BeginAction(GameObject targetObject){
-    used = true;
+    if(NetworkServer.active) used = true;
 
     Cursor cursor = targetObject.GetComponent<Cursor>();
     GameObject slashObject = Instantiate(slashPrefab, cursor.transform.position, Quaternion.identity);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StanceDefend : MonoBehaviour, IStance {
+public class StanceDefend : Stance, IStance {
 
   public int NegotiateDamage(int damage){
     return(damage - 4);
