@@ -335,11 +335,13 @@ public class Unit: NetworkBehaviour {
 
   public void StartMoving(){
     _canWalkPath = true;
+    ActionInformation.Hide();
     GameController.StartMoving(this);
   }
 
   [ClientRpc]
   public void RpcDoAction(int x, int z, int actionIndex){
+    ActionInformation.Hide();
     IAction action = Actions()[actionIndex].GetComponent<IAction>();
 
     if(NetworkServer.active){

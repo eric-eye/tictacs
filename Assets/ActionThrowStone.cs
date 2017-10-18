@@ -18,6 +18,10 @@ public class ActionThrowStone : Action, IAction {
     return("Throw Stone");
   }
 
+  public string Description(){
+    return("Throw a stone at your target. Needs line of sight");
+  }
+
   public int MaxDistance(){
     return(5);
   }

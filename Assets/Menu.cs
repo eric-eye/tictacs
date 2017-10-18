@@ -29,7 +29,7 @@ public class Menu : MonoBehaviour {
     }
   }
 
-  private static void Hide(){
+  public static void Hide(){
     display.enabled = false;
 
     foreach(Transform button in menu.transform.Find("Panel").Find("Actions")){

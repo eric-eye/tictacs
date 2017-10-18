@@ -56,6 +56,8 @@ public class CursorController : NetworkBehaviour {
 
 	// Update is called once per frame
 	public static void Cancel () {
+    ActionInformation.Hide();
+
     if (GameController.state == GameController.State.PickAction && selected){
       ResetPath();
     }
@@ -74,12 +76,15 @@ public class CursorController : NetworkBehaviour {
   }
 
   public void ShowPath(){
+    ActionInformation.Show("Movement", "0", "0", "You know, lets you move");
+    Menu.Hide();
     selected = Cursor.hovered;
     _path = DeriveShortestPath(selected.xPos, selected.zPos, Unit.current.xPos, Unit.current.zPos);
     HighlightTiles(_path);
   }
 
   public static void ResetPath(){
+    Menu.Refresh();
     selected = null;
     foreach(List<Cursor> list in cursorMatrix){
       foreach(Cursor tile in list){
@@ -99,6 +104,8 @@ public class CursorController : NetworkBehaviour {
 
   public static void ShowActionCursors(int actionIndex){
     IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
+
+    ActionInformation.Show(action.Name(), action.TpCost().ToString(), action.MpCost().ToString(), action.Description());
 
     int xPos = Unit.current.xPos;
     int zPos = Unit.current.zPos;

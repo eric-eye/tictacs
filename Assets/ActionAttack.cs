@@ -26,6 +26,10 @@ public class ActionAttack : Action, IAction {
     return(false);
   }
 
+  public string Description(){
+    return("A basic attack. You know, swipe your sword or whatever");
+  }
+
   public void BeginAction(GameObject targetObject){
     if(NetworkServer.active) used = true;
 

@@ -18,6 +18,10 @@ public class ActionRazz : Action, IAction {
   public string Name(){
     return("Razz");
   }
+  
+  public string Description(){
+    return("Annoy your target. Reduces attack for three turns.");
+  }
 
   public int MaxDistance(){
     return(4);

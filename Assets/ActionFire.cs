@@ -17,6 +17,10 @@ public class ActionFire : Action, IAction {
   public string Name(){
     return("Fire");
   }
+  
+  public string Description(){
+    return("Cast a fire spell. Direct damage.");
+  }
 
   public int MaxDistance(){
     return(5);

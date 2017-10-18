@@ -8,6 +8,7 @@ public interface IAction {
   int MaxDistance();
 
   string Name();
+  string Description();
 
   bool CanTargetSelf();
   bool NeedsLineOfSight();
