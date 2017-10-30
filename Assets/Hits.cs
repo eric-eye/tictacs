@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class Hits : MonoBehaviour {
 
   private Text text;
-  public int damage;
+  public string damage;
   private float lifetime = 0;
 
 
 	// Use this for initialization
 	void Start () {
     text = GetComponent<Text>();
-    text.text = damage.ToString();
+    text.text = damage;
     transform.parent = GameObject.Find("Popups").transform;
     transform.position = GameObject.Find("Main Camera").GetComponent<Camera>().WorldToScreenPoint(transform.position);
 	}

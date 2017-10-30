@@ -268,20 +268,44 @@ public class Unit: NetworkBehaviour {
         Die();
       }
     }
+
+    System.Action showHits = () => {
+      GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
+      hitsObject.GetComponent<Hits>().damage = damage.ToString() + " HP";
+    };
+
+    GameObject stanceDialogueObject = Instantiate(stanceDialoguePrefab, transform.position, Quaternion.identity);
+    stanceDialogueObject.GetComponent<StanceDialogue>().stance = Stance();
+    stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
+  }
+
+  public void ReceiveTpDamage(int damage){
+    if(NetworkServer.active){
+      CmdSetTp(currentTp - damage);
+    }
+
+    System.Action showHits = () => {
+      GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
+      hitsObject.GetComponent<Hits>().damage = damage.ToString() + " TP";
+    };
+
+    GameObject stanceDialogueObject = Instantiate(stanceDialoguePrefab, transform.position, Quaternion.identity);
+    stanceDialogueObject.GetComponent<StanceDialogue>().stance = Stance();
+    stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
   }
 
   public void OnChangeHp(int newHp){
     int difference = currentHp - newHp;
     currentHp = newHp;
 
-    System.Action showHits = () => {
-      GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
-      hitsObject.GetComponent<Hits>().damage = difference;
-    };
+    // System.Action showHits = () => {
+    //   GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
+    //   hitsObject.GetComponent<Hits>().damage = difference;
+    // };
 
-    GameObject stanceDialogueObject = Instantiate(stanceDialoguePrefab, transform.position, Quaternion.identity);
-    stanceDialogueObject.GetComponent<StanceDialogue>().stance = Stance();
-    stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
+    // GameObject stanceDialogueObject = Instantiate(stanceDialoguePrefab, transform.position, Quaternion.identity);
+    // stanceDialogueObject.GetComponent<StanceDialogue>().stance = Stance();
+    // stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
   }
 
   public void OnChangeIsCurrent(bool newIsCurrent){

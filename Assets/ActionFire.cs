@@ -41,13 +41,21 @@ public class ActionFire : Action, IAction {
   }
 
   public void DoAction(Cursor cursor){
-    if(cursor.standingUnit){
-      cursor.standingUnit.ReceiveDamage(12);
-    }
-    Unit().FinishAction();
+    StartCoroutine(DoStuff(cursor));
   }
 
   public bool NeedsLineOfSight(){
     return(false);
+  }
+
+  private IEnumerator DoStuff(Cursor cursor){
+    if(cursor.standingUnit){
+      cursor.standingUnit.ReceiveDamage(12);
+    }
+    yield return new WaitForSeconds(0.5f);
+    if(cursor.standingUnit){
+      cursor.standingUnit.ReceiveTpDamage(20);
+    }
+    Unit().FinishAction();
   }
 }

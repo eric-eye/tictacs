@@ -89,6 +89,7 @@ public class Menu : MonoBehaviour {
         buttonObject.transform.Find("Text").GetComponent<Text>().text = newName;
         buttonObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(80, yStart - (x * 30));
         buttonObject.GetComponent<Button>().onClick.AddListener(() => Menu.menu.PickStance(localIndex));
+        buttonObject.GetComponent<StanceButton>().stanceIndex = localIndex;
 
         x++;
       }

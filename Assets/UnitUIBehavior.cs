@@ -17,6 +17,7 @@ public class UnitUIBehavior : MonoBehaviour {
   void OnMouseEnter() {
     Profile.Show(GetComponent<Unit>());
     AdvancedProfile.Show(GetComponent<Unit>());
+    TurnOrder.Show();
     Unit.hovered = GetComponent<Unit>();
     SetHighlight();
   }
@@ -24,6 +25,7 @@ public class UnitUIBehavior : MonoBehaviour {
   void OnMouseExit() {
     Profile.Hide();
     AdvancedProfile.Hide();
+    TurnOrder.Hide();
     Unit.hovered = null;
     UnsetHighlight();
   }
