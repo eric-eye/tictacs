@@ -12,6 +12,5 @@ public interface IAction {
 
   bool CanTargetSelf();
   bool NeedsLineOfSight();
-  void BeginAction(GameObject targetObject);
   void DoAction(Cursor cursor);
 }

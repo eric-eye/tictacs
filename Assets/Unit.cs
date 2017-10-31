@@ -120,29 +120,25 @@ public class Unit: NetworkBehaviour {
     if(NetworkServer.active){
       GameObject instance;
 
-      instance = Instantiate(Resources.Load("ActionAttack", typeof(GameObject))) as GameObject;
-      NetworkServer.Spawn(instance);
-      instance.GetComponent<Action>().parentNetId = netId;
+      List<string> actionList = new List<string> {
+        "DelayAttack", "Fire", "Razz", "ThrowStone" 
+      };
 
-      instance = Instantiate(Resources.Load("ActionFire", typeof(GameObject))) as GameObject;
-      NetworkServer.Spawn(instance);
-      instance.GetComponent<Action>().parentNetId = netId;
+      List<string> stanceList = new List<string> {
+        "Neutral", "Defend"
+      };
 
-      instance = Instantiate(Resources.Load("ActionRazz", typeof(GameObject))) as GameObject;
-      NetworkServer.Spawn(instance);
-      instance.GetComponent<Action>().parentNetId = netId;
+      foreach(string actionName in actionList){
+        instance = Instantiate(Resources.Load("Actions/Action" + actionName, typeof(GameObject))) as GameObject;
+        NetworkServer.Spawn(instance);
+        instance.GetComponent<Action>().parentNetId = netId;
+      }
 
-      instance = Instantiate(Resources.Load("ActionThrowStone", typeof(GameObject))) as GameObject;
-      NetworkServer.Spawn(instance);
-      instance.GetComponent<Action>().parentNetId = netId;
-
-      instance = Instantiate(Resources.Load("StanceNeutral", typeof(GameObject))) as GameObject;
-      NetworkServer.Spawn(instance);
-      instance.GetComponent<Stance>().parentNetId = netId;
-
-      instance = Instantiate(Resources.Load("StanceDefend", typeof(GameObject))) as GameObject;
-      NetworkServer.Spawn(instance);
-      instance.GetComponent<Stance>().parentNetId = netId;
+      foreach(string stanceName in stanceList){
+        instance = Instantiate(Resources.Load("Stances/Stance" + stanceName, typeof(GameObject))) as GameObject;
+        NetworkServer.Spawn(instance);
+        instance.GetComponent<Stance>().parentNetId = netId;
+      }
     }
 
     ReflectCurrent();
@@ -366,7 +362,8 @@ public class Unit: NetworkBehaviour {
   [ClientRpc]
   public void RpcDoAction(int x, int z, int actionIndex){
     ActionInformation.Hide();
-    IAction action = Actions()[actionIndex].GetComponent<IAction>();
+    GameObject actionObject = Actions()[actionIndex];
+    IAction action = actionObject.GetComponent<IAction>();
 
     if(NetworkServer.active){
       currentTp -= action.TpCost();
@@ -378,7 +375,7 @@ public class Unit: NetworkBehaviour {
     GameObject actionDialogueObject = Instantiate(actionDialoguePrefab, transform.position, Quaternion.identity);
     actionDialogueObject.GetComponent<ActionDialogue>().action = action;
     System.Action beginAction = () => {
-      action.BeginAction(cursor.gameObject);
+      actionObject.GetComponent<Action>().BeginAction(cursor.gameObject);
     };
     actionDialogueObject.GetComponent<ActionDialogue>().whenDone = beginAction;
   }

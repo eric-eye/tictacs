@@ -1,12 +1,12 @@
 version: 2
 importPivots: 1
 tpsheetFileNames:
-- Assets/Actions/fire.tpsheet
-- Assets/Actions/razz.tpsheet
+- Assets/ActionVisuals/Fire/fire.tpsheet
+- Assets/ActionVisuals/Razz/razz.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
 textureFileNames:
-- Assets/Actions/fire.png
-- Assets/Actions/razz.png
+- Assets/ActionVisuals/Fire/fire.png
+- Assets/ActionVisuals/Razz/razz.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
 - 

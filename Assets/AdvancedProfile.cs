@@ -48,8 +48,6 @@ public class AdvancedProfile : MonoBehaviour {
 
       if(i < unit.Stances().Count){
         string stanceName = "????";
-        print(newUnit.Stances()[i].GetComponent<Stance>());
-        print(newUnit.Stances()[i].GetComponent<Stance>().used);
         if(newUnit.Stances()[i].GetComponent<Stance>().used || newUnit.playerIndex == Player.player.playerIndex){
           stanceName = newUnit.Stances()[i].GetComponent<IStance>().Name();
         }

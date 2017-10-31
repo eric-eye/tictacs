@@ -52,6 +52,10 @@ public class Player : NetworkBehaviour {
       }
 
       if((GameController.state == GameController.State.PickTarget) && Cursor.hovered && Cursor.hovered.attack){
+        GameController.ConfirmAction(Cursor.hovered);
+      }else if((GameController.state == GameController.State.ConfirmTarget) && Cursor.hovered && !Cursor.hovered.attackConfirm && Cursor.hovered.attack){
+        GameController.ConfirmAction(Cursor.hovered);
+      }else if((GameController.state == GameController.State.ConfirmTarget) && Cursor.hovered && Cursor.hovered.attackConfirm){
         GameController.FreezeInputs();
         CmdDoAction(Cursor.hovered.xPos, Cursor.hovered.zPos, GameController.selectedActionIndex);
       }

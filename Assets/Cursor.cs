@@ -13,6 +13,7 @@ public class Cursor : MonoBehaviour {
   public int yPos;
   public Unit standingUnit;
   public bool attack = false;
+  public bool attackConfirm = false;
   public Color originalColor;
   public bool movable = false;
 
@@ -47,9 +48,15 @@ public class Cursor : MonoBehaviour {
     NegotiateColor();
   }
 
+  void RefreshBorder(bool show){
+    GetComponent<LineRenderer>().enabled = show;
+  }
+
   public void NegotiateColor(){
-    if(hovered == this){
-      SetColor(new Color(1, 0, 0, 0.75f));
+    RefreshBorder(hovered == this);
+
+    if(attackConfirm){
+      SetColor(new Color(1, 0, 1, 0.75f));
     }else if(attack){
       SetColor(new Color(0, 1, 0, 0.75f));
     }else if(path){
@@ -86,8 +93,18 @@ public class Cursor : MonoBehaviour {
     NegotiateColor();
   }
 
+  public void SetAttackConfirm(){
+    attackConfirm = true;
+    NegotiateColor();
+  }
+
   public void UnsetAttack(){
     attack = false;
+    NegotiateColor();
+  }
+
+  public void UnsetAttackConfirm(){
+    attackConfirm = false;
     NegotiateColor();
   }
 

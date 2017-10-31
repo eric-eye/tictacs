@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class GameController : NetworkBehaviour {
-  public enum State { PickAction, PickTarget };
+  public enum State { PickAction, PickTarget, ConfirmTarget };
 
   public GameObject playerPrefab;
   public GameObject unitPrefab;
@@ -95,6 +95,12 @@ public class GameController : NetworkBehaviour {
     CursorController.ShowActionCursors(actionIndex);
   }
 
+  public static void ConfirmAction(Cursor cursor){
+    SetState(State.ConfirmTarget);
+    CursorController.HideConfirmAttackCursors();
+    CursorController.ShowConfirmActionCursors(cursor);
+  }
+
   public static void StartMoving(Unit unit){
     GameController.FreezeInputs();
     Menu.Refresh();
@@ -111,6 +117,7 @@ public class GameController : NetworkBehaviour {
   public static void FinishAction(){
     Menu.Refresh();
     CursorController.HideAttackCursors();
+    CursorController.HideConfirmAttackCursors();
     SetState(State.PickAction);
     TurnController.Next();
   }
@@ -139,6 +146,7 @@ public class GameController : NetworkBehaviour {
   public static void CancelAttack(){
     SetState(State.PickAction);
     CursorController.HideAttackCursors();
+    CursorController.HideConfirmAttackCursors();
     Menu.Refresh();
   }
 

@@ -61,7 +61,7 @@ public class CursorController : NetworkBehaviour {
     if (GameController.state == GameController.State.PickAction && selected){
       ResetPath();
     }
-    if (GameController.state == GameController.State.PickTarget){
+    if (GameController.state == GameController.State.PickTarget || GameController.state == GameController.State.ConfirmTarget){
       GameController.CancelAttack();
     }
 	}
@@ -102,6 +102,15 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
+  public static void HideConfirmAttackCursors(){
+    for(int x = xMin; x < xMax; x++){
+      for(int z = zMin; z < zMax; z++){
+        Cursor tile = GetTile(x, z);
+        tile.UnsetAttackConfirm();
+      }
+    }
+  }
+
   public static void ShowActionCursors(int actionIndex){
     IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
 
@@ -130,6 +139,10 @@ public class CursorController : NetworkBehaviour {
         }
       }
     }
+  }
+
+  public static void ShowConfirmActionCursors(Cursor tile){
+    tile.SetAttackConfirm();
   }
 
   private static List<Cursor> Neighbors(int xPos, int zPos){
