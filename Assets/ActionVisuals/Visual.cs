@@ -13,7 +13,7 @@ public class Visual : MonoBehaviour {
 	}
 
   public void DoAction(){
-    action.DoAction(cursor);
+    action.ReceiveVisualFeedback(cursor);
   }
 
   public void Finish(){

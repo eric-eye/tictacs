@@ -12,6 +12,10 @@ public class ActionAttack : Action, IAction {
     return(0);
   }
 
+  public int RadialDistance(){
+    return(0);
+  }
+
   public string Name(){
     return("Attack");
   }
@@ -28,7 +32,7 @@ public class ActionAttack : Action, IAction {
     return("A basic attack. You know, swipe your sword or whatever");
   }
 
-  public void DoAction(Cursor cursor){
+  public void ReceiveVisualFeedback(Cursor cursor){
     if(cursor.standingUnit){
       cursor.standingUnit.ReceiveDamage(15);
     }

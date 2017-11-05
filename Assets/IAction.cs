@@ -6,11 +6,12 @@ public interface IAction {
   int TpCost();
   int MpCost();
   int MaxDistance();
+  int RadialDistance();
 
   string Name();
   string Description();
 
   bool CanTargetSelf();
   bool NeedsLineOfSight();
-  void DoAction(Cursor cursor);
+  void ReceiveVisualFeedback(Cursor cursor);
 }

@@ -26,10 +26,17 @@ public class Action : NetworkBehaviour {
   public void BeginAction(GameObject targetObject){
     if(NetworkServer.active) used = true;
 
-    Cursor cursor = targetObject.GetComponent<Cursor>();
-    GameObject visualObject = Instantiate(visualPrefab, cursor.transform.position, Quaternion.identity);
+    DoAction(targetObject.GetComponent<Cursor>());
+  }
+
+  protected virtual void DoAction(Cursor cursor){
+    CreateVisual(cursor, cursor.transform.position);
+  }
+
+  protected void CreateVisual(Cursor target, Vector3 visualPosition){
+    GameObject visualObject = Instantiate(visualPrefab, visualPosition, Quaternion.identity);
     Visual visual = visualObject.transform.Find("Main").GetComponent<Visual>();
     visual.action = this.GetComponent<IAction>();
-    visual.cursor = cursor;
+    visual.cursor = target;
   }
 }

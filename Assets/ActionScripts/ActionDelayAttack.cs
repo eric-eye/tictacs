@@ -12,6 +12,10 @@ public class ActionDelayAttack : Action, IAction {
     return(0);
   }
 
+  public int RadialDistance(){
+    return(0);
+  }
+
   public string Name(){
     return("Delay Attack");
   }
@@ -28,7 +32,7 @@ public class ActionDelayAttack : Action, IAction {
     return(false);
   }
 
-  public void DoAction(Cursor cursor){
+  public void ReceiveVisualFeedback(Cursor cursor){
     StartCoroutine(DoScript(cursor));
   }
 

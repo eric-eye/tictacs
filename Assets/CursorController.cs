@@ -68,7 +68,7 @@ public class CursorController : NetworkBehaviour {
 
   public static void ShowMoveCells(){
     if(GameController.IsCurrentPlayer() && !Unit.current.hasMoved){
-      List <int[]> path = GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
+      List <int[]> path = Helpers.GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
       HighlightMovableTiles(path);
     }else{
       UnsetMovement();
@@ -96,7 +96,7 @@ public class CursorController : NetworkBehaviour {
   public static void HideAttackCursors(){
     for(int x = xMin; x < xMax; x++){
       for(int z = zMin; z < zMax; z++){
-        Cursor tile = GetTile(x, z);
+        Cursor tile = Helpers.GetTile(x, z);
         tile.UnsetAttack();
       }
     }
@@ -105,8 +105,9 @@ public class CursorController : NetworkBehaviour {
   public static void HideConfirmAttackCursors(){
     for(int x = xMin; x < xMax; x++){
       for(int z = zMin; z < zMax; z++){
-        Cursor tile = GetTile(x, z);
+        Cursor tile = Helpers.GetTile(x, z);
         tile.UnsetAttackConfirm();
+        tile.UnsetAttackInRange();
       }
     }
   }
@@ -119,9 +120,9 @@ public class CursorController : NetworkBehaviour {
     int xPos = Unit.current.xPos;
     int zPos = Unit.current.zPos;
 
-    foreach(int[] coordinates in GetAllPaths(xPos, zPos, action.MaxDistance(), true)){
+    foreach(int[] coordinates in Helpers.GetAllPaths(xPos, zPos, action.MaxDistance(), true)){
       if(action.CanTargetSelf() || coordinates[0] != xPos || coordinates[1] != zPos) {
-        Cursor tile = GetTile(coordinates[0], coordinates[1]);
+        Cursor tile = Helpers.GetTile(coordinates[0], coordinates[1]);
         if(tile) {
           if(action.NeedsLineOfSight()){
             RaycastHit hit;
@@ -140,30 +141,41 @@ public class CursorController : NetworkBehaviour {
       }
     }
   }
+  public static void ShowActionRangeCursors(Cursor cursor, int actionIndex){
+    IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
+
+    if(action.RadialDistance() > 0){
+      int xPos = cursor.xPos;
+      int zPos = cursor.zPos;
+
+      foreach(int[] coordinates in Helpers.GetAllPaths(xPos, zPos, action.RadialDistance(), true)){
+        if(action.CanTargetSelf() || coordinates[0] != xPos || coordinates[1] != zPos) {
+          Cursor tile = Helpers.GetTile(coordinates[0], coordinates[1]);
+          if(tile) {
+            if(action.NeedsLineOfSight()){
+              RaycastHit hit;
+              GameObject target = tile.gameObject;
+
+              if(tile.standingUnit) target = tile.standingUnit.transform.Find("Hittable").gameObject;
+              if (Physics.Linecast(Unit.current.transform.Find("Hittable").transform.position, target.transform.position, out hit, 1 << 8)){
+                if(hit.collider.gameObject == target.gameObject){
+                  tile.SetAttackInRange();
+                }
+              }
+            }else{
+              tile.SetAttackInRange();
+            }
+          }
+        }
+      }
+    }
+  }
 
   public static void ShowConfirmActionCursors(Cursor tile){
     tile.SetAttackConfirm();
   }
 
-  private static List<Cursor> Neighbors(int xPos, int zPos){
-    List<Cursor> list = new List<Cursor>();
 
-    list.Add(GetTile(xPos + 1, zPos));
-    list.Add(GetTile(xPos - 1, zPos));
-    list.Add(GetTile(xPos, zPos + 1));
-    list.Add(GetTile(xPos, zPos - 1));
-    list.RemoveAll(r => (r == null));
-
-    return list;
-  }
-
-  private static Cursor GetTile(int x, int z){
-    if(x >= 0 && z>= 0 && x < cursorMatrix.Count && z < cursorMatrix[x].Count){
-      return cursorMatrix[x][z];
-    } else {
-      return null;
-    }
-  }
 
   private static void HighlightTiles(List<int[]> tileCoordinates) {
     foreach(List<Cursor> list in cursorMatrix){
@@ -172,7 +184,7 @@ public class CursorController : NetworkBehaviour {
       }
     }
     for(int i = 0; i < tileCoordinates.Count; i++){
-      Cursor tile = GetTile(tileCoordinates[i][0], tileCoordinates[i][1]);
+      Cursor tile = Helpers.GetTile(tileCoordinates[i][0], tileCoordinates[i][1]);
       if(tile) tile.SetPath();
     }
   }
@@ -184,7 +196,7 @@ public class CursorController : NetworkBehaviour {
       }
     }
     for(int i = 0; i < tileCoordinates.Count; i++){
-      Cursor tile = GetTile(tileCoordinates[i][0], tileCoordinates[i][1]);
+      Cursor tile = Helpers.GetTile(tileCoordinates[i][0], tileCoordinates[i][1]);
       if(tile) tile.SetMovement();
     }
   }
@@ -205,7 +217,7 @@ public class CursorController : NetworkBehaviour {
       int[] entry = queue[i];
       int counter = entry[2] + 1;
 
-      List<Cursor> neighbors = Neighbors(entry[0], entry[1]);
+      List<Cursor> neighbors = Helpers.Neighbors(entry[0], entry[1]);
 
       List<int[]> newCells = new List<int[]>();
 
@@ -283,45 +295,5 @@ public class CursorController : NetworkBehaviour {
     }
 
     return(shortestPath);
-  }
-
-  private static List<int[]> GetAllPaths(int originX, int originZ, int maxHops, bool allowOthers) {
-    List<int[]> queue = new List<int[]>();
-    queue.Add(new int[] { originX, originZ, 0 });
-    for(int i = 0; i < queue.Count; i++){
-      int[] entry = queue[i];
-      int counter = entry[2] + 1;
-      if(counter > maxHops) continue;
-
-      List<Cursor> neighbors = Neighbors(entry[0], entry[1]);
-
-      List<int[]> newCells = new List<int[]>();
-
-      foreach(Cursor cursor in neighbors){
-        if(allowOthers || !cursor.standingUnit || cursor.standingUnit == Unit.current){
-          int elevation = VoxelController.GetElevation(cursor.xPos, cursor.zPos);
-          if(Mathf.Abs(elevation - VoxelController.GetElevation(entry[0], entry[1])) < 2){
-            newCells.Add(new int[] { cursor.xPos, cursor.zPos, counter, elevation });
-          }
-        }
-      }
-
-      for(int a = newCells.Count - 1; a >= 0; a--){
-        for(int g = 0; g < queue.Count; g++) {
-          if(newCells[a][0] == queue[g][0] &&
-              newCells[a][1] == queue[g][1] &&
-              newCells[a][2] <= queue[g][2]) {
-            newCells.RemoveAt(a);
-            break;
-          }
-        }
-      }
-
-      for(int a = 0; a < newCells.Count; a++){
-        queue.Add(newCells[a]);
-      }
-    }
-
-    return(queue);
   }
 }

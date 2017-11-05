@@ -11,7 +11,6 @@ public class VisualStone : Visual {
     Transform target = cursor.transform;
     if(cursor.standingUnit) target = cursor.standingUnit.transform;
     transform.position = Vector3.MoveTowards(transform.position, cursor.transform.position, step);
-    print(transform.position);
 
     if(Vector3.Distance(transform.position, cursor.transform.position) < 0.005f){
       DoAction();

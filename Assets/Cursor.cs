@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GridFramework.Grids;
 using GridFramework.Extensions.Align;
+using cakeslice;
 
 public class Cursor : MonoBehaviour {
 
@@ -14,8 +15,10 @@ public class Cursor : MonoBehaviour {
   public Unit standingUnit;
   public bool attack = false;
   public bool attackConfirm = false;
+  public bool attackInRange = false;
   public Color originalColor;
   public bool movable = false;
+  public bool debug = false;
 
   private RectGrid _grid;
   private Color imprintColor;
@@ -49,14 +52,18 @@ public class Cursor : MonoBehaviour {
   }
 
   void RefreshBorder(bool show){
-    GetComponent<LineRenderer>().enabled = show;
+    GetComponent<Outline>().enabled = show;
   }
 
   public void NegotiateColor(){
     RefreshBorder(hovered == this);
 
-    if(attackConfirm){
+    if(debug){
+      SetColor(new Color(1, 1, 1, 1));
+    }else if(attackConfirm){
       SetColor(new Color(1, 0, 1, 0.75f));
+    }else if(attackInRange){
+      SetColor(new Color(1, 0, 1, 0.5f));
     }else if(attack){
       SetColor(new Color(0, 1, 0, 0.75f));
     }else if(path){
@@ -98,6 +105,11 @@ public class Cursor : MonoBehaviour {
     NegotiateColor();
   }
 
+  public void SetAttackInRange(){
+    attackInRange = true;
+    NegotiateColor();
+  }
+
   public void UnsetAttack(){
     attack = false;
     NegotiateColor();
@@ -105,6 +117,11 @@ public class Cursor : MonoBehaviour {
 
   public void UnsetAttackConfirm(){
     attackConfirm = false;
+    NegotiateColor();
+  }
+
+  public void UnsetAttackInRange(){
+    attackInRange = false;
     NegotiateColor();
   }
 

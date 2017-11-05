@@ -14,6 +14,10 @@ public class ActionRazz : Action, IAction {
     return(5);
   }
 
+  public int RadialDistance(){
+    return(0);
+  }
+
   public string Name(){
     return("Razz");
   }
@@ -30,7 +34,7 @@ public class ActionRazz : Action, IAction {
     return(false);
   }
 
-  public void DoAction(Cursor cursor){
+  public void ReceiveVisualFeedback(Cursor cursor){
     if(cursor.standingUnit){
       GameObject effect = Instantiate(effectPrefab, Vector3.zero, Quaternion.identity);
       cursor.standingUnit.ReceiveBuff(effect);

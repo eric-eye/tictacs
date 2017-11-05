@@ -28,7 +28,15 @@ public class ActionThrowStone : Action, IAction {
     return(false);
   }
 
-  public void DoAction(Cursor cursor){
+  public int RadialDistance(){
+    return(0);
+  }
+
+  protected override void DoAction(Cursor cursor){
+    CreateVisual(cursor, Unit().transform.position);
+  }
+
+  public void ReceiveVisualFeedback(Cursor cursor){
     if(cursor.standingUnit){
       cursor.standingUnit.ReceiveDamage(5);
     }

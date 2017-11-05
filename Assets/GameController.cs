@@ -99,6 +99,7 @@ public class GameController : NetworkBehaviour {
     SetState(State.ConfirmTarget);
     CursorController.HideConfirmAttackCursors();
     CursorController.ShowConfirmActionCursors(cursor);
+    CursorController.ShowActionRangeCursors(cursor, selectedActionIndex);
   }
 
   public static void StartMoving(Unit unit){
