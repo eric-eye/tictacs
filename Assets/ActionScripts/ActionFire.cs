@@ -33,20 +33,9 @@ public class ActionFire : Action, IAction {
   }
 
   public void ReceiveVisualFeedback(Cursor cursor){
-    List<Cursor> affectedCursors = new List<Cursor>();
-    foreach(int[] coordinates in Helpers.GetAllPaths(cursor.xPos, cursor.zPos, this.RadialDistance(), true)){
-      print(coordinates[0] + ", " + coordinates[1]);
-      Cursor tile = Helpers.GetTile(coordinates[0], coordinates[1]);
-      if(tile) {
-        if(affectedCursors.Contains(tile)) {
-          continue;
-        }
-
-        affectedCursors.Add(tile);
-
-        if(tile.standingUnit){
-          tile.standingUnit.ReceiveDamage(12);
-        }
+    foreach(Cursor tile in Helpers.GetRadialTiles(cursor.xPos, cursor.zPos, this.RadialDistance(), true)){
+      if(tile.standingUnit){
+        tile.standingUnit.ReceiveDamage(12);
       }
     }
     Unit().FinishAction();

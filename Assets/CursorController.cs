@@ -68,7 +68,7 @@ public class CursorController : NetworkBehaviour {
 
   public static void ShowMoveCells(){
     if(GameController.IsCurrentPlayer() && !Unit.current.hasMoved){
-      List <int[]> path = Helpers.GetAllPaths(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
+      List<Cursor> path = Helpers.GetRadialTiles(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
       HighlightMovableTiles(path);
     }else{
       UnsetMovement();
@@ -79,7 +79,7 @@ public class CursorController : NetworkBehaviour {
     ActionInformation.Show("Movement", "0", "0", "You know, lets you move");
     Menu.Hide();
     selected = Cursor.hovered;
-    _path = DeriveShortestPath(selected.xPos, selected.zPos, Unit.current.xPos, Unit.current.zPos);
+    _path = Helpers.DeriveShortestPath(selected.xPos, selected.zPos, Unit.current.xPos, Unit.current.zPos);
     HighlightTiles(_path);
   }
 
@@ -120,27 +120,13 @@ public class CursorController : NetworkBehaviour {
     int xPos = Unit.current.xPos;
     int zPos = Unit.current.zPos;
 
-    foreach(int[] coordinates in Helpers.GetAllPaths(xPos, zPos, action.MaxDistance(), true)){
-      if(action.CanTargetSelf() || coordinates[0] != xPos || coordinates[1] != zPos) {
-        Cursor tile = Helpers.GetTile(coordinates[0], coordinates[1]);
-        if(tile) {
-          if(action.NeedsLineOfSight()){
-            RaycastHit hit;
-            GameObject target = tile.gameObject;
+    List<Cursor> tiles = Helpers.GetRadialTiles(xPos, zPos, action.MaxDistance(), true);
 
-            if(tile.standingUnit) target = tile.standingUnit.transform.Find("Hittable").gameObject;
-            if (Physics.Linecast(Unit.current.transform.Find("Hittable").transform.position, target.transform.position, out hit, 1 << 8)){
-              if(hit.collider.gameObject == target.gameObject){
-                tile.SetAttack();
-              }
-            }
-          }else{
-            tile.SetAttack();
-          }
-        }
-      }
+    foreach(Cursor tile in tiles){
+      if (IsValidTarget(action, tile, xPos, zPos)) tile.SetAttack();
     }
   }
+
   public static void ShowActionRangeCursors(Cursor cursor, int actionIndex){
     IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
 
@@ -148,34 +134,28 @@ public class CursorController : NetworkBehaviour {
       int xPos = cursor.xPos;
       int zPos = cursor.zPos;
 
-      foreach(int[] coordinates in Helpers.GetAllPaths(xPos, zPos, action.RadialDistance(), true)){
-        if(action.CanTargetSelf() || coordinates[0] != xPos || coordinates[1] != zPos) {
-          Cursor tile = Helpers.GetTile(coordinates[0], coordinates[1]);
-          if(tile) {
-            if(action.NeedsLineOfSight()){
-              RaycastHit hit;
-              GameObject target = tile.gameObject;
+      List<Cursor> tiles = Helpers.GetRadialTiles(cursor.xPos, cursor.zPos, action.RadialDistance(), true);
 
-              if(tile.standingUnit) target = tile.standingUnit.transform.Find("Hittable").gameObject;
-              if (Physics.Linecast(Unit.current.transform.Find("Hittable").transform.position, target.transform.position, out hit, 1 << 8)){
-                if(hit.collider.gameObject == target.gameObject){
-                  tile.SetAttackInRange();
-                }
-              }
-            }else{
-              tile.SetAttackInRange();
-            }
-          }
-        }
+      foreach(Cursor tile in tiles){
+        if(IsValidTarget(action, tile, xPos, zPos)) tile.SetAttackInRange();
       }
     }
+  }
+
+  private static bool IsValidTarget(IAction action, Cursor tile, int xPos, int zPos){
+    if(action.CanTargetSelf() || tile.xPos != xPos || tile.zPos != zPos) {
+      if(action.NeedsLineOfSight()){
+        return(Helpers.CanHitTarget(tile));
+      }else{
+        return(true);
+      }
+    }
+    return(false);
   }
 
   public static void ShowConfirmActionCursors(Cursor tile){
     tile.SetAttackConfirm();
   }
-
-
 
   private static void HighlightTiles(List<int[]> tileCoordinates) {
     foreach(List<Cursor> list in cursorMatrix){
@@ -189,15 +169,14 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  private static void HighlightMovableTiles(List<int[]> tileCoordinates) {
+  private static void HighlightMovableTiles(List<Cursor> tiles) {
     foreach(List<Cursor> list in cursorMatrix){
       foreach(Cursor tile in list){
         tile.UnsetMovement();
       }
     }
-    for(int i = 0; i < tileCoordinates.Count; i++){
-      Cursor tile = Helpers.GetTile(tileCoordinates[i][0], tileCoordinates[i][1]);
-      if(tile) tile.SetMovement();
+    foreach(Cursor tile in tiles){
+      tile.SetMovement();
     }
   }
 
@@ -207,93 +186,5 @@ public class CursorController : NetworkBehaviour {
         tile.UnsetMovement();
       }
     }
-  }
-
-  public static List<int[]> DeriveShortestPath(int xPos, int zPos, int originX, int originZ) {
-    List<int[]> queue = new List<int[]>();
-    List<int[]> shortestPath = new List<int[]>();
-    queue.Add(new int[] { xPos, zPos, 0, VoxelController.GetElevation(xPos, zPos) });
-    for(int i = 0; i < queue.Count; i++){
-      int[] entry = queue[i];
-      int counter = entry[2] + 1;
-
-      List<Cursor> neighbors = Helpers.Neighbors(entry[0], entry[1]);
-
-      List<int[]> newCells = new List<int[]>();
-
-      foreach(Cursor cursor in neighbors){
-        if(!cursor.standingUnit || cursor.standingUnit == Unit.current){
-          int elevation = VoxelController.GetElevation(cursor.xPos, cursor.zPos);
-          if(Mathf.Abs(elevation - VoxelController.GetElevation(entry[0], entry[1])) < 2){
-              newCells.Add(new int[] { cursor.xPos, cursor.zPos, counter, elevation });
-          }
-        }
-      }
-
-      bool reachedDestination = false;
-
-      for(int a = 0; a < newCells.Count; a++){
-        if(newCells[a][0] == originX && newCells[a][1] == originZ){
-          reachedDestination = true;
-          break;
-        }
-      }
-
-      for(int a = newCells.Count - 1; a >= 0; a--){
-        for(int g = 0; g < queue.Count; g++) {
-          if(newCells[a][0] == queue[g][0] &&
-              newCells[a][1] == queue[g][1] &&
-              newCells[a][2] >= queue[g][2]) {
-            newCells.RemoveAt(a);
-            break;
-          }
-        }
-      }
-
-      for(int a = 0; a < newCells.Count; a++){
-        queue.Add(newCells[a]);
-      }
-
-      if(reachedDestination) {
-        queue.Reverse();
-        int firstIndex = queue.FindIndex(r => (r[0] == originX && r[1] == originZ));
-        shortestPath.Add(queue[firstIndex]);
-
-        int[] previousElement = queue[firstIndex];
-
-
-        for(int b = firstIndex; b < queue.Count; b++){
-          int[] currentElement = queue[b];
-
-          if(
-              (
-               (
-                currentElement[0] == previousElement[0] - 1 &&
-                currentElement[1] == previousElement[1]
-               ) ||
-               (
-                currentElement[0] == previousElement[0] + 1 &&
-                currentElement[1] == previousElement[1]
-               ) ||
-               (
-                currentElement[0] == previousElement[0] &&
-                currentElement[1] == previousElement[1] + 1
-               ) ||
-               (
-                currentElement[0] == previousElement[0] &&
-                currentElement[1] == previousElement[1] - 1
-               )
-              ) && currentElement[2] == previousElement[2] - 1
-            ){
-            shortestPath.Add(currentElement);
-            previousElement = currentElement;
-          }
-        }
-
-        break;
-      }
-    }
-
-    return(shortestPath);
   }
 }

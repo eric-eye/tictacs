@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Helpers : MonoBehaviour {
@@ -27,43 +28,147 @@ public class Helpers : MonoBehaviour {
 		return list;
 	}
 
-	public static List<int[]> GetAllPaths(int originX, int originZ, int maxHops, bool allowOthers) {
+	public static bool CanHitTarget(Cursor targetTile){
+		RaycastHit hit;
+		GameObject target = targetTile.gameObject;
+
+		if(targetTile.standingUnit) target = targetTile.standingUnit.transform.Find("Hittable").gameObject;
+			if (Physics.Linecast(Unit.current.transform.Find("Hittable").transform.position, target.transform.position, out hit, 1 << 8)){
+			return(hit.collider.gameObject == target.gameObject);
+		}
+
+		return(false);
+	}
+	public static List<Cursor> GetRadialTiles(int originX, int originZ, int maxHops, bool allowOthers) {
 		List<int[]> queue = new List<int[]>();
 		queue.Add(new int[] { originX, originZ, 0 });
 		for(int i = 0; i < queue.Count; i++){
-		int[] entry = queue[i];
-		int counter = entry[2] + 1;
-		if(counter > maxHops) continue;
+			int[] entry = queue[i];
+			int counter = entry[2] + 1;
+			if(counter > maxHops) continue;
 
-		List<Cursor> neighbors = Neighbors(entry[0], entry[1]);
+			List<Cursor> neighbors = Neighbors(entry[0], entry[1]);
 
-		List<int[]> newCells = new List<int[]>();
+			List<int[]> newCells = new List<int[]>();
 
-		foreach(Cursor cursor in neighbors){
-			if(allowOthers || !cursor.standingUnit || cursor.standingUnit == Unit.current){
-			int elevation = VoxelController.GetElevation(cursor.xPos, cursor.zPos);
-			if(Mathf.Abs(elevation - VoxelController.GetElevation(entry[0], entry[1])) < 2){
-				newCells.Add(new int[] { cursor.xPos, cursor.zPos, counter, elevation });
+			foreach(Cursor cursor in neighbors){
+				if(allowOthers || !cursor.standingUnit || cursor.standingUnit == Unit.current){
+					int elevation = VoxelController.GetElevation(cursor.xPos, cursor.zPos);
+					if(Mathf.Abs(elevation - VoxelController.GetElevation(entry[0], entry[1])) < 2){
+						newCells.Add(new int[] { cursor.xPos, cursor.zPos, counter, elevation });
+					}
+				}
 			}
+
+			for(int a = newCells.Count - 1; a >= 0; a--){
+				for(int g = 0; g < queue.Count; g++) {
+					if(newCells[a][0] == queue[g][0] &&
+						newCells[a][1] == queue[g][1] &&
+						newCells[a][2] <= queue[g][2]) {
+						newCells.RemoveAt(a);
+						break;
+					}
+				}
+			}
+
+			for(int a = 0; a < newCells.Count; a++){
+				queue.Add(newCells[a]);
 			}
 		}
 
-		for(int a = newCells.Count - 1; a >= 0; a--){
-			for(int g = 0; g < queue.Count; g++) {
-			if(newCells[a][0] == queue[g][0] &&
-				newCells[a][1] == queue[g][1] &&
-				newCells[a][2] <= queue[g][2]) {
-				newCells.RemoveAt(a);
-				break;
-			}
-			}
+		HashSet<Cursor> cursors = new HashSet<Cursor>();
+
+		foreach(int[] entry in queue){
+			cursors.Add(GetTile(entry[0], entry[1]));
 		}
 
-		for(int a = 0; a < newCells.Count; a++){
-			queue.Add(newCells[a]);
-		}
-		}
-
-		return(queue);
+		return(cursors.ToList());
 	}
+
+  public static List<int[]> DeriveShortestPath(int xPos, int zPos, int originX, int originZ) {
+    List<int[]> queue = new List<int[]>();
+    List<int[]> shortestPath = new List<int[]>();
+    queue.Add(new int[] { xPos, zPos, 0, VoxelController.GetElevation(xPos, zPos) });
+    for(int i = 0; i < queue.Count; i++){
+      int[] entry = queue[i];
+      int counter = entry[2] + 1;
+
+      List<Cursor> neighbors = Helpers.Neighbors(entry[0], entry[1]);
+
+      List<int[]> newCells = new List<int[]>();
+
+      foreach(Cursor cursor in neighbors){
+        if(!cursor.standingUnit || cursor.standingUnit == Unit.current){
+          int elevation = VoxelController.GetElevation(cursor.xPos, cursor.zPos);
+          if(Mathf.Abs(elevation - VoxelController.GetElevation(entry[0], entry[1])) < 2){
+              newCells.Add(new int[] { cursor.xPos, cursor.zPos, counter, elevation });
+          }
+        }
+      }
+
+      bool reachedDestination = false;
+
+      for(int a = 0; a < newCells.Count; a++){
+        if(newCells[a][0] == originX && newCells[a][1] == originZ){
+          reachedDestination = true;
+          break;
+        }
+      }
+
+      for(int a = newCells.Count - 1; a >= 0; a--){
+        for(int g = 0; g < queue.Count; g++) {
+          if(newCells[a][0] == queue[g][0] &&
+              newCells[a][1] == queue[g][1] &&
+              newCells[a][2] >= queue[g][2]) {
+            newCells.RemoveAt(a);
+            break;
+          }
+        }
+      }
+
+      for(int a = 0; a < newCells.Count; a++){
+        queue.Add(newCells[a]);
+      }
+
+      if(reachedDestination) {
+        queue.Reverse();
+        int firstIndex = queue.FindIndex(r => (r[0] == originX && r[1] == originZ));
+        shortestPath.Add(queue[firstIndex]);
+
+        int[] previousElement = queue[firstIndex];
+
+        for(int b = firstIndex; b < queue.Count; b++){
+          int[] currentElement = queue[b];
+
+          if(
+              (
+               (
+                currentElement[0] == previousElement[0] - 1 &&
+                currentElement[1] == previousElement[1]
+               ) ||
+               (
+                currentElement[0] == previousElement[0] + 1 &&
+                currentElement[1] == previousElement[1]
+               ) ||
+               (
+                currentElement[0] == previousElement[0] &&
+                currentElement[1] == previousElement[1] + 1
+               ) ||
+               (
+                currentElement[0] == previousElement[0] &&
+                currentElement[1] == previousElement[1] - 1
+               )
+              ) && currentElement[2] == previousElement[2] - 1
+            ){
+            shortestPath.Add(currentElement);
+            previousElement = currentElement;
+          }
+        }
+
+        break;
+      }
+    }
+
+    return(shortestPath);
+  }
 }

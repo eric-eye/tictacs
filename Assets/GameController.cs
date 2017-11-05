@@ -42,7 +42,7 @@ public class GameController : NetworkBehaviour {
 
   [Command]
   public void CmdMoveAlong(int x, int z){
-    List<int[]> path = CursorController.DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
+    List<int[]> path = Helpers.DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
     CursorController.moveEnabled = false;
     CursorController.Coordinate[] coordinates = new CursorController.Coordinate[path.Count];
     int c = 0;
