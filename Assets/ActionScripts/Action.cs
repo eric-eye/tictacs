@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class Action : NetworkBehaviour {
+  public enum CursorModes { Radial, Line };
   public GameObject visualPrefab;
 
   [SyncVar]

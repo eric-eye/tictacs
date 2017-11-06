@@ -127,20 +127,33 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  public static void ShowActionRangeCursors(Cursor cursor, int actionIndex){
-    IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
+    public static void ShowActionRangeCursors(Cursor cursor, int actionIndex)
+    {
+        IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
+        List<Cursor> tiles = new List<Cursor>();
 
-    if(action.RadialDistance() > 0){
-      int xPos = cursor.xPos;
-      int zPos = cursor.zPos;
+        int xPos = cursor.xPos;
+        int zPos = cursor.zPos;
 
-      List<Cursor> tiles = Helpers.GetRadialTiles(cursor.xPos, cursor.zPos, action.RadialDistance(), true);
+        {
+            if (action.CursorMode() == Action.CursorModes.Radial)
+            {
+                if (action.RadialDistance() > 0)
+                {
+                    tiles = Helpers.GetRadialTiles(xPos, zPos, action.RadialDistance(), true);
+                }
+            }
+            else
+            {
+                tiles = Helpers.GetLineTiles(Unit.current.xPos, Unit.current.zPos, xPos, zPos);
+            }
+        }
 
-      foreach(Cursor tile in tiles){
-        if(IsValidTarget(action, tile, xPos, zPos)) tile.SetAttackInRange();
-      }
+        foreach (Cursor tile in tiles)
+        {
+            if (IsValidTarget(action, tile, xPos, zPos)) tile.SetAttackInRange();
+        }
     }
-  }
 
   private static bool IsValidTarget(IAction action, Cursor tile, int xPos, int zPos){
     if(action.CanTargetSelf() || tile.xPos != xPos || tile.zPos != zPos) {

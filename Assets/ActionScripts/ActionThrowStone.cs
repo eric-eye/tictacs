@@ -43,6 +43,10 @@ public class ActionThrowStone : Action, IAction {
     Unit().FinishAction();
   }
 
+  public CursorModes CursorMode(){
+    return(CursorModes.Radial);
+  }
+
   public bool NeedsLineOfSight(){
     return(true);
   }

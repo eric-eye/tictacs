@@ -23,6 +23,9 @@ public class ActionAttack : Action, IAction {
   public int MaxDistance(){
     return(1);
   }
+  public CursorModes CursorMode(){
+    return(CursorModes.Radial);
+  }
 
   public bool CanTargetSelf(){
     return(false);

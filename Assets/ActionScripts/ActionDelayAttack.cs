@@ -39,6 +39,9 @@ public class ActionDelayAttack : Action, IAction {
   public bool NeedsLineOfSight(){
     return(false);
   }
+  public CursorModes CursorMode(){
+    return(CursorModes.Radial);
+  }
 
   private IEnumerator DoScript(Cursor cursor){
     if(cursor.standingUnit){

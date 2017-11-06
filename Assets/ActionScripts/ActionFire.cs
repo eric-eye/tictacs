@@ -8,6 +8,10 @@ public class ActionFire : Action, IAction {
     return(35);
   }
 
+  public CursorModes CursorMode(){
+    return(CursorModes.Radial);
+  }
+
   public int MpCost(){
     return(5);
   }

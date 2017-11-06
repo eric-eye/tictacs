@@ -33,6 +33,9 @@ public class ActionRazz : Action, IAction {
   public bool CanTargetSelf(){
     return(false);
   }
+  public CursorModes CursorMode(){
+    return(CursorModes.Radial);
+  }
 
   public void ReceiveVisualFeedback(Cursor cursor){
     if(cursor.standingUnit){

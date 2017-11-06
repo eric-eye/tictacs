@@ -14,4 +14,5 @@ public interface IAction {
   bool CanTargetSelf();
   bool NeedsLineOfSight();
   void ReceiveVisualFeedback(Cursor cursor);
+  Action.CursorModes CursorMode();
 }
