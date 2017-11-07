@@ -3,44 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ActionDelayAttack : Action, IAction {
-  public int TpCost(){
-    return(35);
-  }
+public class ActionDelayAttack : Action {
 
-  public int MpCost(){
-    return(0);
-  }
-
-  public int RadialDistance(){
-    return(0);
-  }
-
-  public string Name(){
+  public override string Name(){
     return("Delay Attack");
   }
   
-  public string Description(){
+  public override string Description(){
     return("Attack target, reducing their TP by " + TpCost());
   }
 
-  public int MaxDistance(){
+  public override int MaxDistance(){
     return(1);
   }
 
-  public bool CanTargetSelf(){
-    return(false);
-  }
-
-  public void ReceiveVisualFeedback(Cursor cursor){
+  public override void ReceiveVisualFeedback(Cursor cursor){
     StartCoroutine(DoScript(cursor));
-  }
-
-  public bool NeedsLineOfSight(){
-    return(false);
-  }
-  public CursorModes CursorMode(){
-    return(CursorModes.Radial);
   }
 
   private IEnumerator DoScript(Cursor cursor){

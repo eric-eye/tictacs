@@ -5,7 +5,7 @@ using UnityEngine;
 public class Visual : MonoBehaviour {
 
   public Cursor cursor;
-  public IAction action;
+  public Action action;
 
 	// Use this for initialization
 	void Start () {

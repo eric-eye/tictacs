@@ -32,7 +32,7 @@ public class AdvancedProfile : MonoBehaviour {
       if(i < newUnit.Actions().Count){
         string actionName = "????";
         if(newUnit.Actions()[i].GetComponent<Action>().used || newUnit.playerIndex == Player.player.playerIndex){
-          actionName = newUnit.Actions()[i].GetComponent<IAction>().Name();
+          actionName = newUnit.Actions()[i].GetComponent<Action>().Name();
         }
         actionTransform.GetComponent<Text>().text = actionName;
       }else{
@@ -49,7 +49,7 @@ public class AdvancedProfile : MonoBehaviour {
       if(i < unit.Stances().Count){
         string stanceName = "????";
         if(newUnit.Stances()[i].GetComponent<Stance>().used || newUnit.playerIndex == Player.player.playerIndex){
-          stanceName = newUnit.Stances()[i].GetComponent<IStance>().Name();
+          stanceName = newUnit.Stances()[i].GetComponent<Stance>().Name();
         }
         stanceTransform.GetComponent<Text>().text = stanceName;
       }else{

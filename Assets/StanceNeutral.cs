@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StanceNeutral : Stance, IStance {
+public class StanceNeutral : Stance {
 
-  public int NegotiateDamage(int damage){
+  public override int NegotiateDamage(int damage){
+    print("stanceNeutral");
     return(damage);
   }
 
-  public int NegotiateMoveLength(int moveLength){
+  public override int NegotiateMoveLength(int moveLength){
     return(moveLength);
   }
 
-  public string Name(){
+  public override string Name(){
     return("Neutral");
   }
 }

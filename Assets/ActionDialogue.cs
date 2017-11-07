@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ActionDialogue : MonoBehaviour {
 
   private Text text;
-  public IAction action;
+  public Action action;
   private float lifetime = 0;
   public System.Action whenDone;
 

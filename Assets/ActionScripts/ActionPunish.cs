@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ActionAttack : Action {
+public class ActionPunish : Action {
 
   public override string Name(){
-    return("Attack");
+    return("Punish");
   }
 
   public override string Description(){
-    return("A basic attack. You know, swipe your sword or whatever");
+    return("A basic attack with decent range. If the target is using a learned stance, more damage is incurred.");
   }
 
   public override void ReceiveVisualFeedback(Cursor cursor){
     if(cursor.standingUnit){
-      cursor.standingUnit.ReceiveDamage(15);
+      Stance stance = cursor.standingUnit.Stance();
+      // int damage = stance.used ? 20 : 5;
+        cursor.standingUnit.ReceiveDamage(15);
     }
     Unit().FinishAction();
   }

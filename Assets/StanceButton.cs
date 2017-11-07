@@ -8,7 +8,7 @@ public class StanceButton : MonoBehaviour {
 
   public void OnMouseEnter() {
     Unit unit = Unit.current;
-    IStance stance = unit.Stances()[stanceIndex].GetComponent<IStance>();
+    Stance stance = unit.Stances()[stanceIndex].GetComponent<Stance>();
     StanceInformation.Show(stance.Name(), "0", "0", "");
   }
 

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StanceDialogue : MonoBehaviour {
 
   private Text text;
-  public IStance stance;
+  public Stance stance;
   private float lifetime = 0;
   public System.Action whenDone;
 

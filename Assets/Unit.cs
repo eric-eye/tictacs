@@ -246,18 +246,19 @@ public class Unit: NetworkBehaviour {
     GameController.FinishStanceChange();
   }
 
-  public IStance Stance(){
-    return(Stances()[stanceIndex].GetComponent<IStance>());
+  public Stance Stance(){
+    return(Stances()[stanceIndex].GetComponent<Stance>());
   }
 
   public void ReceiveDamage(int damage){
+    damage = Stance().NegotiateDamage(damage);
+
     if(NetworkServer.active){
       foreach(GameObject stance in Stances()){
-          if(stance.GetComponent<IStance>() == Stance()){
+          if(stance.GetComponent<Stance>() == Stance()){
             stance.GetComponent<Stance>().used = true;
           }
       }
-      damage = Stance().NegotiateDamage(damage);
       stanceRevealed = true;
       currentHp -= damage;
       if(currentHp < 1){
@@ -363,7 +364,7 @@ public class Unit: NetworkBehaviour {
   public void RpcDoAction(int x, int z, int actionIndex){
     ActionInformation.Hide();
     GameObject actionObject = Actions()[actionIndex];
-    IAction action = actionObject.GetComponent<IAction>();
+    Action action = actionObject.GetComponent<Action>();
 
     if(NetworkServer.active){
       currentTp -= action.TpCost();

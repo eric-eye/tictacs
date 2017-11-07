@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StanceDefend : Stance, IStance {
+public class StanceDefend : Stance {
 
-  public int NegotiateDamage(int damage){
+  public override int NegotiateDamage(int damage){
+    print("stanceDefend");
     return(damage - 4);
   }
 
-  public int NegotiateMoveLength(int moveLength){
+  public override int NegotiateMoveLength(int moveLength){
     return(moveLength/2);
   }
 
-  public string Name(){
+  public override string Name(){
     return("Defend");
   }
 }

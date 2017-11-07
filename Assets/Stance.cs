@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Stance : NetworkBehaviour {
+abstract public class Stance : NetworkBehaviour {
 
   [SyncVar]
   public bool used = false;
@@ -18,4 +18,7 @@ public class Stance : NetworkBehaviour {
     }
   }
 
+  abstract public int NegotiateDamage(int damage);
+  abstract public int NegotiateMoveLength(int moveLength);
+  abstract public string Name();
 }

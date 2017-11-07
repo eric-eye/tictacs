@@ -59,7 +59,7 @@ public class Menu : MonoBehaviour {
         buttonObject.transform.parent = menu.transform.Find("Panel").Find("Actions");
 
         //buttonObject.transform.position = Vector3.zero;
-        IAction action = Unit.current.Actions()[i].GetComponent<IAction>();
+        Action action = Unit.current.Actions()[i].GetComponent<Action>();
         buttonObject.transform.Find("Text").GetComponent<Text>().text = action.Name();
         buttonObject.transform.position = menu.transform.Find("Panel").transform.position;
         buttonObject.transform.localScale = new Vector3(1, 1, 1);
@@ -81,7 +81,7 @@ public class Menu : MonoBehaviour {
         int localIndex = x;
         GameObject buttonObject = Instantiate(menu.stanceButtonPrefab, Vector3.zero, Quaternion.identity);
         buttonObject.transform.parent = menu.transform.Find("Panel").Find("Stances");
-        IStance stance = Unit.current.Stances()[x].GetComponent<IStance>();
+        Stance stance = Unit.current.Stances()[x].GetComponent<Stance>();
         string newName = stance.Name();
         if(stance == Unit.current.Stance()) newName = newName + " *";
         buttonObject.transform.position = menu.transform.Find("Panel").transform.position;

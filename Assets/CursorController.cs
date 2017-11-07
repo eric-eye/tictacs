@@ -113,7 +113,7 @@ public class CursorController : NetworkBehaviour {
   }
 
   public static void ShowActionCursors(int actionIndex){
-    IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
+    Action action = Unit.current.Actions()[actionIndex].GetComponent<Action>();
 
     ActionInformation.Show(action.Name(), action.TpCost().ToString(), action.MpCost().ToString(), action.Description());
 
@@ -129,7 +129,7 @@ public class CursorController : NetworkBehaviour {
 
     public static void ShowActionRangeCursors(Cursor cursor, int actionIndex)
     {
-        IAction action = Unit.current.Actions()[actionIndex].GetComponent<IAction>();
+        Action action = Unit.current.Actions()[actionIndex].GetComponent<Action>();
         List<Cursor> tiles = new List<Cursor>();
 
         int xPos = cursor.xPos;
@@ -155,7 +155,7 @@ public class CursorController : NetworkBehaviour {
         }
     }
 
-  private static bool IsValidTarget(IAction action, Cursor tile, int xPos, int zPos){
+  private static bool IsValidTarget(Action action, Cursor tile, int xPos, int zPos){
     if(action.CanTargetSelf() || tile.xPos != xPos || tile.zPos != zPos) {
       if(action.NeedsLineOfSight()){
         return(Helpers.CanHitTarget(tile));
