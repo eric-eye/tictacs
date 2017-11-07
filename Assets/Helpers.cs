@@ -104,7 +104,7 @@ public class Helpers : MonoBehaviour
         return (cursors.ToList());
     }
 
-    public static List<Cursor> GetLineTiles(int originX, int originZ, int destinationX, int destinationZ)
+    public static List<Cursor> GetLineTiles(int originX, int originZ, int destinationX, int destinationZ, int maxTiles)
     {
         int incrementX = 0;
         int incrementZ = 0;
@@ -125,7 +125,7 @@ public class Helpers : MonoBehaviour
         int[] coordinates = { incrementX + originX, incrementZ + originZ };
         bool tileExists = true;
 
-        while (tileExists)
+        while (tileExists && tiles.Count < maxTiles)
         {
             Cursor tile = Helpers.GetTile(coordinates[0], coordinates[1]);
             if (tile)

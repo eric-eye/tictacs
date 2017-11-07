@@ -46,6 +46,10 @@ abstract public class Action : NetworkBehaviour {
     return(0);
   }
 
+  public virtual int LineDistance(){
+    return(0);
+  }
+
   public virtual bool CanTargetSelf(){
     return(false);
   }

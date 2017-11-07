@@ -28,6 +28,11 @@ public class ActionLightningStab : Action
         return (CursorModes.Line);
     }
 
+    public override int LineDistance()
+    {
+        return (9999);
+    }
+
     public override void ReceiveVisualFeedback(Cursor cursor)
     {
         if (cursor.standingUnit)
@@ -40,7 +45,7 @@ public class ActionLightningStab : Action
 
     protected override void DoAction(Cursor cursor)
     {
-        List<Cursor> allTiles = Helpers.GetLineTiles(Unit().xPos, Unit().zPos, cursor.xPos, cursor.zPos);
+        List<Cursor> allTiles = Helpers.GetLineTiles(Unit().xPos, Unit().zPos, cursor.xPos, cursor.zPos, LineDistance());
         List<Cursor> tiles = allTiles.Where(tile => tile.standingUnit).ToList();
         targetsToResolve += tiles.Count;
 

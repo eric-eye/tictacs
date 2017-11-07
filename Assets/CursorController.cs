@@ -145,7 +145,7 @@ public class CursorController : NetworkBehaviour {
             }
             else
             {
-                tiles = Helpers.GetLineTiles(Unit.current.xPos, Unit.current.zPos, xPos, zPos);
+                tiles = Helpers.GetLineTiles(Unit.current.xPos, Unit.current.zPos, xPos, zPos, action.LineDistance());
             }
         }
 

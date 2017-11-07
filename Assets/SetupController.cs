@@ -35,7 +35,7 @@ public class SetupController : NetworkBehaviour {
   void CmdAddUnits(){
     AddUnit(0, 0, Color.magenta, 0, "pinky", 25);
     AddUnit(1, 3, Color.blue, 1, "bluey", 15);
-    AddUnit(5, 4, Color.yellow, 0, "yellowy", 9);
+    AddUnit(2, 3, Color.yellow, 0, "yellowy", 9);
     AddUnit(1, 5, Color.green, 1, "greenie", 8);
   }
 
