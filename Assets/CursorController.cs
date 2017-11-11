@@ -120,7 +120,7 @@ public class CursorController : NetworkBehaviour {
     int xPos = Unit.current.xPos;
     int zPos = Unit.current.zPos;
 
-    List<Cursor> tiles = Helpers.GetRadialTiles(xPos, zPos, action.MaxDistance(), true);
+    List<Cursor> tiles = Helpers.GetRadialTiles(xPos, zPos, action.MaxDistance(), true, action.MinDistance());
 
     foreach(Cursor tile in tiles){
       if (IsValidTarget(action, tile, xPos, zPos)) tile.SetAttack();

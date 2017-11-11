@@ -38,6 +38,10 @@ abstract public class Action : NetworkBehaviour {
     return(0);
   }
 
+  public virtual int MinDistance(){
+    return(0);
+  }
+
   public virtual int MaxDistance(){
     return(1);
   }

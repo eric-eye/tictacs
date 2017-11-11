@@ -48,7 +48,7 @@ public class Helpers : MonoBehaviour
 
         return (false);
     }
-    public static List<Cursor> GetRadialTiles(int originX, int originZ, int maxHops, bool allowOthers)
+    public static List<Cursor> GetRadialTiles(int originX, int originZ, int maxHops, bool allowOthers, int minDistance = 0)
     {
         List<int[]> queue = new List<int[]>();
         queue.Add(new int[] { originX, originZ, 0 });
@@ -98,7 +98,8 @@ public class Helpers : MonoBehaviour
 
         foreach (int[] entry in queue)
         {
-            cursors.Add(GetTile(entry[0], entry[1]));
+            bool satisfiesMinDistance = Mathf.Abs(entry[0] - originX) + Mathf.Abs(entry[1] - originZ) >= minDistance;
+            if(satisfiesMinDistance) cursors.Add(GetTile(entry[0], entry[1]));
         }
 
         return (cursors.ToList());
