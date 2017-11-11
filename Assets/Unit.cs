@@ -121,7 +121,7 @@ public class Unit: NetworkBehaviour {
       GameObject instance;
 
       List<string> actionList = new List<string> {
-        "Punish", "Fire", "SpinAttack", "Meteor"
+        "Punish", "Fire", "SpinAttack", "ChainLightning"
       };
 
       List<string> stanceList = new List<string> {
