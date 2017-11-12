@@ -48,15 +48,17 @@ public class Helpers : MonoBehaviour
 
         return (false);
     }
-    public static List<Cursor> GetRadialTiles(int originX, int originZ, int maxHops, bool allowOthers, int minDistance = 0)
+    public static List<Cursor> GetRadialTiles(int originX, int originZ, int maxHops, bool allowOthers, int minDistance = 0, bool heightAugmented = false)
     {
+        Cursor origin = GetTile(originX, originZ);
         List<int[]> queue = new List<int[]>();
         queue.Add(new int[] { originX, originZ, 0 });
         for (int i = 0; i < queue.Count; i++)
         {
             int[] entry = queue[i];
             int counter = entry[2] + 1;
-            if (counter > maxHops) continue;
+            int hopAugment = heightAugmented ? origin.yPos : 0;
+            if (counter > maxHops + hopAugment) continue;
 
             List<Cursor> neighbors = Neighbors(entry[0], entry[1]);
 
@@ -98,8 +100,16 @@ public class Helpers : MonoBehaviour
 
         foreach (int[] entry in queue)
         {
-            bool satisfiesMinDistance = Mathf.Abs(entry[0] - originX) + Mathf.Abs(entry[1] - originZ) >= minDistance;
-            if(satisfiesMinDistance) cursors.Add(GetTile(entry[0], entry[1]));
+            int distance = Mathf.Abs(entry[0] - originX) + Mathf.Abs(entry[1] - originZ);
+            bool satisfiesMinDistance = distance >= minDistance;
+            bool satisfiesHeightOffset = !heightAugmented;
+            if(heightAugmented) {
+                Cursor destination = GetTile(entry[0], entry[1]);
+                int distanceDiff = distance - maxHops;
+                int heightDiff = origin.yPos - destination.yPos;
+                satisfiesHeightOffset = distanceDiff <= heightDiff;
+            }
+            if(satisfiesMinDistance && satisfiesHeightOffset) cursors.Add(GetTile(entry[0], entry[1]));
         }
 
         return (cursors.ToList());

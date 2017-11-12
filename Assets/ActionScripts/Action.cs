@@ -30,6 +30,10 @@ abstract public class Action : NetworkBehaviour {
     DoAction(targetObject.GetComponent<Cursor>());
   }
 
+  public virtual bool HeightAssisted(){
+    return(false);
+  }
+
   public virtual int TpCost(){
     return(25);
   }

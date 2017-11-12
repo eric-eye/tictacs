@@ -27,6 +27,10 @@ public class ActionThrowStone : Action {
     return(true);
   }
 
+  public override bool HeightAssisted(){
+    return(true);
+  }
+
   protected override void DoAction(Cursor cursor){
     CreateVisual(cursor, Unit().transform.position);
   }
