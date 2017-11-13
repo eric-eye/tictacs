@@ -52,7 +52,7 @@ public class Menu : MonoBehaviour {
     float yStart = 35;
     int i = 0;
 
-    if(Unit.current && !Unit.current.hasActed){
+    if(Unit.current && !Unit.current.hasActed && !Unit.current.dead){
       foreach(GameObject actionObject in Unit.current.Actions()){
         int localIndex = i;
         GameObject buttonObject = Instantiate(menu.actionButtonPrefab, Vector3.zero, Quaternion.identity);

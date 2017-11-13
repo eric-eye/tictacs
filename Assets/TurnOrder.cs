@@ -34,7 +34,7 @@ public class TurnOrder : MonoBehaviour {
 
     foreach(Transform actionTransform in display.transform.Find("Panel")){
       if(i < Unit.All().Count){
-        actionTransform.GetComponent<Text>().text = i + 1 + ". " + Unit.All()[i].name + " - " + Unit.All()[i].CurrentTp();
+        actionTransform.GetComponent<Text>().text = i + 1 + ". " + Unit.All()[i].unitName + " - " + Unit.All()[i].CurrentTp();
         i++;
       }else{
         actionTransform.GetComponent<Text>().text = "";

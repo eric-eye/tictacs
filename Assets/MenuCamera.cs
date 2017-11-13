@@ -12,6 +12,6 @@ public class MenuCamera : MonoBehaviour {
 	}
 	
   public static void Refresh(){
-    main.SetActive(GameController.IsCurrentPlayer());
+    main.SetActive(GameController.IsCurrentPlayer() && GameController.CurrentUnitIsAlive());
   }
 }

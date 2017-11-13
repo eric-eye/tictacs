@@ -9,6 +9,7 @@ using System.Linq;
 
 public class Unit: NetworkBehaviour {
 
+  [SyncVar]
   public string unitName;
 
   private bool _isMoving;
@@ -82,6 +83,12 @@ public class Unit: NetworkBehaviour {
 
   [SyncVar(hook = "OnChangeHasMoved")]
   public bool hasMoved = false;
+
+  [SyncVar]
+  public int points = 100;
+
+  [SyncVar]
+  public bool dead = false;
 
   public float attackModifier = 1;
   public float physicalResistModifier = 1;
@@ -228,8 +235,11 @@ public class Unit: NetworkBehaviour {
   }
 
   private void Die(){
-    GameController.RemoveUnit(this);
-    Destroy(gameObject);
+    dead = true;
+  }
+
+  private void Revive(){
+    dead = false;
   }
 
   public int MoveLength(){
@@ -251,6 +261,7 @@ public class Unit: NetworkBehaviour {
   }
 
   public void ReceiveDamage(int damage){
+    int startingHp = currentHp;
     damage = Stance().NegotiateDamage(damage);
 
     if(NetworkServer.active){
@@ -261,9 +272,6 @@ public class Unit: NetworkBehaviour {
       }
       stanceRevealed = true;
       currentHp -= damage;
-      if(currentHp < 1){
-        Die();
-      }
     }
 
     System.Action showHits = () => {
@@ -274,6 +282,14 @@ public class Unit: NetworkBehaviour {
     GameObject stanceDialogueObject = Instantiate(stanceDialoguePrefab, transform.position, Quaternion.identity);
     stanceDialogueObject.GetComponent<StanceDialogue>().stance = Stance();
     stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
+
+    print("received damage " + damage + " to " + currentHp);
+
+    if (damage >= currentHp)
+    {
+        print("die");
+        Die();
+    }
   }
 
   public void ReceiveTpDamage(int damage){
@@ -294,21 +310,16 @@ public class Unit: NetworkBehaviour {
   public void OnChangeHp(int newHp){
     int difference = currentHp - newHp;
     currentHp = newHp;
-
-    // System.Action showHits = () => {
-    //   GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
-    //   hitsObject.GetComponent<Hits>().damage = difference;
-    // };
-
-    // GameObject stanceDialogueObject = Instantiate(stanceDialoguePrefab, transform.position, Quaternion.identity);
-    // stanceDialogueObject.GetComponent<StanceDialogue>().stance = Stance();
-    // stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
   }
 
   public void OnChangeIsCurrent(bool newIsCurrent){
     isCurrent = newIsCurrent;
     ReflectCurrent();
     GameController.RefreshPlayerView();
+    if(isCurrent && dead){
+      currentTp -= 50;
+      StartCoroutine(GameController.SkipTurn(5));
+    }
   }
 
   public void ReflectCurrent(){
@@ -405,7 +416,7 @@ public class Unit: NetworkBehaviour {
   }
 
   public bool DoneWithTurn(){
-    return(hasActed && hasMoved);
+    return(dead || (hasActed && hasMoved));
   }
 
   public void ReadyNextTurn(){

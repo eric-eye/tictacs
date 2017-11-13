@@ -67,7 +67,7 @@ public class CursorController : NetworkBehaviour {
 	}
 
   public static void ShowMoveCells(){
-    if(GameController.IsCurrentPlayer() && !Unit.current.hasMoved){
+    if(GameController.IsCurrentPlayer() && !Unit.current.hasMoved && !Unit.current.dead){
       List<Cursor> path = Helpers.GetRadialTiles(Unit.current.xPos, Unit.current.zPos, Unit.current.MoveLength(), false);
       HighlightMovableTiles(path);
     }else{

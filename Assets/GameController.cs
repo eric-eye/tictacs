@@ -3,170 +3,202 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GameController : NetworkBehaviour {
-  public enum State { PickAction, PickTarget, ConfirmTarget };
+public class GameController : NetworkBehaviour
+{
+    public enum State { PickAction, PickTarget, ConfirmTarget };
 
-  public GameObject playerPrefab;
-  public GameObject unitPrefab;
-  public GameObject voxelControllerPrefab;
-  public GameObject cursorControllerPrefab;
-  public GameObject turnControllerPrefab;
-  public GameObject setupControllerPrefab;
+    public GameObject playerPrefab;
+    public GameObject unitPrefab;
+    public GameObject voxelControllerPrefab;
+    public GameObject cursorControllerPrefab;
+    public GameObject turnControllerPrefab;
+    public GameObject setupControllerPrefab;
 
-  public static State state = State.PickAction;
-  public static bool inputsFrozen = false;
-  public static GameController instance;
-  public static bool canLaunch = false;
-  public static int selectedActionIndex;
+    public static State state = State.PickAction;
+    public static bool inputsFrozen = false;
+    public static GameController instance;
+    public static bool canLaunch = false;
+    public static int selectedActionIndex;
 
-  private bool launched = false;
+    private bool launched = false;
 
-  [SyncVar]
-  public int playerCount = 0;
+    [SyncVar]
+    public int playerCount = 0;
 
-  void Awake(){
-    instance = this;
-  }
-
-  void Start(){
-    if(NetworkServer.active) instance.CmdSpawnControllers();
-  }
-
-  void Update(){
-    if(canLaunch && !launched && Unit.current) Launch();
-
-    if(InputController.InputCancel()){
-      CursorController.Cancel();
+    void Awake()
+    {
+        instance = this;
     }
-  }
 
-  [Command]
-  public void CmdMoveAlong(int x, int z){
-    List<int[]> path = Helpers.DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
-    CursorController.moveEnabled = false;
-    CursorController.Coordinate[] coordinates = new CursorController.Coordinate[path.Count];
-    int c = 0;
-    foreach(int[] array in path){
-      CursorController.Coordinate coordinate = new CursorController.Coordinate();
-      coordinate.x = array[0];
-      coordinate.z = array[1];
-      coordinate.counter = array[2];
-      coordinate.elevation = array[3];
-      coordinates[c] = coordinate;
-      c++;
+    void Start()
+    {
+        if (NetworkServer.active) instance.CmdSpawnControllers();
     }
-    Unit.current.CmdSetPath(coordinates);
-  }
 
-  [Command]
-  public void CmdPickStance(int stanceIndex, GameObject player){
-    Unit.current.CmdSetStance(stanceIndex, player);
-  }
+    void Update()
+    {
+        if (canLaunch && !launched && Unit.current) Launch();
 
-  [Command]
-  public void CmdDoAction(int x, int z, int actionIndex){
-    Unit.current.RpcDoAction(x, z, actionIndex);
-  }
-
-  [Command]
-  public void CmdBumpPlayerCount(){
-    playerCount++;
-  }
-
-  [Command]
-  private void CmdSpawnControllers(){
-    GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(voxelPrefab);
-
-    GameObject turnPrefab = Instantiate(instance.turnControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(turnPrefab);
-
-    GameObject cursorPrefab = Instantiate(instance.cursorControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(cursorPrefab);
-
-    GameObject setupPrefab = Instantiate(instance.setupControllerPrefab, Vector3.zero, Quaternion.identity);
-    NetworkServer.Spawn(setupPrefab);
-  }
-
-  public static void PickAction(int actionIndex){
-    CursorController.Cancel();
-    SetState(State.PickTarget);
-    selectedActionIndex = actionIndex;
-    CursorController.ShowActionCursors(actionIndex);
-  }
-
-  public static void ConfirmAction(Cursor cursor){
-    SetState(State.ConfirmTarget);
-    CursorController.HideConfirmAttackCursors();
-    CursorController.ShowConfirmActionCursors(cursor);
-    CursorController.ShowActionRangeCursors(cursor, selectedActionIndex);
-  }
-
-  public static void StartMoving(Unit unit){
-    GameController.FreezeInputs();
-    Menu.Refresh();
-  }
-
-  public static void FinishMoving(){
-    CursorController.ShowMoveCells();
-    CursorController.ResetPath();
-    TurnController.Next();
-    UnfreezeInputs();
-    Menu.Refresh();
-  }
-
-  public static void FinishAction(){
-    Menu.Refresh();
-    CursorController.HideAttackCursors();
-    CursorController.HideConfirmAttackCursors();
-    SetState(State.PickAction);
-    TurnController.Next();
-  }
-
-  public static void RemoveUnit(Unit unit) {
-    //instance.units.Remove(unit);
-  }
-
-  public static void RefreshPlayerView(){
-    CursorController.ShowMoveCells();
-    SetState(State.PickAction);
-    Menu.Refresh();
-    MenuCamera.Refresh();
-  }
-
-  public static bool IsCurrentPlayer(){
-    return(Unit.current && Unit.current.playerIndex == Player.player.playerIndex);
-  }
-
-  public static void FinishStanceChange() {
-    CursorController.Cancel();
-    CursorController.ShowMoveCells();
-    Menu.Refresh();
-  }
-
-  public static void CancelAttack(){
-    SetState(State.PickAction);
-    CursorController.HideAttackCursors();
-    CursorController.HideConfirmAttackCursors();
-    Menu.Refresh();
-  }
-
-  public static void FreezeInputs() {
-    inputsFrozen = true;
-  }
-
-  public static void UnfreezeInputs() {
-    inputsFrozen = false;
-  }
-
-  private static void SetState(State newState){
-    state = newState;
-  }
-
-  private void Launch(){
-    if(Unit.All().Count > 0){
-      RefreshPlayerView();
-      launched = true;
+        if (InputController.InputCancel())
+        {
+            CursorController.Cancel();
+        }
     }
-  }
+
+    [Command]
+    public void CmdMoveAlong(int x, int z)
+    {
+        List<int[]> path = Helpers.DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
+        CursorController.moveEnabled = false;
+        CursorController.Coordinate[] coordinates = new CursorController.Coordinate[path.Count];
+        int c = 0;
+        foreach (int[] array in path)
+        {
+            CursorController.Coordinate coordinate = new CursorController.Coordinate();
+            coordinate.x = array[0];
+            coordinate.z = array[1];
+            coordinate.counter = array[2];
+            coordinate.elevation = array[3];
+            coordinates[c] = coordinate;
+            c++;
+        }
+        Unit.current.CmdSetPath(coordinates);
+    }
+
+    [Command]
+    public void CmdPickStance(int stanceIndex, GameObject player)
+    {
+        Unit.current.CmdSetStance(stanceIndex, player);
+    }
+
+    [Command]
+    public void CmdDoAction(int x, int z, int actionIndex)
+    {
+        Unit.current.RpcDoAction(x, z, actionIndex);
+    }
+
+    [Command]
+    public void CmdBumpPlayerCount()
+    {
+        playerCount++;
+    }
+
+    [Command]
+    private void CmdSpawnControllers()
+    {
+        GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
+        NetworkServer.Spawn(voxelPrefab);
+
+        GameObject turnPrefab = Instantiate(instance.turnControllerPrefab, Vector3.zero, Quaternion.identity);
+        NetworkServer.Spawn(turnPrefab);
+
+        GameObject cursorPrefab = Instantiate(instance.cursorControllerPrefab, Vector3.zero, Quaternion.identity);
+        NetworkServer.Spawn(cursorPrefab);
+
+        GameObject setupPrefab = Instantiate(instance.setupControllerPrefab, Vector3.zero, Quaternion.identity);
+        NetworkServer.Spawn(setupPrefab);
+    }
+
+    public static void PickAction(int actionIndex)
+    {
+        CursorController.Cancel();
+        SetState(State.PickTarget);
+        selectedActionIndex = actionIndex;
+        CursorController.ShowActionCursors(actionIndex);
+    }
+
+    public static void ConfirmAction(Cursor cursor)
+    {
+        SetState(State.ConfirmTarget);
+        CursorController.HideConfirmAttackCursors();
+        CursorController.ShowConfirmActionCursors(cursor);
+        CursorController.ShowActionRangeCursors(cursor, selectedActionIndex);
+    }
+
+    public static void StartMoving(Unit unit)
+    {
+        GameController.FreezeInputs();
+        Menu.Refresh();
+    }
+
+    public static void FinishMoving()
+    {
+        CursorController.ShowMoveCells();
+        CursorController.ResetPath();
+        TurnController.Next();
+        UnfreezeInputs();
+        Menu.Refresh();
+    }
+
+    public static IEnumerator SkipTurn(float wait = 0){
+        yield return new WaitForSeconds(wait);
+        GameController.FinishAction();
+    }
+
+    public static void FinishAction()
+    {
+        Menu.Refresh();
+        CursorController.HideAttackCursors();
+        CursorController.HideConfirmAttackCursors();
+        SetState(State.PickAction);
+        TurnController.Next();
+    }
+
+    public static void RefreshPlayerView()
+    {
+        CursorController.ShowMoveCells();
+        SetState(State.PickAction);
+        Menu.Refresh();
+        DeathInformation.Refresh();
+        MenuCamera.Refresh();
+    }
+
+    public static bool IsCurrentPlayer()
+    {
+        return (Unit.current && Unit.current.playerIndex == Player.player.playerIndex);
+    }
+
+    public static bool CurrentUnitIsAlive()
+    {
+        return (Unit.current && !Unit.current.dead);
+    }
+
+    public static void FinishStanceChange()
+    {
+        CursorController.Cancel();
+        CursorController.ShowMoveCells();
+        Menu.Refresh();
+    }
+
+    public static void CancelAttack()
+    {
+        SetState(State.PickAction);
+        CursorController.HideAttackCursors();
+        CursorController.HideConfirmAttackCursors();
+        Menu.Refresh();
+    }
+
+    public static void FreezeInputs()
+    {
+        inputsFrozen = true;
+    }
+
+    public static void UnfreezeInputs()
+    {
+        inputsFrozen = false;
+    }
+
+    private static void SetState(State newState)
+    {
+        state = newState;
+    }
+
+    private void Launch()
+    {
+        if (Unit.All().Count > 0)
+        {
+            RefreshPlayerView();
+            launched = true;
+        }
+    }
 }
