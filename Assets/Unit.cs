@@ -12,6 +12,9 @@ public class Unit: NetworkBehaviour {
   [SyncVar]
   public string unitName;
 
+  [SyncVar]
+  public int turnsDead = 0;
+
   private bool _isMoving;
   private bool _isMovingUp;
   private bool _isMovingDown;
@@ -235,11 +238,41 @@ public class Unit: NetworkBehaviour {
   }
 
   private void Die(){
+    Cursor tile = Helpers.GetTile(xPos, zPos);
+    tile.standingUnit = null;
+    xPos = -1;
+    zPos = -1;
+    yPos = -1;
     dead = true;
+    StartCoroutine(MoveAway());
   }
 
-  private void Revive(){
+  private IEnumerator MoveAway(){
+    yield return new WaitForSeconds(1f);
+    transform.position = new Vector3(9999, 9999, 9999);
+  }
+
+  [Command]
+  public void CmdRevive(){
     dead = false;
+    xPos = 0;
+    zPos = 0;
+    Cursor tile = Helpers.GetTile(xPos, zPos);
+    yPos = tile.yPos;
+    RpcRevive(xPos, zPos);
+  }
+
+  [ClientRpc]
+  public void RpcRevive(int x, int z){
+    dead = false;
+    Cursor tile = Helpers.GetTile(x, z);
+    tile.standingUnit = this;
+    Vector3 position = transform.position;
+    position.x = x + .5f;
+    position.z = z + .5f;
+    position.y = tile.yPos + 1.5f;
+    transform.position = position;
+    GameController.refreshView = true;
   }
 
   public int MoveLength(){
@@ -316,10 +349,22 @@ public class Unit: NetworkBehaviour {
     isCurrent = newIsCurrent;
     ReflectCurrent();
     GameController.RefreshPlayerView();
-    if(isCurrent && dead){
-      currentTp -= 50;
-      StartCoroutine(GameController.SkipTurn(5));
+
+    if(isCurrent){
+      if(NetworkServer.active) GameController.instance.CmdResolveDeathPhase();
     }
+    // if(isCurrent && dead){
+    //   if(turnsDead <= 1){
+    //     if(NetworkServer.active){
+    //       currentTp -= 50;
+    //     }
+    //     StartCoroutine(GameController.SkipTurn(5));
+    //   }else{
+    //     Revive();
+    //     ReflectCurrent();
+    //     GameController.RefreshPlayerView();
+    //   }
+    // }
   }
 
   public void ReflectCurrent(){

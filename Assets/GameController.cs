@@ -19,6 +19,7 @@ public class GameController : NetworkBehaviour
     public static GameController instance;
     public static bool canLaunch = false;
     public static int selectedActionIndex;
+    public static bool refreshView = false;
 
     private bool launched = false;
 
@@ -43,6 +44,29 @@ public class GameController : NetworkBehaviour
         {
             CursorController.Cancel();
         }
+
+        if(refreshView){
+            RefreshPlayerView();
+            refreshView = false;
+        }
+    }
+
+    [Command]
+    public void CmdResolveDeathPhase(){
+        if(Unit.current.dead) {
+            Unit.current.turnsDead++;
+            if(Unit.current.turnsDead <= 1){
+                Unit.current.currentTp -= 50;
+                RpcResolveDeathPhase();
+            }else{
+                Unit.current.CmdRevive();
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcResolveDeathPhase(){
+        StartCoroutine(GameController.SkipTurn(5));
     }
 
     [Command]

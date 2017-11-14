@@ -14,7 +14,6 @@ public class DeathInformation : MonoBehaviour {
 	}
 
   public static void Refresh(){
-		print("refreshing...");
 		Unit unit = Unit.current;
 
 		if(unit){

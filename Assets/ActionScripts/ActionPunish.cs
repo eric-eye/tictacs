@@ -45,7 +45,10 @@ public class ActionPunish : Action
     {
         List<Cursor> allTiles = Helpers.GetLineTiles(Unit().xPos, Unit().zPos, cursor.xPos, cursor.zPos, LineDistance());
         List<Cursor> tiles = allTiles.Where(tile => tile.standingUnit).ToList();
-        targetsToResolve = maxTargetsToResolve;
+        foreach(Cursor tile in tiles) {
+            if(tile.standingUnit) targetsToResolve++;
+            if(targetsToResolve == maxTargetsToResolve) break;
+        }
 
         if (targetsToResolve == 0)
         {
