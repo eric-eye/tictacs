@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Linq;
 
-public class Unit: NetworkBehaviour {
+public class Unit : NetworkBehaviour {
 
   [SyncVar]
   public string unitName;

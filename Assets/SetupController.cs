@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class SetupController : NetworkBehaviour {
   public GameObject unitPrefab;
+  public GameObject pointsPrefab;
 
   private int setupIndex = 0;
 
@@ -41,6 +42,9 @@ public class SetupController : NetworkBehaviour {
 
   private Unit AddUnit(int xPos, int zPos, Color color, int playerIndex, string newName, int initialTp){
     GameObject unitObject = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
+    GameObject pointsObject = Instantiate(pointsPrefab, Vector3.zero, Quaternion.identity);
+
+    pointsObject.GetComponent<Points>().unit = unitObject.GetComponent<Unit>();
 
     NetworkServer.Spawn(unitObject);
 
