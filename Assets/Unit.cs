@@ -271,6 +271,8 @@ public class Unit: NetworkBehaviour {
     position.x = x + .5f;
     position.z = z + .5f;
     position.y = tile.yPos + 1.5f;
+    currentxPos = x;
+    currentzPos = z;
     transform.position = position;
     GameController.refreshView = true;
   }
@@ -525,6 +527,7 @@ public class Unit: NetworkBehaviour {
       }
 
       CursorController.Coordinate nextStep = _path[_pathIndex];
+      print("nextStep" + nextStep.x + ", " + nextStep.z);
       _pathIndex++;
       if(_pathIndex >= _path.Count) {
         resetPath = true;
