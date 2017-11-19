@@ -37,7 +37,7 @@ public class ActionLightningStab : Action
     {
         if (cursor.standingUnit)
         {
-            cursor.standingUnit.ReceiveDamage(5);
+            cursor.standingUnit.ReceiveDamage(5, Unit());
             targetsToResolve -= 1;
         }
         if(targetsToResolve == 0) Unit().FinishAction();

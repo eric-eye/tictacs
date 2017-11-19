@@ -34,8 +34,8 @@ public class ActionPunish : Action
         if (cursor.standingUnit)
         {
             Stance stance = cursor.standingUnit.Stance();
-            int damage = stance.used ? 50 : 30;
-            cursor.standingUnit.ReceiveDamage(damage);
+            int damage = stance.used ? 20 : 5;
+            cursor.standingUnit.ReceiveDamage(damage, Unit());
             targetsToResolve -= 1;
         }
         if(targetsToResolve == 0) Unit().FinishAction();

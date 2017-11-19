@@ -22,7 +22,7 @@ public class ActionSpinAttack : Action
     {
         if (cursor.standingUnit)
         {
-            cursor.standingUnit.ReceiveDamage(15);
+            cursor.standingUnit.ReceiveDamage(15, Unit());
             targetsToResolve -= 1;
         }
         if(targetsToResolve == 0) Unit().FinishAction();
@@ -56,5 +56,6 @@ public class ActionSpinAttack : Action
         {
             CreateVisual(tile, tile.transform.position);
         }
+        if(targetsToResolve == 0) Unit().FinishAction();
     }
 }

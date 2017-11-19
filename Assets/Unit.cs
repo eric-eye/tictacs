@@ -87,7 +87,7 @@ public class Unit : NetworkBehaviour {
   [SyncVar(hook = "OnChangeHasMoved")]
   public bool hasMoved = false;
 
-  [SyncVar]
+  [SyncVar(hook = "OnChangePoints")]
   public int points = 100;
 
   [SyncVar]
@@ -96,7 +96,25 @@ public class Unit : NetworkBehaviour {
   public float attackModifier = 1;
   public float physicalResistModifier = 1;
 
+  public GameObject pointsPrefab;
+
   //public List<GameObject> buffs = new List<GameObject>();
+
+  public static List<string> allActions = new List<string>{
+    "Attack",
+    "ChainLightning",
+    "DelayAttack",
+    "Fire",
+    "LightningStab",
+    "Meteor",
+    "Punish",
+    "Razz",
+    "SpinAttack",
+    "ThrowStone",
+  };
+  // public static List<string> allActions = new List<string>{
+  //   "SpinAttack",
+  // };
 
 	// Use this for initialization
 	void Start () {
@@ -127,12 +145,16 @@ public class Unit : NetworkBehaviour {
 
     all.Add(this);
 
+    GameObject pointsObject = Instantiate(pointsPrefab, Vector3.zero, Quaternion.identity);
+
+    pointsObject.GetComponent<Points>().unit = this;
+
+    PlayerPointsBar.ResizeByIndex(playerIndex);
+
     if(NetworkServer.active){
       GameObject instance;
 
-      List<string> actionList = new List<string> {
-        "Punish", "Fire", "ThrowStone", "ChainLightning"
-      };
+      List<string> actionList = allActions.OrderBy(item => Random.value).ToList().GetRange(0, 4);
 
       List<string> stanceList = new List<string> {
         "Neutral", "Defend"
@@ -237,13 +259,15 @@ public class Unit : NetworkBehaviour {
     return(maxTp - currentTp);
   }
 
-  private void Die(){
+  private void Die(Unit aggressor){
     Cursor tile = Helpers.GetTile(xPos, zPos);
     tile.standingUnit = null;
     xPos = -1;
     zPos = -1;
     yPos = -1;
     dead = true;
+    aggressor.points += points;
+    points = 0;
     StartCoroutine(MoveAway());
   }
 
@@ -259,6 +283,8 @@ public class Unit : NetworkBehaviour {
     zPos = 0;
     Cursor tile = Helpers.GetTile(xPos, zPos);
     yPos = tile.yPos;
+    points = 100;
+    currentHp = 30;
     RpcRevive(xPos, zPos);
   }
 
@@ -295,7 +321,7 @@ public class Unit : NetworkBehaviour {
     return(Stances()[stanceIndex].GetComponent<Stance>());
   }
 
-  public void ReceiveDamage(int damage){
+  public void ReceiveDamage(int damage, Unit aggressor){
     int startingHp = currentHp;
     damage = Stance().NegotiateDamage(damage);
 
@@ -320,10 +346,9 @@ public class Unit : NetworkBehaviour {
 
     print("received damage " + damage + " to " + currentHp);
 
-    if (damage >= currentHp)
+    if (damage >= startingHp)
     {
-        print("die");
-        Die();
+        Die(aggressor);
     }
   }
 
@@ -343,8 +368,12 @@ public class Unit : NetworkBehaviour {
   }
 
   public void OnChangeHp(int newHp){
-    int difference = currentHp - newHp;
     currentHp = newHp;
+  }
+
+  public void OnChangePoints(int newPoints){
+    points = newPoints;
+    PlayerPointsBar.ResizeByIndex(this.playerIndex);
   }
 
   public void OnChangeIsCurrent(bool newIsCurrent){

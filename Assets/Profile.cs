@@ -33,7 +33,7 @@ public class Profile : MonoBehaviour {
   // Update is called once per frame
   void Update () {
     if(activated){
-      unitName.text = "Name: " + unit.name;
+      unitName.text = "Name: " + unit.unitName;
       unitHp.text = "HP: " + unit.currentHp.ToString() + "/" + unit.maxHp.ToString();
       unitMp.text = "MP: " + unit.currentMp.ToString() + "/" + unit.maxMp.ToString();
       unitTp.text = "TP: " + unit.CurrentTp().ToString() + "/" + unit.maxTp.ToString();

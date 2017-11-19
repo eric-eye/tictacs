@@ -20,6 +20,7 @@ public class GameController : NetworkBehaviour
     public static bool canLaunch = false;
     public static int selectedActionIndex;
     public static bool refreshView = false;
+    public static int pointsToWin = 1000;
 
     private bool launched = false;
 

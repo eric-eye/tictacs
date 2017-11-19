@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Linq;
 
 public class Player : NetworkBehaviour {
 
   public static Player player;
+  public static List<Player> players = new List<Player>();
 
   [SyncVar(hook = "OnPlayerIndexChanged")]
   public int playerIndex;
@@ -14,6 +16,8 @@ public class Player : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
+    players.Add(this);
+
     if(isServer && isLocalPlayer){
       CmdSpawnGameController();
     }
@@ -94,5 +98,18 @@ public class Player : NetworkBehaviour {
   void CmdSpawnGameController(){
     GameObject gameController = Instantiate(gameControllerPrefab, Vector3.zero, Quaternion.identity);
     NetworkServer.Spawn(gameController);
+  }
+
+  public List<Unit> Units(){
+    return Unit.All().Where(unit => unit.playerIndex == playerIndex).ToList();
+  }
+
+  public int CurrentPoints(){
+    return Units().Aggregate(0, (acc, x) => acc + x.points);
+  }
+
+  public static Player ByIndex(int index){
+    print(players.Count);
+    return(players.Find(player => player.playerIndex == index));
   }
 }

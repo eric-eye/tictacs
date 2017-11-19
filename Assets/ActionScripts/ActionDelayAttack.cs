@@ -23,7 +23,7 @@ public class ActionDelayAttack : Action {
 
   private IEnumerator DoScript(Cursor cursor){
     if(cursor.standingUnit){
-      cursor.standingUnit.ReceiveDamage(5);
+      cursor.standingUnit.ReceiveDamage(5, Unit());
     }
     yield return new WaitForSeconds(0.5f);
     if(cursor.standingUnit){

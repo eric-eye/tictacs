@@ -29,7 +29,7 @@ public class ActionChainLightning : Action
         if (cursor.standingUnit)
         {
             targetsToResolve--;
-            cursor.standingUnit.ReceiveDamage(5);
+            cursor.standingUnit.ReceiveDamage(5, Unit());
         }
 
         List<Cursor> tiles = Helpers.GetRadialTiles(cursor.xPos, cursor.zPos, 2, true);

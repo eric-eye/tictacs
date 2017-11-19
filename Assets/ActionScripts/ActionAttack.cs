@@ -15,7 +15,7 @@ public class ActionAttack : Action {
 
   public override void ReceiveVisualFeedback(Cursor cursor){
     if(cursor.standingUnit){
-      cursor.standingUnit.ReceiveDamage(15);
+      cursor.standingUnit.ReceiveDamage(15, Unit());
     }
     Unit().FinishAction();
   }

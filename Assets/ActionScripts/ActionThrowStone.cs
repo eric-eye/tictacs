@@ -18,7 +18,7 @@ public class ActionThrowStone : Action {
 
   public override void ReceiveVisualFeedback(Cursor cursor){
     if(cursor.standingUnit){
-      cursor.standingUnit.ReceiveDamage(5);
+      cursor.standingUnit.ReceiveDamage(5, Unit());
     }
     Unit().FinishAction();
   }

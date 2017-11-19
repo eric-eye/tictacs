@@ -33,7 +33,7 @@ public class ActionMeteor : Action {
     List<Cursor> tiles = Helpers.GetRadialTiles(cursor.xPos, cursor.zPos, this.RadialDistance(), true);
     foreach(Cursor tile in tiles){
       if(tile.standingUnit){
-        tile.standingUnit.ReceiveDamage(12);
+        tile.standingUnit.ReceiveDamage(12, Unit());
       }
     }
     Unit().FinishAction();
