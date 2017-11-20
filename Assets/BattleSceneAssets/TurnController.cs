@@ -44,10 +44,14 @@ public class TurnController : NetworkBehaviour {
   }
 
   public static void Next() {
-    if(Unit.current.DoneWithTurn()){
-      Unit.current.ReadyNextTurn();
-      CursorController.moveEnabled = true;
-      if(NetworkServer.active) instance.CmdAdvanceTpToNext();
+    if(GameController.gameFinished){
+      GameController.EndGame();
+    }else{
+      if(Unit.current.DoneWithTurn()){
+        Unit.current.ReadyNextTurn();
+        CursorController.moveEnabled = true;
+        if(NetworkServer.active) instance.CmdAdvanceTpToNext();
+      }
     }
   }
 }

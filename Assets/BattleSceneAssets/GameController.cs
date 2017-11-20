@@ -21,6 +21,7 @@ public class GameController : NetworkBehaviour
     public static int selectedActionIndex;
     public static bool refreshView = false;
     public static int pointsToWin = 1000;
+    public static bool gameFinished = false;
 
     private bool launched = false;
 
@@ -121,6 +122,11 @@ public class GameController : NetworkBehaviour
 
         GameObject setupPrefab = Instantiate(instance.setupControllerPrefab, Vector3.zero, Quaternion.identity);
         NetworkServer.Spawn(setupPrefab);
+    }
+
+    public static void EndGame(){
+        gameFinished = true;
+        WinInformation.Show();
     }
 
     public static void PickAction(int actionIndex)

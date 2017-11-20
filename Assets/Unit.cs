@@ -100,21 +100,25 @@ public class Unit : NetworkBehaviour {
 
   //public List<GameObject> buffs = new List<GameObject>();
 
+  // public static List<string> allActions = new List<string>{
+  //   "Attack",
+  //   "ChainLightning",
+  //   "DelayAttack",
+  //   "Fire",
+  //   "LightningStab",
+  //   "Meteor",
+  //   "Punish",
+  //   "Razz",
+  //   "SpinAttack",
+  //   "ThrowStone",
+  // };
+
   public static List<string> allActions = new List<string>{
-    "Attack",
     "ChainLightning",
-    "DelayAttack",
-    "Fire",
-    "LightningStab",
-    "Meteor",
-    "Punish",
     "Razz",
     "SpinAttack",
     "ThrowStone",
   };
-  // public static List<string> allActions = new List<string>{
-  //   "SpinAttack",
-  // };
 
 	// Use this for initialization
 	void Start () {
@@ -267,7 +271,7 @@ public class Unit : NetworkBehaviour {
     yPos = -1;
     dead = true;
     aggressor.points += points;
-    points = 0;
+    points = 100;
     StartCoroutine(MoveAway());
   }
 
@@ -370,7 +374,12 @@ public class Unit : NetworkBehaviour {
   }
 
   public void OnChangePoints(int newPoints){
+    print("points changing " + newPoints);
     points = newPoints;
+    print("computed points: " + Player.ByIndex(playerIndex).CurrentPoints());
+    if(Player.ByIndex(playerIndex).CurrentPoints() >= 500){
+      GameController.EndGame();
+    }
     PlayerPointsBar.ResizeByIndex(this.playerIndex);
   }
 

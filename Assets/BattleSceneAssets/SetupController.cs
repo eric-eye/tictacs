@@ -10,6 +10,7 @@ public class SetupController : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
+    WinInformation.Hide();
 	}
 	
 	// Update is called once per frame
