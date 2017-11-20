@@ -111,8 +111,7 @@ public class GameController : NetworkBehaviour
     [Command]
     private void CmdSpawnControllers()
     {
-        GameObject voxelPrefab = Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
-        NetworkServer.Spawn(voxelPrefab);
+        Instantiate(instance.voxelControllerPrefab, Vector3.zero, Quaternion.identity);
 
         GameObject turnPrefab = Instantiate(instance.turnControllerPrefab, Vector3.zero, Quaternion.identity);
         NetworkServer.Spawn(turnPrefab);

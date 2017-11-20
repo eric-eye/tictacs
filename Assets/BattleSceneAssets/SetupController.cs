@@ -10,7 +10,6 @@ public class SetupController : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
@@ -43,18 +42,16 @@ public class SetupController : NetworkBehaviour {
     AddUnit(18, 17, Color.blue, 1, "Squirtle", 20);
   }
 
-  private Unit AddUnit(int xPos, int zPos, Color color, int playerIndex, string newName, int initialTp){
+  private void AddUnit(int xPos, int zPos, Color color, int playerIndex, string newName, int initialTp){
     GameObject unitObject = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
-
-    NetworkServer.Spawn(unitObject);
 
     Unit unit = unitObject.GetComponent<Unit>();
     unit.xPos = xPos;
     unit.zPos = zPos;
     unit.playerIndex = playerIndex;
-    unit.CmdSetColor(color);
+    unit.SetColor(color);
     unit.unitName = newName;
-    unit.CmdSetTp(initialTp);
-    return unit;
+    unit.currentTp = initialTp;
+    NetworkServer.Spawn(unitObject);
   }
 }

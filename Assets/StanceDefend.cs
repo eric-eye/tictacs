@@ -5,7 +5,6 @@ using UnityEngine;
 public class StanceDefend : Stance {
 
   public override int NegotiateDamage(int damage){
-    print("stanceDefend");
     return(damage - 4);
   }
 

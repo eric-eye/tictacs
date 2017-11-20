@@ -14,28 +14,28 @@ public class Player : NetworkBehaviour {
 
   public GameObject gameControllerPrefab;
 
+  void Awake(){
+    DontDestroyOnLoad(gameObject);
+  }
+
 	// Use this for initialization
 	void Start () {
+    if(isLocalPlayer) player = this;
+    if(NetworkServer.active) {
+      playerIndex = players.Count;
+    }
     players.Add(this);
+	}
 
+  public void BeginBattle(){
     if(isServer && isLocalPlayer){
       CmdSpawnGameController();
     }
-    if(isLocalPlayer){
-      player = this;
-      CmdSetPlayerIndex(GameController.instance.playerCount);
-      GameController.instance.CmdBumpPlayerCount();
-    }
-	}
+  }
 
   void OnPlayerIndexChanged(int newPlayerIndex){
     playerIndex = newPlayerIndex;
     GameController.canLaunch = true;
-  }
-
-  [Command]
-  void CmdSetPlayerIndex(int newIndex){
-    playerIndex = newIndex;
   }
 	
 	// Update is called once per frame
@@ -109,7 +109,6 @@ public class Player : NetworkBehaviour {
   }
 
   public static Player ByIndex(int index){
-    print(players.Count);
     return(players.Find(player => player.playerIndex == index));
   }
 }

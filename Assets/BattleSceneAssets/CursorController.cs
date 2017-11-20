@@ -30,7 +30,7 @@ public class CursorController : NetworkBehaviour {
   private static int zMax;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
     instance = this;
     _grid = GameObject.Find("Grid").GetComponent<RectGrid>();
     _renderer = _grid.gameObject.GetComponent<Parallelepiped>();
@@ -38,7 +38,9 @@ public class CursorController : NetworkBehaviour {
     xMax = (int)_renderer.To[0];
     zMin = (int)_renderer.From[2];
     zMax = (int)_renderer.To[2];
+	}
 
+  public void Load(){
     for(int x = xMin; x < xMax; x++){
       cursorMatrix.Add(new List<Cursor>());
       for(int z = zMin; z < zMax; z++){
@@ -52,7 +54,7 @@ public class CursorController : NetworkBehaviour {
         cursorMatrix[x].Add(cursor);
       }
     }
-	}
+  }
 
 	// Update is called once per frame
 	public static void Cancel () {

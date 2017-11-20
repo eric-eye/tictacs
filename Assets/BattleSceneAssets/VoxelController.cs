@@ -72,11 +72,15 @@ public class VoxelController : NetworkBehaviour {
           syncCoordinates.Add(coordinate);
         }
       }
+
+      NetworkServer.Spawn(gameObject);
     }
 
     CacheMatrix();
 
     RenderVoxels();
+
+    CursorController.instance.Load();
 	}
 
   void RenderVoxels(){

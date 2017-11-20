@@ -162,14 +162,14 @@ public class Unit : NetworkBehaviour {
 
       foreach(string actionName in actionList){
         instance = Instantiate(Resources.Load("Actions/Action" + actionName, typeof(GameObject))) as GameObject;
-        NetworkServer.Spawn(instance);
         instance.GetComponent<Action>().parentNetId = netId;
+        NetworkServer.Spawn(instance);
       }
 
       foreach(string stanceName in stanceList){
         instance = Instantiate(Resources.Load("Stances/Stance" + stanceName, typeof(GameObject))) as GameObject;
-        NetworkServer.Spawn(instance);
         instance.GetComponent<Stance>().parentNetId = netId;
+        NetworkServer.Spawn(instance);
       }
     }
 
@@ -206,6 +206,7 @@ public class Unit : NetworkBehaviour {
 
   [Command]
   public void CmdSetTp(int newTp){
+    print("setting tp... " + newTp);
     currentTp = newTp;
   }
 
@@ -250,8 +251,7 @@ public class Unit : NetworkBehaviour {
     currentTp += tpToAdd;
   }
 
-  [Command]
-  public void CmdSetColor(Color color){
+  public void SetColor(Color color){
     _color = color;
   }
 
@@ -343,8 +343,6 @@ public class Unit : NetworkBehaviour {
     GameObject stanceDialogueObject = Instantiate(stanceDialoguePrefab, transform.position, Quaternion.identity);
     stanceDialogueObject.GetComponent<StanceDialogue>().stance = Stance();
     stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
-
-    print("received damage " + damage + " to " + currentHp);
 
     if (damage >= startingHp)
     {
@@ -556,7 +554,6 @@ public class Unit : NetworkBehaviour {
       }
 
       CursorController.Coordinate nextStep = _path[_pathIndex];
-      print("nextStep" + nextStep.x + ", " + nextStep.z);
       _pathIndex++;
       if(_pathIndex >= _path.Count) {
         resetPath = true;
