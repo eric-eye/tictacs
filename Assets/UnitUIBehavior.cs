@@ -14,7 +14,7 @@ public class UnitUIBehavior : MonoBehaviour {
 		
 	}
 
-  void OnMouseEnter() {
+  public void Focus() {
     Profile.Show(GetComponent<Unit>());
     AdvancedProfile.Show(GetComponent<Unit>());
     TurnOrder.Show();
@@ -22,7 +22,7 @@ public class UnitUIBehavior : MonoBehaviour {
     SetHighlight();
   }
 
-  void OnMouseExit() {
+  public void Blur() {
     Profile.Hide();
     AdvancedProfile.Hide();
     TurnOrder.Hide();
@@ -31,13 +31,21 @@ public class UnitUIBehavior : MonoBehaviour {
   }
 
   void SetHighlight(){
-    gameObject.transform.Find("Body").GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red * 100);
-    gameObject.transform.Find("Body").GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+    HighlightBodyPart("ArmLeft1");
+    HighlightBodyPart("ArmRight1");
+    HighlightBodyPart("Body1");
+    HighlightBodyPart("Head1");
+    HighlightBodyPart("LegLeft1");
+    HighlightBodyPart("LegRight1");
   }
 
   void UnsetHighlight(){
-    gameObject.transform.Find("Body").GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.black);
-    gameObject.transform.Find("Body").GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+    UnsetHighlightBodyPart("ArmLeft1");
+    UnsetHighlightBodyPart("ArmRight1");
+    UnsetHighlightBodyPart("Body1");
+    UnsetHighlightBodyPart("Head1");
+    UnsetHighlightBodyPart("LegLeft1");
+    UnsetHighlightBodyPart("LegRight1");
   }
 
   public void SetMarker(){
@@ -46,5 +54,15 @@ public class UnitUIBehavior : MonoBehaviour {
 
   public void UnsetMarker(){
     transform.Find("Marker").GetComponent<MeshRenderer>().enabled = false;
+  }
+
+  private void HighlightBodyPart(string bodyPart){
+    gameObject.transform.Find("Body").Find("CharacterModel").Find(bodyPart).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red * 100);
+    gameObject.transform.Find("Body").Find("CharacterModel").Find(bodyPart).GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+  }
+
+  private void UnsetHighlightBodyPart(string bodyPart){
+    gameObject.transform.Find("Body").Find("CharacterModel").Find(bodyPart).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.black);
+    gameObject.transform.Find("Body").Find("CharacterModel").Find(bodyPart).GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
   }
 }

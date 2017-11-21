@@ -100,21 +100,14 @@ public class Unit : NetworkBehaviour {
 
   //public List<GameObject> buffs = new List<GameObject>();
 
-  // public static List<string> allActions = new List<string>{
-  //   "Attack",
-  //   "ChainLightning",
-  //   "DelayAttack",
-  //   "Fire",
-  //   "LightningStab",
-  //   "Meteor",
-  //   "Punish",
-  //   "Razz",
-  //   "SpinAttack",
-  //   "ThrowStone",
-  // };
-
   public static List<string> allActions = new List<string>{
+    "Attack",
     "ChainLightning",
+    "DelayAttack",
+    "Fire",
+    "LightningStab",
+    "Meteor",
+    "Punish",
     "Razz",
     "SpinAttack",
     "ThrowStone",
@@ -377,7 +370,7 @@ public class Unit : NetworkBehaviour {
     print("points changing " + newPoints);
     points = newPoints;
     print("computed points: " + Player.ByIndex(playerIndex).CurrentPoints());
-    if(Player.ByIndex(playerIndex).CurrentPoints() >= 500){
+    if(Player.ByIndex(playerIndex).CurrentPoints() >= 1000){
       GameController.EndGame();
     }
     PlayerPointsBar.ResizeByIndex(this.playerIndex);

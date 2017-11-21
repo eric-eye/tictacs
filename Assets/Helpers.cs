@@ -40,7 +40,7 @@ public class Helpers : MonoBehaviour
         RaycastHit hit;
         GameObject target = targetTile.gameObject;
 
-        if (targetTile.standingUnit) target = targetTile.standingUnit.transform.Find("Hittable").gameObject;
+        // if (targetTile.standingUnit) target = targetTile.standingUnit.transform.Find("Hittable").gameObject;
         if (Physics.Linecast(Unit.current.transform.Find("Hittable").transform.position, target.transform.position, out hit, 1 << 8))
         {
             return (hit.collider.gameObject == target.gameObject);

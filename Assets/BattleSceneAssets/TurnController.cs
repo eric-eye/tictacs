@@ -23,7 +23,7 @@ public class TurnController : NetworkBehaviour {
 
   [Command]
   public void CmdAdvanceTpToNext(){
-    // CmdAdvanceTp();
+    CmdAdvanceTp();
     CmdSetCurrentUnit();
   }
 

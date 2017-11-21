@@ -43,11 +43,13 @@ public class Cursor : MonoBehaviour {
 	
   void OnMouseEnter() {
     hovered = this;
+    if(standingUnit) standingUnit.GetComponent<UnitUIBehavior>().Focus();
     NegotiateColor();
   }
 
   void OnMouseExit() {
     hovered = null;
+    if(standingUnit) standingUnit.GetComponent<UnitUIBehavior>().Blur();
     NegotiateColor();
   }
 
