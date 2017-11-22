@@ -40,13 +40,13 @@ public class Unit : NetworkBehaviour {
   public int currentxPos;
   public int currentzPos;
 
-  public class CoordinateList : SyncListStruct<CursorController.Coordinate> {};
+  public class CoordinateList : List<CursorController.Coordinate> {};
 
   public int yPos;
   private bool resetPath = false;
 
-  [SyncVar]
   private CoordinateList _path = new CoordinateList();
+  private CoordinateList _pathToSync = new CoordinateList();
 
   [SyncVar]
   private Color _color;
@@ -59,7 +59,6 @@ public class Unit : NetworkBehaviour {
 
   public int maxHp = 30;
 
-  [SyncVar(hook = "OnChangeHp")]
   public int currentHp = 30;
 
   public int maxTp = 100;
@@ -69,7 +68,6 @@ public class Unit : NetworkBehaviour {
   [SyncVar(hook = "OnChangeIsCurrent")]
   private bool isCurrent = false;
 
-  [SyncVar]
   public int currentTp = 0;
 
   public int maxMp;
@@ -203,7 +201,6 @@ public class Unit : NetworkBehaviour {
 
   [Command]
   public void CmdSetTp(int newTp){
-    print("setting tp... " + newTp);
     currentTp = newTp;
   }
 
@@ -304,8 +301,7 @@ public class Unit : NetworkBehaviour {
     return(Stance().NegotiateMoveLength(10));
   }
 
-  [Command]
-  public void CmdSetStance(int newStanceIndex, GameObject player){
+  public void SetStance(int newStanceIndex, GameObject player){
     stanceIndex = newStanceIndex;
   }
 
@@ -322,15 +318,13 @@ public class Unit : NetworkBehaviour {
     int startingHp = currentHp;
     damage = Stance().NegotiateDamage(damage);
 
-    if(NetworkServer.active){
-      foreach(GameObject stance in Stances()){
-          if(stance.GetComponent<Stance>() == Stance()){
-            stance.GetComponent<Stance>().used = true;
-          }
-      }
-      stanceRevealed = true;
-      currentHp -= damage;
+    foreach(GameObject stance in Stances()){
+        if(stance.GetComponent<Stance>() == Stance()){
+          stance.GetComponent<Stance>().used = true;
+        }
     }
+    stanceRevealed = true;
+    currentHp -= damage;
 
     System.Action showHits = () => {
       GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
@@ -348,9 +342,7 @@ public class Unit : NetworkBehaviour {
   }
 
   public void ReceiveTpDamage(int damage){
-    if(NetworkServer.active){
-      CmdSetTp(currentTp - damage);
-    }
+    // CmdSetTp(currentTp - damage);
 
     System.Action showHits = () => {
       GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
@@ -362,14 +354,8 @@ public class Unit : NetworkBehaviour {
     stanceDialogueObject.GetComponent<StanceDialogue>().whenDone = showHits;
   }
 
-  public void OnChangeHp(int newHp){
-    currentHp = newHp;
-  }
-
   public void OnChangePoints(int newPoints){
-    print("points changing " + newPoints);
     points = newPoints;
-    print("computed points: " + Player.ByIndex(playerIndex).CurrentPoints());
     if(Player.ByIndex(playerIndex).CurrentPoints() >= 1000){
       GameController.EndGame();
     }
@@ -382,20 +368,8 @@ public class Unit : NetworkBehaviour {
     GameController.RefreshPlayerView();
 
     if(isCurrent){
-      if(NetworkServer.active) GameController.instance.CmdResolveDeathPhase();
+      // if(NetworkServer.active) GameController.instance.CmdResolveDeathPhase();
     }
-    // if(isCurrent && dead){
-    //   if(turnsDead <= 1){
-    //     if(NetworkServer.active){
-    //       currentTp -= 50;
-    //     }
-    //     StartCoroutine(GameController.SkipTurn(5));
-    //   }else{
-    //     Revive();
-    //     ReflectCurrent();
-    //     GameController.RefreshPlayerView();
-    //   }
-    // }
   }
 
   public void ReflectCurrent(){
@@ -407,12 +381,11 @@ public class Unit : NetworkBehaviour {
     }
   }
 
-  [Command]
-  public void CmdSetCurrent(){
+  public void SetCurrent(){
     if(Unit.current){
       Unit.current.isCurrent = false;
       //SYNCVAR bug
-      if(NetworkServer.active) Unit.current.OnChangeIsCurrent(false);
+      // if(NetworkServer.active) Unit.current.OnChangeIsCurrent(false);
     }
     hasMoved = false;
     hasActed = false;
@@ -421,21 +394,19 @@ public class Unit : NetworkBehaviour {
     AdvanceBuffs();
   }
 
-  [Command]
-  public void CmdSetPath(CursorController.Coordinate[] path){
+  public void SetPath(CursorController.Coordinate[] path){
     currentTp -= 25;
     _path.Clear();
     foreach(CursorController.Coordinate coordinate in path){
       _path.Add(coordinate);
     }
-    RpcUpdateUnitsOnGrid(xPos, zPos, _path.Last().x, _path.Last().z, gameObject);
+    UpdateUnitsOnGrid(xPos, zPos, _path.Last().x, _path.Last().z, gameObject);
     hasMoved = true;
     xPos = _path.Last().x;
     zPos = _path.Last().z;
   }
 
-  [ClientRpc]
-  public void RpcUpdateUnitsOnGrid(int fromX, int fromZ, int toX, int toZ, GameObject unitObject){
+  private void UpdateUnitsOnGrid(int fromX, int fromZ, int toX, int toZ, GameObject unitObject){
     Unit unit = unitObject.GetComponent<Unit>();
     CursorController.cursorMatrix[fromX][fromZ].standingUnit = null;
     CursorController.cursorMatrix[toX][toZ].standingUnit = unit;
@@ -453,10 +424,8 @@ public class Unit : NetworkBehaviour {
     GameObject actionObject = Actions()[actionIndex];
     Action action = actionObject.GetComponent<Action>();
 
-    if(NetworkServer.active){
-      currentTp -= action.TpCost();
-      currentMp -= action.MpCost();
-    }
+    currentTp -= action.TpCost();
+    currentMp -= action.MpCost();
 
     Cursor cursor = CursorController.cursorMatrix[x][z];
 

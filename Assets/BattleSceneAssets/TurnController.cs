@@ -35,7 +35,7 @@ public class TurnController : NetworkBehaviour {
     }
     units.Sort((a, b) => a.GetComponent<Unit>().TpDiff().CompareTo(b.GetComponent<Unit>().TpDiff()));
     Unit unit = units[0].GetComponent<Unit>();
-    unit.CmdSetCurrent();
+    unit.SetCurrent();
 
     unit.currentMp += 2;
     if(unit.currentMp > unit.maxMp){
