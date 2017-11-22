@@ -79,10 +79,7 @@ public class Unit : NetworkBehaviour {
 
   public string defense = "Free";
 
-  [SyncVar(hook = "OnChangeHasActed")]
   public bool hasActed = false;
-
-  [SyncVar(hook = "OnChangeHasMoved")]
   public bool hasMoved = false;
 
   [SyncVar(hook = "OnChangePoints")]
@@ -240,8 +237,7 @@ public class Unit : NetworkBehaviour {
     }
   }
 
-  [Command]
-  public void CmdAddTp(int tpToAdd){
+  public void AddTp(int tpToAdd){
     currentTp += tpToAdd;
   }
 
@@ -387,8 +383,8 @@ public class Unit : NetworkBehaviour {
       //SYNCVAR bug
       // if(NetworkServer.active) Unit.current.OnChangeIsCurrent(false);
     }
-    hasMoved = false;
-    hasActed = false;
+    SetHasMoved(false);
+    SetHasActed(false);
     isCurrent = true;
     stanceRevealed = false;
     AdvanceBuffs();
@@ -401,7 +397,7 @@ public class Unit : NetworkBehaviour {
       _path.Add(coordinate);
     }
     UpdateUnitsOnGrid(xPos, zPos, _path.Last().x, _path.Last().z, gameObject);
-    hasMoved = true;
+    SetHasMoved(true);
     xPos = _path.Last().x;
     zPos = _path.Last().z;
   }
@@ -438,10 +434,10 @@ public class Unit : NetworkBehaviour {
 
   public void FinishAction(){
     GameController.UnfreezeInputs();
-    if(NetworkServer.active) hasActed = true;
+    SetHasActed(true);
   }
 
-  public void OnChangeHasActed(bool newHasActed){
+  private void SetHasActed(bool newHasActed){
     hasActed = newHasActed;
     if(hasActed) {
       GameController.FinishAction();
@@ -450,7 +446,7 @@ public class Unit : NetworkBehaviour {
     }
   }
 
-  public void OnChangeHasMoved(bool newHasMoved){
+  private void SetHasMoved(bool newHasMoved){
     hasMoved = newHasMoved;
     if(hasMoved) {
       StartMoving();
@@ -464,8 +460,8 @@ public class Unit : NetworkBehaviour {
   }
 
   public void ReadyNextTurn(){
-    hasActed = false;
-    hasMoved = false;
+    SetHasActed(false);
+    SetHasMoved(false);
   }
 
   private void Move() {

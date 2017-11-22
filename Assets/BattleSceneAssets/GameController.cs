@@ -201,6 +201,7 @@ public class GameController : NetworkBehaviour
     {
         if (Unit.All().Count > 0)
         {
+            if(!NetworkServer.active) TurnController.instance.AdvanceTpToNext();
             RefreshPlayerView();
             launched = true;
         }

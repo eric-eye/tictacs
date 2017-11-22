@@ -11,24 +11,22 @@ public class TurnController : NetworkBehaviour {
     instance = this;
   }
 
-  [Command]
-  public void CmdAdvanceTp(){
+  public void AdvanceTp(){
     List<Unit> sudoUnits = Unit.All();
     sudoUnits.Sort((a, b) => a.TpDiff().CompareTo(b.TpDiff()));
     int difference = sudoUnits[0].TpDiff();
     foreach(Unit unit in sudoUnits){
-      unit.CmdAddTp(difference);
+      unit.AddTp(difference);
     }
   }
 
-  [Command]
-  public void CmdAdvanceTpToNext(){
-    CmdAdvanceTp();
-    CmdSetCurrentUnit();
+  public void AdvanceTpToNext(){
+    print("advance tp to next..");
+    AdvanceTp();
+    SetCurrentUnit();
   }
 
-  [Command]
-  public void CmdSetCurrentUnit(){
+  public void SetCurrentUnit(){
     List<GameObject> units = new List<GameObject>();
     foreach(Transform unitObject in GameObject.Find("Units").transform){
       units.Add(unitObject.gameObject);
@@ -44,13 +42,15 @@ public class TurnController : NetworkBehaviour {
   }
 
   public static void Next() {
+    print("next...");
     if(GameController.gameFinished){
       GameController.EndGame();
     }else{
       if(Unit.current.DoneWithTurn()){
+        print("unit is done with turn...");
         Unit.current.ReadyNextTurn();
         CursorController.moveEnabled = true;
-        if(NetworkServer.active) instance.CmdAdvanceTpToNext();
+        instance.AdvanceTpToNext();
       }
     }
   }
