@@ -418,8 +418,7 @@ public class Unit : NetworkBehaviour {
     GameController.StartMoving(this);
   }
 
-  [ClientRpc]
-  public void RpcDoAction(int x, int z, int actionIndex){
+  public void DoAction(int x, int z, int actionIndex){
     ActionInformation.Hide();
     GameObject actionObject = Actions()[actionIndex];
     Action action = actionObject.GetComponent<Action>();

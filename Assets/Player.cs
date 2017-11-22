@@ -91,7 +91,7 @@ public class Player : NetworkBehaviour {
         GameController.ConfirmAction(Cursor.hovered);
       }else if((GameController.state == GameController.State.ConfirmTarget) && Cursor.hovered && Cursor.hovered.attackConfirm){
         GameController.FreezeInputs();
-        CmdDoAction(Cursor.hovered.xPos, Cursor.hovered.zPos, GameController.selectedActionIndex);
+        DoAction(Cursor.hovered.xPos, Cursor.hovered.zPos, GameController.selectedActionIndex);
       }
     }
 
@@ -114,9 +114,19 @@ public class Player : NetworkBehaviour {
     GameController.instance.CmdPickStance(stanceIndex, player);
   }
 
+  public void DoAction(int x, int z, int actionIndex){
+    CmdDoAction(x, z, actionIndex, Player.player.playerIndex);
+    Unit.current.DoAction(x, z, actionIndex);
+  }
+
   [Command]
-  public void CmdDoAction(int x, int z, int actionIndex){
-    GameController.instance.CmdDoAction(x, z, actionIndex);
+  public void CmdDoAction(int x, int z, int actionIndex, int playerIndex){
+    RpcDoAction(x, z, actionIndex, playerIndex);
+  }
+
+  [ClientRpc]
+  public void RpcDoAction(int x, int z, int actionIndex, int playerIndex){
+    if(playerIndex != Player.player.playerIndex) Unit.current.DoAction(x, z, actionIndex);
   }
 
   [Command]

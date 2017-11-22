@@ -71,35 +71,10 @@ public class GameController : NetworkBehaviour
         StartCoroutine(GameController.SkipTurn(5));
     }
 
-    // public void MoveAlong(int x, int z)
-    // {
-    //     List<int[]> path = Helpers.DeriveShortestPath(x, z, Unit.current.xPos, Unit.current.zPos);
-    //     CursorController.moveEnabled = false;
-    //     CursorController.Coordinate[] coordinates = new CursorController.Coordinate[path.Count];
-    //     int c = 0;
-    //     foreach (int[] array in path)
-    //     {
-    //         CursorController.Coordinate coordinate = new CursorController.Coordinate();
-    //         coordinate.x = array[0];
-    //         coordinate.z = array[1];
-    //         coordinate.counter = array[2];
-    //         coordinate.elevation = array[3];
-    //         coordinates[c] = coordinate;
-    //         c++;
-    //     }
-    //     Unit.current.SetPath(coordinates, Player.player.playerIndex);
-    // }
-
     [Command]
     public void CmdPickStance(int stanceIndex, GameObject player)
     {
         Unit.current.SetStance(stanceIndex, player);
-    }
-
-    [Command]
-    public void CmdDoAction(int x, int z, int actionIndex)
-    {
-        Unit.current.RpcDoAction(x, z, actionIndex);
     }
 
     [Command]
