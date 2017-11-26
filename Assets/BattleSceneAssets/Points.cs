@@ -25,7 +25,7 @@ public class Points : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    text.text = unit.points.ToString() + " / " + unit.currentHp.ToString() + " / " + unit.currentMp.ToString() + " / " + unit.currentTp.ToString();
+    text.text = unit.points.ToString() + " / " + unit.currentHp.ToString() + " / " + unit.currentMp.ToString() + " / " + unit.currentTp.ToString() + " / " + unit.stanceIndex.ToString();
     transform.position = mainCamera.WorldToScreenPoint(anchor.position);
   }
 }

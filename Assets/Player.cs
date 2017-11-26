@@ -55,17 +55,20 @@ public class Player : NetworkBehaviour {
           c++;
       }
       Unit.current.SetPath(coordinates);
-      CmdSetPathOnServer(coordinates, Player.player.playerIndex);
+      CmdSetPathOnServer(coordinates, Player.player.playerIndex, Unit.current.stanceIndex);
   }
 
   [Command]
-  private void CmdSetPathOnServer(CursorController.Coordinate[] path, int playerIndex){
-    RpcSetPathOnClient(path, playerIndex);
+  private void CmdSetPathOnServer(CursorController.Coordinate[] path, int playerIndex, int stanceIndex){
+    RpcSetPathOnClient(path, playerIndex, stanceIndex);
   }
 
   [ClientRpc]
-  private void RpcSetPathOnClient(CursorController.Coordinate[] path, int playerIndex){
-    if(playerIndex != Player.player.playerIndex) Unit.current.SetPath(path);
+  private void RpcSetPathOnClient(CursorController.Coordinate[] path, int playerIndex, int stanceIndex){
+    if(playerIndex != Player.player.playerIndex) {
+      Unit.current.SetStance(stanceIndex);
+      Unit.current.SetPath(path);
+    }
   }
 	
 	// Update is called once per frame
@@ -106,27 +109,26 @@ public class Player : NetworkBehaviour {
 	}
 
   public void PickStance(int stanceIndex){
-    CmdPickStance(stanceIndex, gameObject);
-  }
-
-  [Command]
-  public void CmdPickStance(int stanceIndex, GameObject player){
-    GameController.instance.CmdPickStance(stanceIndex, player);
+    Unit.current.SetStance(stanceIndex);
+    GameController.FinishStanceChange();
   }
 
   public void DoAction(int x, int z, int actionIndex){
-    CmdDoAction(x, z, actionIndex, Player.player.playerIndex);
+    CmdDoAction(x, z, actionIndex, Player.player.playerIndex, Unit.current.stanceIndex);
     Unit.current.DoAction(x, z, actionIndex);
   }
 
   [Command]
-  public void CmdDoAction(int x, int z, int actionIndex, int playerIndex){
-    RpcDoAction(x, z, actionIndex, playerIndex);
+  public void CmdDoAction(int x, int z, int actionIndex, int playerIndex, int stanceIndex){
+    RpcDoAction(x, z, actionIndex, playerIndex, stanceIndex);
   }
 
   [ClientRpc]
-  public void RpcDoAction(int x, int z, int actionIndex, int playerIndex){
-    if(playerIndex != Player.player.playerIndex) Unit.current.DoAction(x, z, actionIndex);
+  public void RpcDoAction(int x, int z, int actionIndex, int playerIndex, int stanceIndex){
+    if(playerIndex != Player.player.playerIndex) {
+      Unit.current.SetStance(stanceIndex);
+      Unit.current.DoAction(x, z, actionIndex);
+    };
   }
 
   [Command]

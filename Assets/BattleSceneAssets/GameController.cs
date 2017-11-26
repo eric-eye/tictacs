@@ -72,12 +72,6 @@ public class GameController : NetworkBehaviour
     }
 
     [Command]
-    public void CmdPickStance(int stanceIndex, GameObject player)
-    {
-        Unit.current.SetStance(stanceIndex, player);
-    }
-
-    [Command]
     public void CmdBumpPlayerCount()
     {
         playerCount++;

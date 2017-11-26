@@ -71,11 +71,9 @@ public class Unit : NetworkBehaviour {
   public int currentTp = 0;
 
   public int maxMp;
-  [SyncVar]
   public int currentMp;
 
-  [SyncVar(hook = "OnStanceIndexChanged")]
-  private int stanceIndex = 0;
+  public int stanceIndex = 0;
 
   public string defense = "Free";
 
@@ -297,13 +295,8 @@ public class Unit : NetworkBehaviour {
     return(Stance().NegotiateMoveLength(10));
   }
 
-  public void SetStance(int newStanceIndex, GameObject player){
+  public void SetStance(int newStanceIndex){
     stanceIndex = newStanceIndex;
-  }
-
-  public void OnStanceIndexChanged(int newStanceIndex){
-    stanceIndex = newStanceIndex;
-    GameController.FinishStanceChange();
   }
 
   public Stance Stance(){
