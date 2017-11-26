@@ -7,7 +7,6 @@ abstract public class Action : NetworkBehaviour {
   public enum CursorModes { Radial, Line };
   public GameObject visualPrefab;
 
-  [SyncVar]
   public bool used = false;
 
   [SyncVar]
@@ -25,7 +24,7 @@ abstract public class Action : NetworkBehaviour {
   }
 
   public void BeginAction(GameObject targetObject){
-    if(NetworkServer.active) used = true;
+    used = true;
 
     DoAction(targetObject.GetComponent<Cursor>());
   }

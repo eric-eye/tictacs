@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 abstract public class Stance : NetworkBehaviour {
 
-  [SyncVar]
   public bool used = false;
 
   [SyncVar]
