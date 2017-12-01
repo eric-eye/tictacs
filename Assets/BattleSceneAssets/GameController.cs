@@ -53,22 +53,16 @@ public class GameController : NetworkBehaviour
         }
     }
 
-    [Command]
-    public void CmdResolveDeathPhase(){
+    public void ResolveDeathPhase(){
         if(Unit.current.dead) {
             Unit.current.turnsDead++;
             if(Unit.current.turnsDead <= 1){
                 Unit.current.currentTp -= 50;
-                RpcResolveDeathPhase();
+                StartCoroutine(GameController.SkipTurn(5));
             }else{
-                Unit.current.CmdRevive();
+                Unit.current.Revive();
             }
         }
-    }
-
-    [ClientRpc]
-    public void RpcResolveDeathPhase(){
-        StartCoroutine(GameController.SkipTurn(5));
     }
 
     [Command]

@@ -12,7 +12,6 @@ public class Unit : NetworkBehaviour {
   [SyncVar]
   public string unitName;
 
-  [SyncVar]
   public int turnsDead = 0;
 
   private bool _isMoving;
@@ -93,17 +92,24 @@ public class Unit : NetworkBehaviour {
 
   //public List<GameObject> buffs = new List<GameObject>();
 
+  // public static List<string> allActions = new List<string>{
+  //   "Attack",
+  //   "ChainLightning",
+  //   "DelayAttack",
+  //   "Fire",
+  //   "LightningStab",
+  //   "Meteor",
+  //   "Punish",
+  //   "Razz",
+  //   "SpinAttack",
+  //   "ThrowStone",
+  // };
+
   public static List<string> allActions = new List<string>{
-    "Attack",
-    "ChainLightning",
-    "DelayAttack",
-    "Fire",
-    "LightningStab",
-    "Meteor",
-    "Punish",
-    "Razz",
-    "SpinAttack",
-    "ThrowStone",
+    "Kill",
+    "Kill",
+    "Kill",
+    "Kill",
   };
 
 	// Use this for initialization
@@ -194,11 +200,6 @@ public class Unit : NetworkBehaviour {
     return(currentTp);
   }
 
-  [Command]
-  public void CmdSetTp(int newTp){
-    currentTp = newTp;
-  }
-
   public void ReceiveBuff(GameObject buff){
     if(NetworkServer.active){
       NetworkServer.Spawn(buff);
@@ -264,8 +265,8 @@ public class Unit : NetworkBehaviour {
     transform.position = new Vector3(9999, 9999, 9999);
   }
 
-  [Command]
-  public void CmdRevive(){
+  public void Revive(){
+    print("reviving...");
     dead = false;
     xPos = 0;
     zPos = 0;
@@ -273,20 +274,15 @@ public class Unit : NetworkBehaviour {
     yPos = tile.yPos;
     points = 100;
     currentHp = 30;
-    RpcRevive(xPos, zPos);
-  }
 
-  [ClientRpc]
-  public void RpcRevive(int x, int z){
     dead = false;
-    Cursor tile = Helpers.GetTile(x, z);
     tile.standingUnit = this;
     Vector3 position = transform.position;
-    position.x = x + .5f;
-    position.z = z + .5f;
+    position.x = xPos + .5f;
+    position.z = zPos + .5f;
     position.y = tile.yPos + 1.5f;
-    currentxPos = x;
-    currentzPos = z;
+    currentxPos = xPos;
+    currentzPos = zPos;
     transform.position = position;
     GameController.refreshView = true;
   }
@@ -331,7 +327,7 @@ public class Unit : NetworkBehaviour {
   }
 
   public void ReceiveTpDamage(int damage){
-    // CmdSetTp(currentTp - damage);
+    currentTp -= damage;
 
     System.Action showHits = () => {
       GameObject hitsObject = Instantiate(hitsPrefab, transform.position, Quaternion.identity);
@@ -357,7 +353,7 @@ public class Unit : NetworkBehaviour {
     GameController.RefreshPlayerView();
 
     if(isCurrent){
-      // if(NetworkServer.active) GameController.instance.CmdResolveDeathPhase();
+      GameController.instance.ResolveDeathPhase();
     }
   }
 
