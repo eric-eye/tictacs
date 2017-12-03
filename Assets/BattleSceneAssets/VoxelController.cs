@@ -11,6 +11,7 @@ public class VoxelController : NetworkBehaviour {
       public int x;
       public int z;
       public int y;
+      public bool respawnMarker;
     };
 
   public GameObject voxelPrefab;
@@ -21,6 +22,7 @@ public class VoxelController : NetworkBehaviour {
   private CoordinateList syncCoordinates = new CoordinateList();
 
   private List<List<int>> elevationMatrix = new List<List<int>>();
+  private List<List<bool>> respawnMatrix = new List<List<bool>>();
 
   private static RectGrid _grid;
   private static Parallelepiped _renderer;
@@ -28,6 +30,17 @@ public class VoxelController : NetworkBehaviour {
   private static int xMax;
   private static int zMin;
   private static int zMax;
+
+  public static List<int[]> respawnMarkerList = new List<int[]>{
+    new int[] {0, 0},
+    new int[] {5, 0},
+    new int[] {10, 0},
+    new int[] {15, 0},
+    new int[] {4, 19},
+    new int[] {9, 19},
+    new int[] {14, 19},
+    new int[] {19, 19},
+  };
 
   private static VoxelController instance;
 
@@ -39,9 +52,11 @@ public class VoxelController : NetworkBehaviour {
     foreach(Coordinate c in syncCoordinates){
       if(elevationMatrix.Count <= c.x){
         elevationMatrix.Add(new List<int>());
+        respawnMatrix.Add(new List<bool>());
       }
       if(elevationMatrix[c.x].Count <= c.z){
         elevationMatrix[c.x].Add(c.y);
+        respawnMatrix[c.x].Add(c.respawnMarker);
       }
       elevationMatrix[c.x][c.z] = c.y;
     }
@@ -69,6 +84,7 @@ public class VoxelController : NetworkBehaviour {
           coordinate.x = x;
           coordinate.z = z;
           coordinate.y = elevationMax - 1;
+          coordinate.respawnMarker = respawnMarkerList.Exists(r => r[0] == x && r[1] == z);
           syncCoordinates.Add(coordinate);
         }
       }
@@ -93,6 +109,7 @@ public class VoxelController : NetworkBehaviour {
           voxel.xPos = x;
           voxel.zPos = z;
           voxel.yPos = elevation;
+          voxel.respawnMarker = instance.respawnMatrix[x][z];
         }
       }
     }

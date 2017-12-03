@@ -21,7 +21,6 @@ public class TurnController : NetworkBehaviour {
   }
 
   public void AdvanceTpToNext(){
-    print("advance tp to next..");
     AdvanceTp();
     SetCurrentUnit();
   }
@@ -42,12 +41,10 @@ public class TurnController : NetworkBehaviour {
   }
 
   public static void Next() {
-    print("next...");
     if(GameController.gameFinished){
       GameController.EndGame();
     }else{
       if(Unit.current.DoneWithTurn()){
-        print("unit is done with turn...");
         Unit.current.ReadyNextTurn();
         CursorController.moveEnabled = true;
         instance.AdvanceTpToNext();

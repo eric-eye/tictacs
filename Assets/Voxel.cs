@@ -9,6 +9,7 @@ public class Voxel : MonoBehaviour {
   public int xPos;
   public int zPos;
   public int yPos;
+  public bool respawnMarker;
 
   private RectGrid _grid;
 
@@ -21,6 +22,10 @@ public class Voxel : MonoBehaviour {
     position.x = xPos + 0.5f;
     position.z = zPos + 0.5f;
     position.y = yPos + 0.5f;
+
+    if(respawnMarker){
+      transform.GetComponent<Renderer>().material.color = Color.blue;
+    }
 
     transform.position = position;
 

@@ -249,6 +249,7 @@ public class Unit : NetworkBehaviour {
   }
 
   private void Die(Unit aggressor){
+    print("time to die");
     Cursor tile = Helpers.GetTile(xPos, zPos);
     tile.standingUnit = null;
     xPos = -1;
@@ -265,26 +266,29 @@ public class Unit : NetworkBehaviour {
     transform.position = new Vector3(9999, 9999, 9999);
   }
 
+  private IEnumerator MoveBack(){
+    yield return new WaitForSeconds(1f);
+    transform.position = new Vector3(
+      xPos + .5f,
+      yPos + 1.5f,
+      zPos + .5f
+    );
+  }
+
   public void Revive(){
-    print("reviving...");
     dead = false;
-    xPos = 0;
-    zPos = 0;
-    Cursor tile = Helpers.GetTile(xPos, zPos);
+    Cursor tile = GameController.GetRespawnTile();
+    xPos = tile.xPos;
     yPos = tile.yPos;
+    zPos = tile.zPos;
     points = 100;
     currentHp = 30;
-
     dead = false;
     tile.standingUnit = this;
-    Vector3 position = transform.position;
-    position.x = xPos + .5f;
-    position.z = zPos + .5f;
-    position.y = tile.yPos + 1.5f;
     currentxPos = xPos;
     currentzPos = zPos;
-    transform.position = position;
     GameController.refreshView = true;
+    StartCoroutine(MoveBack());
   }
 
   public int MoveLength(){
