@@ -27,10 +27,7 @@ public class Unit : NetworkBehaviour {
   [SyncVar]
   public int playerIndex;
 
-  [SyncVar]
   public int xPos;
-
-  [SyncVar]
   public int zPos;
 
   [SyncVar]

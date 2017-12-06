@@ -61,12 +61,15 @@ public class SetupController : NetworkBehaviour {
     unit.unitName = newName;
     unit.currentTp = initialTp;
     NetworkServer.Spawn(unitObject);
-    RpcAddUnit(unitObject, initialTp);
+    RpcAddUnit(unitObject, initialTp, xPos, zPos);
   }
 
   [ClientRpc]
-  private void RpcAddUnit(GameObject unitObject, int tp) {
-    unitObject.GetComponent<Unit>().currentTp = tp;
+  private void RpcAddUnit(GameObject unitObject, int tp, int xPos, int zPos) {
+    Unit unit = unitObject.GetComponent<Unit>();
+    unit.currentTp = tp;
+    unit.xPos = xPos;
+    unit.zPos = zPos;
     unitsRegistered++;
   }
 
