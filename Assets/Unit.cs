@@ -29,8 +29,6 @@ public class Unit : NetworkBehaviour {
 
   public int xPos;
   public int zPos;
-
-  [SyncVar]
   public bool stanceRevealed = false;
 
   public int currentxPos;
