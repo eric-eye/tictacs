@@ -88,25 +88,25 @@ public class Unit : NetworkBehaviour {
 
   //public List<GameObject> buffs = new List<GameObject>();
 
-  // public static List<string> allActions = new List<string>{
-  //   "Attack",
-  //   "ChainLightning",
-  //   "DelayAttack",
-  //   "Fire",
-  //   "LightningStab",
-  //   "Meteor",
-  //   "Punish",
-  //   "Razz",
-  //   "SpinAttack",
-  //   "ThrowStone",
-  // };
-
   public static List<string> allActions = new List<string>{
-    "Kill",
-    "Kill",
-    "Kill",
-    "Kill",
+    "Attack",
+    "ChainLightning",
+    "DelayAttack",
+    "Fire",
+    "LightningStab",
+    "Meteor",
+    "Punish",
+    "Razz",
+    "SpinAttack",
+    "ThrowStone",
   };
+
+  // public static List<string> allActions = new List<string>{
+  //   "Kill",
+  //   "Kill",
+  //   "Kill",
+  //   "Kill",
+  // };
 
 	// Use this for initialization
 	void Start () {
@@ -370,7 +370,6 @@ public class Unit : NetworkBehaviour {
     if(Unit.current){
       Unit.current.SetIsCurrent(false);
     }
-    print("setting isCurrent");
     SetHasMoved(false);
     SetHasActed(false);
     SetIsCurrent(true);
@@ -400,9 +399,12 @@ public class Unit : NetworkBehaviour {
     _canWalkPath = true;
     ActionInformation.Hide();
     GameController.StartMoving(this);
+    MainCamera.Lock();
   }
 
   public void DoAction(int x, int z, int actionIndex){
+    MainCamera.Lock();
+    MainCamera.CenterOnWorldPoint(Unit.current.transform.position);
     ActionInformation.Hide();
     GameObject actionObject = Actions()[actionIndex];
     Action action = actionObject.GetComponent<Action>();
@@ -421,6 +423,7 @@ public class Unit : NetworkBehaviour {
   }
 
   public void FinishAction(){
+    MainCamera.Unlock();
     GameController.UnfreezeInputs();
     SetHasActed(true);
   }
@@ -489,6 +492,8 @@ public class Unit : NetworkBehaviour {
       }
     }
 
+    MainCamera.CenterOnWorldPoint(transform.position);
+
     if(!_isMoving && !_isMovingUp && !_isMovingDown && resetPath){
       FinishMoving();
     }
@@ -497,6 +502,7 @@ public class Unit : NetworkBehaviour {
   public void FinishMoving(){
     resetPath = false;
     GameController.FinishMoving();
+    MainCamera.Unlock();
   }
 
   private void PickNext() {

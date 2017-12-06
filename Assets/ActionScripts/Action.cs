@@ -78,6 +78,7 @@ abstract public class Action : NetworkBehaviour {
   }
 
   protected void CreateVisual(Cursor target, Vector3 visualPosition){
+    MainCamera.CenterOnWorldPoint(visualPosition);
     GameObject visualObject = Instantiate(visualPrefab, visualPosition, Quaternion.identity);
     Visual visual = visualObject.transform.Find("Main").GetComponent<Visual>();
     visual.action = this.GetComponent<Action>();
