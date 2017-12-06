@@ -9,6 +9,8 @@ public class Player : NetworkBehaviour {
   public static Player player;
   public static List<Player> players = new List<Player>();
 
+  public static List<System.Action> queuedActions = new List<System.Action>();
+
   [SyncVar(hook = "OnPlayerIndexChanged")]
   public int playerIndex;
 
@@ -66,8 +68,10 @@ public class Player : NetworkBehaviour {
   [ClientRpc]
   private void RpcSetPathOnClient(CursorController.Coordinate[] path, int playerIndex, int stanceIndex){
     if(playerIndex != Player.player.playerIndex) {
-      Unit.current.SetStance(stanceIndex);
-      Unit.current.SetPath(path);
+      queuedActions.Add(() => {
+          Unit.current.SetStance(stanceIndex);
+          Unit.current.SetPath(path);
+      });
     }
   }
 	
@@ -126,8 +130,10 @@ public class Player : NetworkBehaviour {
   [ClientRpc]
   public void RpcDoAction(int x, int z, int actionIndex, int playerIndex, int stanceIndex){
     if(playerIndex != Player.player.playerIndex) {
-      Unit.current.SetStance(stanceIndex);
-      Unit.current.DoAction(x, z, actionIndex);
+      queuedActions.Add(() => {
+        Unit.current.SetStance(stanceIndex);
+        Unit.current.DoAction(x, z, actionIndex);
+      });
     };
   }
 

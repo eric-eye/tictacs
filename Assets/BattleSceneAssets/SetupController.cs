@@ -7,6 +7,8 @@ public class SetupController : NetworkBehaviour {
   public GameObject unitPrefab;
 
   private int setupIndex = 0;
+  private int unitsRegistered = 0;
+  private bool turnAdvanced = false;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +17,10 @@ public class SetupController : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+    if(!NetworkServer.active && !turnAdvanced){
+      AdvanceTurn();
+    }
+
     if(!NetworkServer.active){
       return;
     }
@@ -61,5 +67,13 @@ public class SetupController : NetworkBehaviour {
   [ClientRpc]
   private void RpcAddUnit(GameObject unitObject, int tp) {
     unitObject.GetComponent<Unit>().currentTp = tp;
+    unitsRegistered++;
+  }
+
+  private void AdvanceTurn(){
+    if(Unit.All().Count >= 8){
+      TurnController.instance.AdvanceTpToNext();
+      turnAdvanced = true;
+    }
   }
 }

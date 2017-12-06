@@ -64,7 +64,6 @@ public class Unit : NetworkBehaviour {
   private int _pathIndex = 0;
   private bool _canWalkPath = false;
 
-  [SyncVar(hook = "OnChangeIsCurrent")]
   private bool isCurrent = false;
 
   public int currentTp = 0;
@@ -351,7 +350,7 @@ public class Unit : NetworkBehaviour {
     PlayerPointsBar.ResizeByIndex(this.playerIndex);
   }
 
-  public void OnChangeIsCurrent(bool newIsCurrent){
+  public void SetIsCurrent(bool newIsCurrent){
     isCurrent = newIsCurrent;
     ReflectCurrent();
     GameController.RefreshPlayerView();
@@ -372,13 +371,12 @@ public class Unit : NetworkBehaviour {
 
   public void SetCurrent(){
     if(Unit.current){
-      Unit.current.isCurrent = false;
-      //SYNCVAR bug
-      // if(NetworkServer.active) Unit.current.OnChangeIsCurrent(false);
+      Unit.current.SetIsCurrent(false);
     }
+    print("setting isCurrent");
     SetHasMoved(false);
     SetHasActed(false);
-    isCurrent = true;
+    SetIsCurrent(true);
     stanceRevealed = false;
     AdvanceBuffs();
   }

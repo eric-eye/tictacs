@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class GameController : NetworkBehaviour
 {
@@ -24,10 +25,15 @@ public class GameController : NetworkBehaviour
   public static bool gameFinished = false;
   private int respawnIndex = 0;
 
+  GameObject nextTurnMenu;
+
   [SyncVar]
   private SyncListInt respawnList = new SyncListInt();
 
   private bool launched = false;
+
+  private bool playingTurn = false;
+  private float playingTurnTimer = 0f;
 
   [SyncVar]
   public int playerCount = 0;
@@ -36,6 +42,23 @@ public class GameController : NetworkBehaviour
     int pointer = respawnList[respawnIndex];
     respawnIndex++;
     return(pointer);
+  }
+
+  public void DoNextTurn(){
+    print("doNextTurn");
+    playingTurn = true;
+  }
+
+  public void NextTurnLoop(){
+    if(Player.queuedActions.Count > 0){
+      if(!inputsFrozen){
+        System.Action nextAction = Player.queuedActions[0];
+        nextAction();
+        Player.queuedActions.Remove(nextAction);
+      }
+    }else{
+      playingTurn = false;
+    }
   }
 
   public static Cursor GetRespawnTile(){
@@ -63,6 +86,11 @@ public class GameController : NetworkBehaviour
   {
     if (NetworkServer.active) instance.CmdSpawnControllers();
     if (NetworkServer.active) instance.CmdGenerateRespawnList();
+
+    nextTurnMenu = GameObject.Find("NextTurnMenu");
+    nextTurnMenu.transform.Find("Panel").Find("NextTurn").GetComponent<Button>().onClick.AddListener(
+      () => DoNextTurn()
+    );
   }
 
   void Update()
@@ -79,6 +107,17 @@ public class GameController : NetworkBehaviour
       RefreshPlayerView();
       refreshView = false;
     }
+
+    if(playingTurn){
+      playingTurnTimer += Time.deltaTime;
+
+      if(playingTurnTimer > 2){
+        NextTurnLoop();
+        playingTurnTimer = 0;
+      }
+    }
+
+    nextTurnMenu.GetComponent<Canvas>().enabled = !playingTurn && Player.queuedActions.Count > 1;
   }
 
   public void ResolveDeathPhase()
