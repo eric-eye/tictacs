@@ -40,10 +40,10 @@ public class SetupController : NetworkBehaviour {
   [Command]
   void CmdAddUnits(){
     CmdAddUnit(4, 1, Color.red, 0, "Red", 90);
-    CmdAddUnit(8, 2, Color.red, 0, "Ash", 70);
+    CmdAddUnit(8, 2, Color.red, 0, "Ash", 80);
     CmdAddUnit(10, 1, Color.red, 0, "Ness", 30);
     CmdAddUnit(17, 2, Color.red, 0, "Charizard", 50);
-    CmdAddUnit(4, 17, Color.blue, 1, "Blue", 80);
+    CmdAddUnit(4, 17, Color.blue, 1, "Blue", 70);
     CmdAddUnit(8, 18, Color.blue, 1, "Gary", 40);
     CmdAddUnit(10, 18, Color.blue, 1, "Porky", 60);
     CmdAddUnit(18, 17, Color.blue, 1, "Squirtle", 20);

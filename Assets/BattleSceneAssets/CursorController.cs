@@ -195,7 +195,7 @@ public class CursorController : NetworkBehaviour {
     }
   }
 
-  private static void UnsetMovement() {
+  public static void UnsetMovement() {
     foreach(List<Cursor> list in cursorMatrix){
       foreach(Cursor tile in list){
         tile.UnsetMovement();

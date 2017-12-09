@@ -426,6 +426,14 @@ public class Unit : NetworkBehaviour {
     SetHasActed(true);
   }
 
+  public void EndTurn(){
+    hasActed = true;
+    hasMoved = true;
+    currentTp -= EndTurnCost();
+    TurnController.Next();
+    GameController.RefreshPlayerView();
+  }
+
   private void SetHasActed(bool newHasActed){
     hasActed = newHasActed;
     if(hasActed) {
@@ -552,6 +560,14 @@ public class Unit : NetworkBehaviour {
 
       if(newY > 0) _isMovingUp = true;
       if(newY < 0) _isMovingDown = true;
+    }
+  }
+
+  public int EndTurnCost(){
+    if(!hasActed && !hasMoved){
+      return 40;
+    }else{
+      return 20;
     }
   }
 }

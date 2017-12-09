@@ -10,6 +10,10 @@ public class Menu : MonoBehaviour {
   public GameObject actionButtonPrefab;
   public GameObject stanceButtonPrefab;
 
+  public void EndTurn(){
+    EndTurnMenu.Show();
+  }
+
 	// Use this for initialization
 	void Start () {
     display = gameObject.GetComponent<Canvas>();

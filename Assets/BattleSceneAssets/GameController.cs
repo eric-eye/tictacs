@@ -33,6 +33,7 @@ public class GameController : NetworkBehaviour
   private bool launched = false;
 
   private bool playingTurn = false;
+  public static bool readyToReplay = false;
   private float playingTurnTimer = 0f;
 
   [SyncVar]
@@ -45,19 +46,20 @@ public class GameController : NetworkBehaviour
   }
 
   public void DoNextTurn(){
-    print("doNextTurn");
     playingTurn = true;
   }
 
-  public void NextTurnLoop(){
-    if(Player.queuedActions.Count > 0){
+  public void NextTurnLoop(Player.Turn turn){
+    if(turn.actions.Count > 0){
       if(!inputsFrozen){
-        System.Action nextAction = Player.queuedActions[0];
+        System.Action nextAction = turn.actions[0];
         nextAction();
-        Player.queuedActions.Remove(nextAction);
+        turn.actions.Remove(nextAction);
       }
     }else{
+      Player.turns.RemoveAt(0);
       playingTurn = false;
+      readyToReplay = false;
     }
   }
 
@@ -75,6 +77,10 @@ public class GameController : NetworkBehaviour
       }
     }
     return(tile);
+  }
+
+  public static void EndTurn(){
+    Player.player.EndTurn();
   }
 
   void Awake()
@@ -112,12 +118,16 @@ public class GameController : NetworkBehaviour
       playingTurnTimer += Time.deltaTime;
 
       if(playingTurnTimer > 2){
-        NextTurnLoop();
+        NextTurnLoop(Player.OldestTurn());
         playingTurnTimer = 0;
       }
     }
 
-    nextTurnMenu.GetComponent<Canvas>().enabled = !playingTurn && Player.queuedActions.Count > 1;
+    // print(Player.OldestTurn().finished);
+
+    print("turn count" + Player.turns.Count);
+
+    nextTurnMenu.GetComponent<Canvas>().enabled = !playingTurn && Player.OldestTurn() != null && Player.OldestTurn().finished;
   }
 
   public void ResolveDeathPhase()
@@ -206,6 +216,10 @@ public class GameController : NetworkBehaviour
   {
     yield return new WaitForSeconds(wait);
     GameController.FinishAction();
+  }
+
+  public static void ShowEndTurnMenu(){
+    EndTurnMenu.Show();
   }
 
   public static void FinishAction()

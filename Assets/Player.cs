@@ -6,10 +6,17 @@ using System.Linq;
 
 public class Player : NetworkBehaviour {
 
+  public class Turn
+  {
+    public List<System.Action> actions;
+    public int playerIndex;
+    public bool finished;
+  }
+
+  public static List<Turn> turns = new List<Turn>();
+
   public static Player player;
   public static List<Player> players = new List<Player>();
-
-  public static List<System.Action> queuedActions = new List<System.Action>();
 
   [SyncVar(hook = "OnPlayerIndexChanged")]
   public int playerIndex;
@@ -18,6 +25,18 @@ public class Player : NetworkBehaviour {
 
   void Awake(){
     DontDestroyOnLoad(gameObject);
+  }
+
+  public static Turn CurrentTurn(){
+    return(turns[turns.Count - 1]);
+  }
+
+  public static Turn OldestTurn(){
+    if(turns.Count > 0){
+      return(turns[0]);
+    }else{
+      return null;
+    }
   }
 
 	// Use this for initialization
@@ -68,10 +87,47 @@ public class Player : NetworkBehaviour {
   [ClientRpc]
   private void RpcSetPathOnClient(CursorController.Coordinate[] path, int playerIndex, int stanceIndex){
     if(playerIndex != Player.player.playerIndex) {
-      queuedActions.Add(() => {
+      AddTurn();
+      turns[turns.Count - 1].actions.Add(() => {
           Unit.current.SetStance(stanceIndex);
           Unit.current.SetPath(path);
       });
+      turns[turns.Count - 1].finished = CurrentTurn().actions.Count > 1;
+      print(CurrentTurn().finished);
+      print(OldestTurn().finished);
+    }
+  }
+
+  private void AddTurn(){
+      if(turns.Count == 0 || turns[turns.Count - 1].finished){
+        Player.Turn turn = new Player.Turn();
+        turn.playerIndex = Unit.current.playerIndex;
+        turn.finished = false;
+        turn.actions = new List<System.Action>();
+        Player.turns.Add(turn);
+      }
+  }
+
+  public void EndTurn(){
+    Unit.current.EndTurn();
+    CmdEndTurnOnServer(Player.player.playerIndex);
+  }
+
+  [Command]
+  private void CmdEndTurnOnServer(int playerIndex){
+    RpcEndTurnOnClient(playerIndex);
+  }
+
+  [ClientRpc]
+  private void RpcEndTurnOnClient(int playerIndex){
+    if(playerIndex != Player.player.playerIndex) {
+      AddTurn();
+      turns[turns.Count - 1].actions.Add(() => {
+          Unit.current.EndTurn();
+      });
+      turns[turns.Count - 1].finished = true;
+      print(CurrentTurn().finished);
+      print(OldestTurn().finished);
     }
   }
 	
@@ -130,10 +186,14 @@ public class Player : NetworkBehaviour {
   [ClientRpc]
   public void RpcDoAction(int x, int z, int actionIndex, int playerIndex, int stanceIndex){
     if(playerIndex != Player.player.playerIndex) {
-      queuedActions.Add(() => {
+      AddTurn();
+      turns[turns.Count - 1].actions.Add(() => {
         Unit.current.SetStance(stanceIndex);
         Unit.current.DoAction(x, z, actionIndex);
       });
+      turns[turns.Count - 1].finished = CurrentTurn().actions.Count > 1;
+      print(CurrentTurn().finished);
+      print(OldestTurn().finished);
     };
   }
 
