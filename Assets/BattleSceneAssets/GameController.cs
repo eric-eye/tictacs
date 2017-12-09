@@ -127,7 +127,13 @@ public class GameController : NetworkBehaviour
 
     print("turn count" + Player.turns.Count);
 
-    nextTurnMenu.GetComponent<Canvas>().enabled = !playingTurn && Player.OldestTurn() != null && Player.OldestTurn().finished;
+    if(Unit.current){
+      nextTurnMenu.transform.Find("Panel").Find("PlayerInfo").GetComponent<Text>().text = "Currently Player " + (Unit.current.playerIndex + 1) + "'s turn";
+      nextTurnMenu.transform.Find("Panel").Find("NextTurn").gameObject.SetActive(!playingTurn && Player.OldestTurn() != null && Player.OldestTurn().finished);
+      nextTurnMenu.GetComponent<Canvas>().enabled = Unit.current.playerIndex != Player.player.playerIndex;
+    }else{
+      nextTurnMenu.GetComponent<Canvas>().enabled = false;
+    }
   }
 
   public void ResolveDeathPhase()
