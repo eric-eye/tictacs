@@ -88,13 +88,11 @@ public class Player : NetworkBehaviour {
   private void RpcSetPathOnClient(CursorController.Coordinate[] path, int playerIndex, int stanceIndex){
     if(playerIndex != Player.player.playerIndex) {
       AddTurn();
-      turns[turns.Count - 1].actions.Add(() => {
+      CurrentTurn().actions.Add(() => {
           Unit.current.SetStance(stanceIndex);
           Unit.current.SetPath(path);
       });
-      turns[turns.Count - 1].finished = CurrentTurn().actions.Count > 1;
-      print(CurrentTurn().finished);
-      print(OldestTurn().finished);
+      CurrentTurn().finished = CurrentTurn().actions.Count > 1;
     }
   }
 
@@ -122,12 +120,10 @@ public class Player : NetworkBehaviour {
   private void RpcEndTurnOnClient(int playerIndex){
     if(playerIndex != Player.player.playerIndex) {
       AddTurn();
-      turns[turns.Count - 1].actions.Add(() => {
+      CurrentTurn().actions.Add(() => {
           Unit.current.EndTurn();
       });
-      turns[turns.Count - 1].finished = true;
-      print(CurrentTurn().finished);
-      print(OldestTurn().finished);
+      CurrentTurn().finished = true;
     }
   }
 	
@@ -187,13 +183,11 @@ public class Player : NetworkBehaviour {
   public void RpcDoAction(int x, int z, int actionIndex, int playerIndex, int stanceIndex){
     if(playerIndex != Player.player.playerIndex) {
       AddTurn();
-      turns[turns.Count - 1].actions.Add(() => {
+      CurrentTurn().actions.Add(() => {
         Unit.current.SetStance(stanceIndex);
         Unit.current.DoAction(x, z, actionIndex);
       });
-      turns[turns.Count - 1].finished = CurrentTurn().actions.Count > 1;
-      print(CurrentTurn().finished);
-      print(OldestTurn().finished);
+      CurrentTurn().finished = CurrentTurn().actions.Count > 1;
     };
   }
 
