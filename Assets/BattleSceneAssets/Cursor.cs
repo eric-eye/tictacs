@@ -13,6 +13,7 @@ public class Cursor : MonoBehaviour {
   public int zPos;
   public int yPos;
   public Unit standingUnit;
+  public GameObject standingModel;
   public bool attack = false;
   public bool attackConfirm = false;
   public bool attackInRange = false;

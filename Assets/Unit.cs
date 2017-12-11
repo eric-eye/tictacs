@@ -12,6 +12,8 @@ public class Unit : NetworkBehaviour {
   [SyncVar]
   public string unitName;
 
+  public Material transparentMaterial;
+
   public int turnsDead = 0;
 
   private bool _isMoving;
@@ -43,7 +45,7 @@ public class Unit : NetworkBehaviour {
   private CoordinateList _pathToSync = new CoordinateList();
 
   [SyncVar]
-  private Color _color;
+  public Color _color;
 
   public static Unit current;
   public GameObject hitsPrefab;
